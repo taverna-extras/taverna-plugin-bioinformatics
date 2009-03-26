@@ -257,10 +257,7 @@ public class AddParserActionHelper  {
          * @see org.embl.ebi.escience.scuflui.processoractions.ProcessorActionSPI#getIcon()
          */
     public ImageIcon getIcon() {
-	Class<?> cls = this.getClass();
-	URL url = cls.getClassLoader().getResource(
-		"/Cut24.gif");
-	return new ImageIcon(url);
+    	return MobyPanel.getIcon("/Cut24.gif");
     }
 
     /**
@@ -278,8 +275,6 @@ public class AddParserActionHelper  {
          *                the location of the image to use as an icon
          */
     private ImageIcon getIcon(String loc) {
-	Class<?> cls = this.getClass();
-	URL url = cls.getClassLoader().getResource(loc);
-	return new ImageIcon(url);
+    	return MobyPanel.getIcon(loc);
     }
 }
