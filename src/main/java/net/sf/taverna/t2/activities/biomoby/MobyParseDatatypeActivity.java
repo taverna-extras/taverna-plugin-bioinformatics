@@ -65,6 +65,7 @@ public class MobyParseDatatypeActivity extends AbstractAsynchronousActivity<Moby
 			final AsynchronousActivityCallback callback) {
 		callback.requestRun(new Runnable() {
 
+			@SuppressWarnings("unchecked")
 			public void run() {
 				ReferenceService referenceService = callback.getContext().getReferenceService();
 
@@ -213,6 +214,7 @@ public class MobyParseDatatypeActivity extends AbstractAsynchronousActivity<Moby
 		return configurationBean;
 	}
 
+	@SuppressWarnings("unchecked")
 	private void init() throws ActivityConfigurationException {
 		try {
 			central = new CentralImpl(configurationBean.getRegistryEndpoint());
@@ -272,6 +274,7 @@ public class MobyParseDatatypeActivity extends AbstractAsynchronousActivity<Moby
 		return false;
 	}
 
+	@SuppressWarnings("unchecked")
 	private void processDatatype(MobyDataType dt, Central central, String currentName, List list) throws ActivityConfigurationException {
 
 		if (dt.getParentName() == null || dt.getParentName().trim().equals("")) {
@@ -334,6 +337,7 @@ public class MobyParseDatatypeActivity extends AbstractAsynchronousActivity<Moby
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private void flattenChildType(String name, Central central, String current, List list) throws ActivityConfigurationException {
 		MobyDataType dt = null;
 		try {
