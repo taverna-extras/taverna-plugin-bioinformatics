@@ -1,0 +1,3 @@
+net.sf.taverna.t2.activities.biomoby.BiomobyActivityHealthChecker
+net.sf.taverna.t2.activities.biomoby.BiomobyObjectActivityHealthChecker
+net.sf.taverna.t2.activities.biomoby.MobyParseDatatypeActivityHealthChecker
