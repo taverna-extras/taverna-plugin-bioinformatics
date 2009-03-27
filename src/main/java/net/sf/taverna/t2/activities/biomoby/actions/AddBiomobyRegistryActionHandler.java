@@ -20,7 +20,6 @@ import net.sf.taverna.t2.workbench.helper.HelpEnabledDialog;
 import org.apache.log4j.Logger;
 import org.biomoby.client.CentralImpl;
 
-import net.sf.taverna.t2.activities.biomoby.actions.BiomobyScavengerDialog;
 
 @SuppressWarnings("serial")
 public class AddBiomobyRegistryActionHandler extends AddQueryActionHandler {
