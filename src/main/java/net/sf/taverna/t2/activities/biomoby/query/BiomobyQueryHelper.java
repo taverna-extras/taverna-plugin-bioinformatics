@@ -17,6 +17,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import net.sf.taverna.raven.appconfig.ApplicationRuntime;
+import net.sf.taverna.t2.activities.biomoby.GetOntologyThread;
 
 import org.apache.log4j.Logger;
 import org.biomoby.client.CentralDigestCachedImpl;
@@ -72,6 +73,12 @@ public class BiomobyQueryHelper {
 							e);
 		}
 		//getRDFLocations();
+		// now we try to speed up the loading of the datatypes ontology
+		try {
+			new GetOntologyThread(central.getRegistryEndpoint()).start();
+		} catch (Exception e) {
+			/* don't care if an exception occurs here ... */
+		}
 	}
 
 	@SuppressWarnings("unused")
