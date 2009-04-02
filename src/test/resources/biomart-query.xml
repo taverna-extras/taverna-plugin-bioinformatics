@@ -1,0 +1,24 @@
+<biomart:MartQuery
+	xmlns:biomart="http://org.embl.ebi.escience/xscufl-biomart/0.1alpha">
+	<biomart:MartService
+		location="http://www.biomart.org/biomart/martservice" />
+	<biomart:MartDataset displayName="Homo sapiens genes (NCBI36)"
+		name="hsapiens_gene_ensembl" type="TableSet" initialBatchSize="10"
+		maximumBatchSize="50000" visible="false" interface="default"
+		modified="2006-11-27 12:49:27">
+		<biomart:MartURLLocation database="ensembl_mart_41" default="1"
+			displayName="ENSEMBL 41  (SANGER)" host="www.biomart.org"
+			includeDatasets="" martUser="" name="ensembl"
+			path="/biomart/martservice" port="80" serverVirtualSchema="default"
+			virtualSchema="default" visible="1" />
+	</biomart:MartDataset>
+	<biomart:Query virtualSchemaName="default" count="0" uniqueRows="0"
+		softwareVersion="0.5" requestId="taverna">
+		<biomart:Dataset name="hsapiens_gene_ensembl">
+			<biomart:Attribute name="coding_gene_flank" />
+			<biomart:Attribute name="gene_stable_id" />
+			<biomart:Filter name="ensembl_gene_id" value="" list="true" />
+			<biomart:Filter name="upstream_flank" value="100" />
+		</biomart:Dataset>
+	</biomart:Query>
+</biomart:MartQuery>
