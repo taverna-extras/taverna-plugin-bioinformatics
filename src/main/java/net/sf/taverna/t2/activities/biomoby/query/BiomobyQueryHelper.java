@@ -51,8 +51,12 @@ public class BiomobyQueryHelper {
 		try {
 			if (uri != null)
 				this.REGISTRY_URI = uri;
+			else
+				this.REGISTRY_URI = registryUri;
 			if (url != null)
 				this.REGISTRY_URL = url;
+			else
+				this.REGISTRY_URL = registryUrl;
 			String tavernaHome=null;
 			if (ApplicationRuntime.getInstance().getApplicationHomeDir()!=null) {
 				tavernaHome=ApplicationRuntime.getInstance().getApplicationHomeDir().getAbsolutePath();
@@ -63,7 +67,7 @@ public class BiomobyQueryHelper {
 			if (!cacheLoc.endsWith(System.getProperty("file.separator")))
 				cacheLoc += File.separator;
 			
-			central = new CentralDigestCachedImpl(registryUrl, registryUri, cacheLoc + CACHE_NAME);
+			central = new CentralDigestCachedImpl(this.REGISTRY_URL, this.REGISTRY_URI, cacheLoc + CACHE_NAME);
 
 		} catch (MobyException e) {
 			// 
