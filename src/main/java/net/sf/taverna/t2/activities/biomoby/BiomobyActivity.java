@@ -1694,7 +1694,7 @@ public class BiomobyActivity extends
 			throws MobyException {
 		try {
 			// Construct data
-			String data = "query=" + URLEncoder.encode(xml, "UTF-8");
+			String data = "data=" + URLEncoder.encode(xml, "UTF-8");
 
 			// Send data
 			URL url = new URL(serviceEndpoint);
