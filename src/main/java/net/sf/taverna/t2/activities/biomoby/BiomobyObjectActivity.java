@@ -87,6 +87,8 @@ public class BiomobyObjectActivity extends AbstractAsynchronousActivity<BiomobyO
 				String registryEndpoint = worker.getRegistryEndpoint();
 				Registry mRegistry = new Registry(registryEndpoint,registryEndpoint,"http://domain.com/MOBY/Central");
 
+                BiomobyCache.cacheForRegistry(mRegistry);
+                
 				if (isPrimitiveType) {
 					try {
 
