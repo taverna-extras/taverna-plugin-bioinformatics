@@ -12,7 +12,6 @@ package net.sf.taverna.t2.activities.biomoby;
 
 
 import org.biomoby.client.CentralImpl;
-import org.biomoby.registry.meta.Registry;
 
 /**
  * This class is used to speed up the running of workflows. Basically, whenever
