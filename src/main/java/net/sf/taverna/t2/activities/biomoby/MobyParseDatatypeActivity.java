@@ -22,8 +22,7 @@ import net.sf.taverna.t2.workflowmodel.OutputPort;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AbstractAsynchronousActivity;
 import net.sf.taverna.t2.workflowmodel.processor.activity.ActivityConfigurationException;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivityCallback;
-import net.sf.taverna.t2.activities.biomoby.XMLUtilities;
-import net.sf.taverna.t2.activities.biomoby.ParseMobyXML;
+
 
 import org.apache.log4j.Logger;
 import org.biomoby.client.CentralImpl;
@@ -72,6 +71,9 @@ public class MobyParseDatatypeActivity extends AbstractAsynchronousActivity<Moby
 				Map<String, T2Reference> output = new HashMap<String, T2Reference>();
 				
 				try {
+
+                    //cache ontology and namespace if not done so already. Immediately returns if already cached.
+                    BiomobyCache.cacheForRegistryEndpoint(getConfiguration().getRegistryEndpoint());
 
 					String inputMapKey = getInputPorts().iterator().next().getName();
 					// inputMap wasnt as expected

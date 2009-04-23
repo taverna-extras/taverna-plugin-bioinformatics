@@ -941,6 +941,13 @@ public class BiomobyActivity extends
 		} catch (Exception e) {
 			/* don't care if an exception occurs here ... */
 		}
+		// here we make sure that we have downloaded the ontology for the
+		// registry that we got this service from
+		try {
+			new GetOntologyThread(worker.getRegistryEndpoint()).start();
+		} catch (Exception e) {
+			/* don't care if an exception occurs here ... */
+		}
 
 	}
 

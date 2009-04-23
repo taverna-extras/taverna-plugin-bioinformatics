@@ -28,10 +28,17 @@ public class BiomobyCache {
 
     private static Logger logger = Logger.getLogger(BiomobyCache.class);
 
-	private static Map<Registry,Object> cached = new HashMap<Registry, Object>();
+	private static Map<String,Object> cached = new HashMap<String, Object>();
 
+    /**
+	 * If necessary caches the Ontology and namespace information.
+     * This call immediately returns if the cache has been previously called for this endpoint
+     *
+	 * @param reg - the Registry instance
+	 *
+	 */
 	public static synchronized void cacheForRegistry(Registry reg) {
-		if (cached.get(reg) == null) {
+		if (cached.get(reg.getEndpoint()) == null) {
 			logger.info("Caching started for Biomoby registry"
 					+ reg.getEndpoint());
 
@@ -44,7 +51,7 @@ public class BiomobyCache {
 				MobyDataType.getDataType("Object", reg);
 				MobyNamespace.getNamespace("foo", reg);
 
-				cached.put(reg, new Boolean(true));
+				cached.put(reg.getEndpoint(), new Boolean(true));
 				logger.info("Caching complete for Biomoby registry"
 						+ reg.getEndpoint());
 
@@ -52,8 +59,20 @@ public class BiomobyCache {
 				logger.error("Error whilst caching for Biomoby registry",e);
 			}
 
-
 		}
 	}
+
+    /**
+	 * If necessary caches the Ontology and namespace information.
+     * This call immediately returns if the cache has been previously called for this endpoint url.
+     *
+	 * @param endpointUrl - the Registry endpoint Url
+	 *
+	 */
+    public static synchronized void cacheForRegistryEndpoint(String endpointUrl) {
+        Registry registry = new Registry(endpointUrl, endpointUrl,
+					"http://domain.com/MOBY/Central");
+        cacheForRegistry(registry);
+    }
 
 }

@@ -10,31 +10,29 @@
 
 package net.sf.taverna.t2.activities.biomoby;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.biomoby.client.CentralImpl;
 import org.biomoby.registry.meta.Registry;
-import org.biomoby.shared.MobyDataType;
 
 /**
  * This class is used to speed up the running of workflows. Basically, whenever
  * a new Biomoby activity is added to taverna, a call out to RESOURCES/Objects
  * is made to download the datatype ontology.
+ *
+ * Uses BiomobyCache to process the registry
  * 
  * This should speed up the execution of workflows, since the ontologies will
  * have already been downloaded.
  * 
  * @author Eddie Kawas
+ * @author Stuart Owen
+ *
+ * @see BiomobyCache
  * 
  */
 public class GetOntologyThread extends Thread {
 
-	// a map of registries that we have already processed
-	static Map<String, String> REGISTRIES_HANDLED = Collections
-			.synchronizedMap(new HashMap<String, String>());
-
+	
 	// the registry endpoint
 	String worker = null;
 
@@ -57,15 +55,10 @@ public class GetOntologyThread extends Thread {
 	 * @see java.lang.Thread#run()
 	 */
 	public void run() {
-		if (REGISTRIES_HANDLED.containsKey(worker))
-			return;
+		
 		try {
-			Registry mRegistry = new Registry(worker, worker,
-					"http://domain.com/MOBY/Central");
-			// attempt to get a primitive datatype from the registry
-			MobyDataType.getDataType("Float", mRegistry);
-			// add the registry to the map
-			REGISTRIES_HANDLED.put(worker, "");
+			
+			BiomobyCache.cacheForRegistryEndpoint(worker);
 		} catch (Exception e) {
 
 		}
