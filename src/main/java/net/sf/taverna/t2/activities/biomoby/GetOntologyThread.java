@@ -55,12 +55,6 @@ public class GetOntologyThread extends Thread {
 	 * @see java.lang.Thread#run()
 	 */
 	public void run() {
-		
-		try {
-			
-			BiomobyCache.cacheForRegistryEndpoint(worker);
-		} catch (Exception e) {
-
-		}
+		BiomobyCache.cacheForRegistryEndpoint(worker);		
 	}
 }
