@@ -354,6 +354,13 @@ public class BiomobyObjectActivity extends AbstractAsynchronousActivity<BiomobyO
             }
             throw new ActivityConfigurationException(formatError(e.toString()));
         }
+        // here we make sure that we have downloaded the ontology for the
+		// registry that we got this service from
+        try {
+			new GetOntologyThread(worker.getRegistryEndpoint()).start();
+		} catch (Exception e) {
+			/* don't care if an exception occurs here ... */
+		}
     }
 
     private void generatePorts() {
