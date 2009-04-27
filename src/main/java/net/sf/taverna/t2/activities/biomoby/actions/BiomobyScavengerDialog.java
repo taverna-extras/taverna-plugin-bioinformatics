@@ -12,6 +12,9 @@ package net.sf.taverna.t2.activities.biomoby.actions;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -30,6 +33,7 @@ import net.sf.taverna.t2.lang.ui.ShadedLabel;
  */
 public class BiomobyScavengerDialog extends JPanel {
 
+	private static final String CUSTOM = "Custom";
 	private static final long serialVersionUID = -57047613557546674L;
 	private JTextField registryEndpoint = new JTextField(
 			"http://moby.ucalgary.ca/moby/MOBY-Central.pl");
@@ -48,9 +52,16 @@ public class BiomobyScavengerDialog extends JPanel {
 		super();
 		GridLayout layout = new GridLayout(5, 2);
 		setLayout(layout);
+		
+		registryEndpoint.setEnabled(false);
+		registryURI.setEnabled(false);		
+		
 		// a combo box showing known registries
 		final Registries regs = RegistriesList.getInstance();
-		JComboBox regList = new JComboBox(regs.list());
+		List<String> choices = new ArrayList<String>(Arrays.asList(regs.list()));
+		choices.add(CUSTOM);
+		
+		JComboBox regList = new JComboBox(choices.toArray());
 		regList.setToolTipText("A selection will fill text fields below");
 		regList.setSelectedItem(Registries.DEFAULT_REGISTRY_SYNONYM);
 		regList.addActionListener(new ActionListener() {
@@ -58,7 +69,15 @@ public class BiomobyScavengerDialog extends JPanel {
 				String contents = (String) ((JComboBox) e.getSource())
 						.getSelectedItem();
 
-				org.biomoby.registry.meta.Registry theReg = null;
+				if (contents.equals(CUSTOM)) {
+					registryEndpoint.setEnabled(true);
+					registryURI.setEnabled(true);
+					return;
+				} else {
+					registryEndpoint.setEnabled(false);
+					registryURI.setEnabled(false);					
+				}
+ 				org.biomoby.registry.meta.Registry theReg = null;
 				try {
 					theReg = regs.get(contents);
 				} catch (MobyException ee) {
@@ -69,7 +88,6 @@ public class BiomobyScavengerDialog extends JPanel {
 					}
 				}
 				if (theReg != null) {
-
 					registryEndpoint.setText(theReg.getEndpoint());
 					registryURI.setText(theReg.getNamespace());
 
@@ -79,7 +97,7 @@ public class BiomobyScavengerDialog extends JPanel {
 		add(new ShadedLabel("Choose a registry from the list: ",
 				ShadedLabel.BLUE, true));
 		add(regList);
-		add(new ShadedLabel("Or enter your own below,", ShadedLabel.BLUE, true));
+		add(new ShadedLabel("Or select '" + CUSTOM + "' to enter your own below,", ShadedLabel.BLUE, true));
 		add(new ShadedLabel("", ShadedLabel.BLUE, true));
 		add(new ShadedLabel(
 				"Location (URL) of your BioMoby central registry: ",
