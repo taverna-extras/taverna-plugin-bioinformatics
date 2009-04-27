@@ -25,6 +25,9 @@ package net.sf.taverna.t2.activities.biomoby.edits;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.biomoby.registry.meta.Registry;
+import org.biomoby.shared.MobyDataType;
+
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivity;
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivityConfigurationBean;
 import net.sf.taverna.t2.activities.biomoby.BiomobyObjectActivity;
@@ -43,6 +46,7 @@ import net.sf.taverna.t2.workflowmodel.ProcessorOutputPort;
 import net.sf.taverna.t2.workflowmodel.impl.AbstractDataflowEdit;
 import net.sf.taverna.t2.workflowmodel.impl.DataflowImpl;
 import net.sf.taverna.t2.workflowmodel.processor.activity.Activity;
+import net.sf.taverna.t2.workflowmodel.processor.activity.ActivityInputPort;
 import net.sf.taverna.t2.workflowmodel.utils.Tools;
 
 /**
@@ -120,9 +124,46 @@ public class AddBiomobyConsumingServiceEdit extends AbstractDataflowEdit {
 		else {
 			sourcePort = getSourcePort(sourceProcessor, sourceProcessor.getActivityList().get(0), sourceProcessor.getOutputPorts().get(0).getName(), linkEditList);
 		}
-		EventHandlingInputPort sinkPort = getSinkPort(sinkProcessor, boActivity, "input", linkEditList);
+		// get the input port that isnt called 'input'
+		String inputPortName = "";
+		for (ActivityInputPort aip : sinkProcessor.getActivityList().get(0).getInputPorts()) {
+			if (!aip.getName().equalsIgnoreCase("input")) {
+				// try to match the datatype to an input port
+				String dtName = activity.getMobyObject().getName();
+				String sinkDtname = aip.getName();
+				if (sinkDtname.indexOf("(") > 0)
+					sinkDtname = sinkDtname.substring(0, sinkDtname.indexOf("("));
+				// are the datatype names exactly the same?
+				if (dtName.equals(sinkDtname)) {
+					inputPortName = aip.getName();
+					break;
+				}
+				// check for the name in the datatypes lineage
+				MobyDataType sinkDt = MobyDataType.getDataType(dtName, 
+						new Registry(
+								activity.getCentral().getRegistryEndpoint(), 
+								activity.getCentral().getRegistryEndpoint(), 
+								activity.getCentral().getRegistryNamespace())
+				);
+				// check the lineage of the sinkdt for dtname
+				for (MobyDataType lineage : sinkDt.getLineage()) {
+					if (lineage.getName().equals(sinkDtname)) {
+						inputPortName = aip.getName();
+						break;
+					}
+				}
+				// are we done?
+				if (!inputPortName.trim().equals("")) 
+					break;
+			}
+		}
+		// if inputPortName is not set, then just pick the first one
+		if (inputPortName.trim().equals("")) {
+			inputPortName = sinkProcessor.getActivityList().get(0).getInputPorts().iterator().next().getName();
+		}
+		EventHandlingInputPort sinkPort = getSinkPort(sinkProcessor, boActivity, inputPortName, linkEditList);
 		if (sinkPort==null) {
-			throw new EditException("No input called 'input' found for Biomoby consuming service");
+			throw new EditException("No valid input called '"+inputPortName+"' found for Biomoby consuming service");
 		}
 		linkEditList.add(Tools
 				.getCreateAndConnectDatalinkEdit(
