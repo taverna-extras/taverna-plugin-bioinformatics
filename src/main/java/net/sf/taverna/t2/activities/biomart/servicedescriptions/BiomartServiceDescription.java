@@ -29,8 +29,6 @@ import net.sf.taverna.t2.activities.biomart.BiomartActivity;
 import net.sf.taverna.t2.activities.biomart.query.BiomartActivityItem;
 import net.sf.taverna.t2.servicedescriptions.ServiceDescription;
 
-import org.biomart.martservice.MartQuery;
-import org.biomart.martservice.MartServiceXMLHandler;
 import org.jdom.Element;
 
 /**
@@ -42,10 +40,14 @@ public class BiomartServiceDescription extends ServiceDescription<Element>{
 	private String url;
 	private String dataset;
 	private String location;
-	private MartQuery biomartQuery;
 	
 	private static final String BIOMART = "Biomart @ ";
+	private Element martQuery;
 	
+	public Element getMartQuery() {
+		return martQuery;
+	}
+
 	/**
 	 * @return the url
 	 */
@@ -88,34 +90,18 @@ public class BiomartServiceDescription extends ServiceDescription<Element>{
 		this.location = location;
 	}
 
-	/**
-	 * @return the biomartQuery
-	 */
-	public MartQuery getBiomartQuery() {
-		return biomartQuery;
-	}
-
-	/**
-	 * @param biomartQuery the biomartQuery to set
-	 */
-	public void setBiomartQuery(MartQuery biomartQuery) {
-		this.biomartQuery = biomartQuery;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	@Override
 	public Class<BiomartActivity> getActivityClass() {
 		return BiomartActivity.class;
 	}
 
+	public void setMartQuery(Element martQuery) {
+		this.martQuery = martQuery;
+	}
+	
 	@Override
 	public Element getActivityConfiguration() {
-		return MartServiceXMLHandler.martQueryToElement(biomartQuery, null);
+		return getMartQuery();
 	}
 
 	@Override
@@ -135,13 +121,9 @@ public class BiomartServiceDescription extends ServiceDescription<Element>{
 		return result;
 	}
 
-	@Override
-	public int hashCode() {
-		return getPath().hashCode();
-	}
 
 	@Override
-	public boolean isTemplateService() {
-		return false;
+	protected List<Object> getIdentifyingData() {
+		return Arrays.<Object>asList(getUrl(), getLocation(), getDataset());
 	}
 }

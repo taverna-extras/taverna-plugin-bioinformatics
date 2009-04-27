@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 
 import net.sf.taverna.t2.activities.biomart.query.BiomartActivityItem;
 import net.sf.taverna.t2.servicedescriptions.AbstractConfigurableServiceProvider;
+import net.sf.taverna.t2.servicedescriptions.CustomizedConfigurePanelProvider;
 import net.sf.taverna.t2.servicedescriptions.ServiceDescription;
 
 import org.biomart.martservice.MartDataset;
@@ -19,6 +20,7 @@ import org.biomart.martservice.MartQuery;
 import org.biomart.martservice.MartRegistry;
 import org.biomart.martservice.MartService;
 import org.biomart.martservice.MartServiceException;
+import org.biomart.martservice.MartServiceXMLHandler;
 import org.biomart.martservice.MartURLLocation;
 import org.jdom.Element;
 
@@ -26,8 +28,9 @@ import org.jdom.Element;
  * @author alanrw
  *
  */
-public class BiomartServiceProvider extends AbstractConfigurableServiceProvider<BiomartServiceProviderConfig>{
+public class BiomartServiceProvider extends AbstractConfigurableServiceProvider<BiomartServiceProviderConfig> {
 
+	private static final String TAVERNA = "taverna";
 	private static final String BIOMART_SERVICE = "Biomart service";
 	
 	public BiomartServiceProvider() {
@@ -42,7 +45,7 @@ public class BiomartServiceProvider extends AbstractConfigurableServiceProvider<
 		try {
 		MartService martService = MartService
 				.getMartService(getBiomartServiceLocation(url));
-		martService.setRequestId("taverna");
+		martService.setRequestId(TAVERNA);
 		MartRegistry registry = martService.getRegistry();
 		MartURLLocation[] martURLLocations = registry.getMartURLLocations();
 		for (MartURLLocation martURLLocation : martURLLocations) {
@@ -57,10 +60,10 @@ public class BiomartServiceProvider extends AbstractConfigurableServiceProvider<
 						item.setUrl(martService.getLocation());
 						item.setLocation(martURLLocation.getDisplayName());
 						item.setDataset(dataset.getName());
-						item.setTextualDescription(dataset.getDisplayName());
+						item.setDescription(dataset.getDisplayName());
 						MartQuery biomartQuery = new MartQuery(martService,
-								dataset, "taverna");
-						item.setBiomartQuery(biomartQuery);
+								dataset, TAVERNA);
+						item.setMartQuery(MartServiceXMLHandler.martQueryToElement(biomartQuery, null));
 						descriptions.add(item);
 					}
 				}
@@ -113,5 +116,7 @@ public class BiomartServiceProvider extends AbstractConfigurableServiceProvider<
 				"http://www.biomart.org/biomart/martservice"));
 		return defaults;
 	}
+
+
 
 }
