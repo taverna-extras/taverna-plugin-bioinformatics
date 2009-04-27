@@ -99,10 +99,6 @@ public class BiomobyActivity extends
 			generatePorts();
 			configureSecondaries();
 			doInit = false;
-			configurationBean.setCategory(mobyService.getCategory());
-			configurationBean
-					.setServiceType(mobyService.getServiceType() == null ? "Service"
-							: mobyService.getServiceType().getName());
 		} else {
 			configureSecondaries();
 		}

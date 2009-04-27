@@ -20,8 +20,9 @@ public class BiomobyActivityConfigurationBean {
 
 	private String authorityName="";
 	
+	@Deprecated
 	private String category = "";
-	
+	@Deprecated
 	private String serviceType = "";
 	
 	private Map<String,String> secondaries=new HashMap<String,String>();
@@ -96,40 +97,5 @@ public class BiomobyActivityConfigurationBean {
 	public void setSecondaries(Map<String,String> secondaries) {
 		this.secondaries=secondaries;
 	}
-
-	/**
-	 * Returns the category of moby service
-	 * @return the category
-	 */
-	public String getCategory() {
-		return category;
-	}
-
-	/**
-	 * Sets the category
-	 * 
-	 * @param category the category to set
-	 */
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	/**
-	 * Returns the service type for this service
-	 * @return the service type
-	 */
-	public String getServiceType() {
-		return serviceType;
-	}
-
-	/**
-	 * Sets the service type
-	 * @param serviceType the service type to set
-	 */
-	public void setServiceType(String serviceType) {
-		this.serviceType = serviceType;
-	}
-	
-	
 
 }
