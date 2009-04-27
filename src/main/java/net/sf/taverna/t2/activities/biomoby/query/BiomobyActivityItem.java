@@ -5,7 +5,6 @@
 package net.sf.taverna.t2.activities.biomoby.query;
 
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivity;
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivityConfigurationBean;
@@ -59,14 +58,12 @@ public class BiomobyActivityItem extends AbstractActivityItem {
 		bean.setAuthorityName(getAuthorityName());
 		bean.setServiceName(getServiceName());
 		bean.setMobyEndpoint(getRegistryUrl());
-		bean.setCategory(getCategory());
-		bean.setServiceType(getServiceType());
 		return bean;
 	}
 
 	@Override
 	public Icon getIcon() {
-		return new ImageIcon(BiomobyActivityItem.class.getResource("/registry.gif"));
+		return BiomobyActivityIcon.getBiomobyIcon();
 	}
 
 	@Override

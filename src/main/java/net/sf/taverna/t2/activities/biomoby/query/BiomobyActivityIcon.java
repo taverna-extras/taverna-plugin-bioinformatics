@@ -5,6 +5,7 @@
 package net.sf.taverna.t2.activities.biomoby.query;
 
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivity;
 import net.sf.taverna.t2.workbench.activityicons.ActivityIconSPI;
@@ -25,7 +26,11 @@ public class BiomobyActivityIcon implements ActivityIconSPI{
 	}
 
 	public Icon getIcon(Activity<?> activity) {
-		return new BiomobyActivityItem().getIcon();
+		return getBiomobyIcon();
+	}
+
+	public static Icon getBiomobyIcon() {
+		return new ImageIcon(BiomobyActivityItem.class.getResource("/registry.gif"));
 	}
 
 }
