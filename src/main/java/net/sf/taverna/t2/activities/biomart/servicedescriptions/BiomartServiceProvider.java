@@ -57,6 +57,7 @@ public class BiomartServiceProvider extends AbstractConfigurableServiceProvider<
 						item.setUrl(martService.getLocation());
 						item.setLocation(martURLLocation.getDisplayName());
 						item.setDataset(dataset.getName());
+						item.setTextualDescription(dataset.getDisplayName());
 						MartQuery biomartQuery = new MartQuery(martService,
 								dataset, "taverna");
 						item.setBiomartQuery(biomartQuery);

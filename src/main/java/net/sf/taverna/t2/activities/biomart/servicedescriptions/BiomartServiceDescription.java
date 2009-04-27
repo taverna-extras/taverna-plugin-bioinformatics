@@ -144,5 +144,4 @@ public class BiomartServiceDescription extends ServiceDescription<Element>{
 	public boolean isTemplateService() {
 		return false;
 	}
-
 }
