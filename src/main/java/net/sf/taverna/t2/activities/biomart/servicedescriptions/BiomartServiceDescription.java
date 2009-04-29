@@ -126,4 +126,9 @@ public class BiomartServiceDescription extends ServiceDescription<Element>{
 	protected List<Object> getIdentifyingData() {
 		return Arrays.<Object>asList(getUrl(), getLocation(), getDataset());
 	}
+	
+	@Override
+	public boolean isTemplateService() {
+		return true;
+	}
 }
