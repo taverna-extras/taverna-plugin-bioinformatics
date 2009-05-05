@@ -91,4 +91,11 @@ public class BiomobyServiceProvider extends
 		addBiomobyDialogue.setVisible(true);
 	}
 
+	@Override
+	protected List<? extends Object> getIdentifyingData() {
+		List<String> result;
+		result = Arrays.asList(getConfiguration().getEndpoint().toString());
+		return result;
+	}
+
 }
