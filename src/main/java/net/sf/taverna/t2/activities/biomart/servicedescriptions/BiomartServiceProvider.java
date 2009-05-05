@@ -117,6 +117,13 @@ public class BiomartServiceProvider extends AbstractConfigurableServiceProvider<
 		return defaults;
 	}
 
+	@Override
+	protected List<? extends Object> getIdentifyingData() {
+		List<String> result;
+		result = Arrays.asList(getConfiguration().getUrl());
+		return result;
+	}
+
 
 
 }
