@@ -130,7 +130,7 @@ public class BiomobyServiceDescription extends
 
 	@Override
 	protected List<Object> getIdentifyingData() {
-		return Arrays.<Object>asList(getNamespace(), getEndpoint(), getServiceName());
+		return Arrays.<Object>asList(getNamespace(), getEndpoint(), getAuthorityName(), getServiceName());
 	}
 
 
