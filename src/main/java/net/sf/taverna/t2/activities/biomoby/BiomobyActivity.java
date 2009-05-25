@@ -210,9 +210,6 @@ public class BiomobyActivity extends
 						}
 						String outputXML = XMLUtilities
 								.createMultipleInvokations(invocations);
-						// goes through and creates the port 'output'
-						processOutputPort(outputXML, outputMap,
-								referenceService, callback.getContext());
 						// create the other ports
 						processOutputPorts(outputXML, outputMap,
 								referenceService, callback.getContext());
@@ -245,117 +242,7 @@ public class BiomobyActivity extends
 					}
 				}
 
-				if (inputMap.containsKey("input")) {
-					// input port takes precedence over other ports
-					try {
-
-						Object input = referenceService.renderIdentifier(
-								inputMap.get("input"), String.class, callback
-										.getContext());
-
-						ActivityInputPort myInput = null;
-						for (ActivityInputPort inputPort : getInputPorts()) {
-							if (inputPort.getName().equalsIgnoreCase("input")) {
-								myInput = inputPort;
-								break;
-							}
-						}
-						if (myInput == null) {
-							callback
-									.fail("The port 'input' was not specified correctly.");
-							return;
-						}
-
-						// If port depth is 0 then the biomoby service consumes
-						// a simple and there is no processing to do as that's
-						// what we
-						// have
-						// If port depth is 1 biomoby expects a collection but
-						// we have a java List of simples - need to convert this
-						// into
-						// a biomoby collection document
-						String inputXML = null;
-
-						if (myInput.getDepth() == 0) {
-							inputXML = (String) input;
-						} else {
-							// List of strings containing simple biomoby objects
-							List simpleInputs = (List) input;
-							// Create the empty collection document
-							Element root = new Element("MOBY", mobyNS);
-							Element content = new Element("mobyContent", mobyNS);
-							root.addContent(content);
-							Element data = new Element("mobyData", mobyNS);
-							data.setAttribute("queryID", "d" + qCounter++,
-									mobyNS);
-							content.addContent(data);
-							Element collectionElement = new Element(
-									"Collection", mobyNS);
-							collectionElement.setAttribute("articleName", "",
-									mobyNS);
-							// It is this collection element that's going to
-							// acquire the simples
-							for (Iterator i = simpleInputs.iterator(); i
-									.hasNext();) {
-								String s = (String) i.next();
-								Element el = XMLUtilities.getDOMDocument(s)
-										.getRootElement();
-								Element mobyDataElement = el.getChild(
-										"mobyContent", mobyNS).getChild(
-										"mobyData", mobyNS);
-								// Remove the single 'Simple' child from this...
-								Element simpleElement = (Element) mobyDataElement
-										.getChildren().get(0);
-								// Tag the simple element onto the collection.
-								collectionElement.addContent(simpleElement
-										.detach());
-							}
-							XMLOutputter xo = new XMLOutputter(Format
-									.getPrettyFormat());
-							inputXML = xo.outputString(new Document(root));
-							// Iterate and create the collection,
-							// ....inputXML = collectionThing
-						}
-
-						// do the task and populate outputXML
-						String methodName = configurationBean.getServiceName();
-						String serviceEndpoint = endpoint.toExternalForm();
-						String outputXML = new CentralImpl(serviceEndpoint,
-								"http://biomoby.org/").call(methodName,
-								inputXML);
-						// goes through and creates the port 'output'
-						processOutputPort(outputXML, outputMap,
-								referenceService, callback.getContext());
-						// create the other ports
-						processOutputPorts(outputXML, outputMap,
-								referenceService, callback.getContext());
-
-						callback.receiveResult(outputMap, new int[0]);
-
-					} catch (ReferenceServiceException e) {
-						callback.fail("Error accessing input/output data", e);
-					} catch (MobyException ex) {
-						// a MobyException should be already reasonably
-						// formatted
-						logger
-								.error(
-										"Error invoking biomoby service for biomoby. A MobyException caught",
-										ex);
-						callback.fail(
-								"Activity failed due to problem invoking biomoby service.\n"
-										+ ex.getMessage(), ex);
-					} catch (Exception ex) {
-						// details of other exceptions will appear only in a log
-						ex.printStackTrace();
-						logger.error(
-								"Error invoking biomoby service for biomoby",
-								ex);
-						callback
-								.fail(
-										"Activity failed due to problem invoking biomoby service (see details in log)",
-										ex);
-					}
-				} else {
+				{
 					// now try other named ports
 					try {
 						String inputXML = null;
@@ -452,17 +339,7 @@ public class BiomobyActivity extends
 												wrappedSimple = XMLUtilities
 														.setQueryID(
 																wrappedSimple,
-																queryID /*
-																		 * +
-																		 * "_+_"
-																		 * +
-																		 * XMLUtilities
-																		 * .
-																		 * getQueryID
-																		 * (
-																		 * wrappedSimple
-																		 * )
-																		 */);
+																queryID );
 												list
 														.add(XMLUtilities
 																.extractMobyData(wrappedSimple));
@@ -510,15 +387,7 @@ public class BiomobyActivity extends
 															type, wrappedSimple);
 											wrappedSimple = XMLUtilities
 													.setQueryID(wrappedSimple,
-															queryID /*
-																	 * + "_+_" +
-																	 * XMLUtilities
-																	 * .
-																	 * getQueryID
-																	 * (
-																	 * wrappedSimple
-																	 * )
-																	 */);
+															queryID );
 											list
 													.add(XMLUtilities
 															.extractMobyData(wrappedSimple));
@@ -606,10 +475,6 @@ public class BiomobyActivity extends
 												mimCollection
 														.addContent(theSimple
 																.detach());
-												// mimQueryID = mimQueryID + "_"
-												// +
-												// XMLUtilities.getQueryID(
-												// invocations[j]);
 											} else {
 												// collection passed in (always
 												// 1 passed in)
@@ -856,9 +721,6 @@ public class BiomobyActivity extends
 
 						String outputXML = XMLUtilities
 								.createMultipleInvokations(invocations);
-						// goes through and creates the port 'output'
-						processOutputPort(outputXML, outputMap,
-								referenceService, callback.getContext());
 						// create the other ports
 						processOutputPorts(outputXML, outputMap,
 								referenceService, callback.getContext());
@@ -993,9 +855,9 @@ public class BiomobyActivity extends
 				}
 			}
 		}
-		addInput("input", inputDepth, true,
+		/*addInput("input", inputDepth, true,
 				new ArrayList<Class<? extends ExternalReferenceSPI>>(),
-				String.class);
+				String.class);*/
 
 		MobyData[] secondaries = this.mobyService.getSecondaryInputs();
 
@@ -1047,7 +909,7 @@ public class BiomobyActivity extends
 			}
 		}
 
-		addOutput("output", outputDepth, "text/xml");
+//		addOutput("output", outputDepth, "text/xml");
 
 	}
 
@@ -1079,129 +941,6 @@ public class BiomobyActivity extends
 
 	public MobyService getMobyService() {
 		return mobyService;
-	}
-
-	@SuppressWarnings("unchecked")
-	private void processOutputPort(String outputXML, Map outputMap,
-			ReferenceService referenceService, ReferenceContext context)
-			throws ActivityConfigurationException, JDOMException, IOException,
-			ReferenceServiceException {
-		OutputPort myOutput = null;
-		for (OutputPort outputPort : getOutputPorts()) {
-			if (outputPort.getName().equalsIgnoreCase("output"))
-				myOutput = outputPort;
-		}
-		if (myOutput == null)
-			throw new ActivityConfigurationException("output port is invalid.");
-
-		if (myOutput.getDepth() == 0) {
-			outputMap.put("output", referenceService.register(outputXML,
-					myOutput.getDepth(), true, context));
-		} else {
-			List outputList = new ArrayList();
-			// Drill into the output xml document creating
-			// a list of strings containing simple types
-			// add them to the outputList
-
-			// This is in the 'outputXML'
-			// --------------------------
-			// <?xml version="1.0" encoding="UTF-8"?>
-			// <moby:MOBY xmlns:moby="http://www.biomoby.org/moby">
-			// <moby:mobyContent>
-			// <moby:mobyData queryID='b1'>
-			// <Collection articleName="mySequenceCollection">
-			// <Simple>
-			// <Object namespace="Genbank/gi" id="163483"/>
-			// </Simple>
-			// <Simple>
-			// <Object namespace="Genbank/gi" id="244355"/>
-			// </Simple>
-			// <Simple>
-			// <Object namespace="Genbank/gi" id="533253"/>
-			// </Simple>
-			// <Simple>
-			// <Object namespace="Genbank/gi" id="745290"/>
-			// </Simple>
-			// </Collection>
-			// </moby:mobyData>
-			// </moby:mobyContent>
-			// </moby:MOBY>
-
-			// And this is what I want to create - several times:
-			// --------------------------------------------------
-			// <?xml version="1.0" encoding="UTF-8"?>
-			// <moby:MOBY xmlns:moby="http://www.biomoby.org/moby">
-			// <moby:mobyContent>
-			// <moby:mobyData queryID='a1'>
-			// <Simple articleName=''>
-			// <Object namespace="Genbank/gi" id="163483"/>
-			// </Simple>
-			// </moby:mobyData>
-			// </moby:mobyContent>
-			// </moby:MOBY>
-
-			// Create a DOM document from the resulting XML
-			SAXBuilder saxBuilder = new SAXBuilder();
-			Document doc = saxBuilder.build(new InputSource(new StringReader(
-					outputXML)));
-			Element mobyElement = doc.getRootElement();
-			Element mobyDataElement = mobyElement.getChild("mobyContent",
-					mobyNS).getChild("mobyData", mobyNS);
-
-			Element collectionElement = null;
-			try {
-				collectionElement = mobyDataElement.getChild("Collection",
-						mobyNS);
-			} catch (Exception e) {
-				// logger.warn("There was a problem processing the output
-				// port.\n" + outputXML);
-				try {
-					outputList
-							.add(new XMLOutputter(Format.getPrettyFormat())
-									.outputString(XMLUtilities
-											.createMobyDataWrapper(
-													XMLUtilities
-															.getQueryID(outputXML),
-													XMLUtilities
-															.getServiceNotesAsElement(outputXML))));
-				} catch (MobyException me) {
-					logger.debug(me);
-				}
-			}
-			if (collectionElement != null) {
-				List simpleElements = new ArrayList(collectionElement
-						.getChildren());
-				for (Iterator i = simpleElements.iterator(); i.hasNext();) {
-					Element simpleElement = (Element) i.next();
-
-					Element newRoot = new Element("MOBY", mobyNS);
-					Element newMobyContent = new Element("mobyContent", mobyNS);
-					Element serviceNotes = XMLUtilities
-							.getServiceNotesAsElement(outputXML);
-					if (serviceNotes != null)
-						newMobyContent.addContent(serviceNotes.detach());
-					newRoot.addContent(newMobyContent);
-					Element newMobyData = new Element("mobyData", mobyNS);
-					newMobyContent.addContent(newMobyData);
-					newMobyData.addContent(simpleElement.detach());
-					try {
-						XMLUtilities.setQueryID(newRoot, XMLUtilities
-								.getQueryID(outputXML)
-								+ "_+_" + XMLUtilities.getQueryID(newRoot));
-					} catch (MobyException e) {
-						newMobyData.setAttribute("queryID", "a1", mobyNS);
-					}
-					XMLOutputter xo = new XMLOutputter();
-					String outputItemString = xo.outputString(new Document(
-							newRoot));
-					outputList.add(outputItemString);
-				}
-			}
-
-			// Return the list (may be empty)
-			outputMap.put("output", referenceService.register(outputList,
-					myOutput.getDepth(), true, context));
-		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -1307,11 +1046,7 @@ public class BiomobyActivity extends
 														.createMobyDataElementWrapper(
 																simples[i],
 																XMLUtilities
-																		.getQueryID(collection)
-																/*
-																 * + "_+_s" +
-																 * qCounter++
-																 */,
+																		.getQueryID(collection),
 																serviceNotesElement));
 									}
 
@@ -1326,21 +1061,7 @@ public class BiomobyActivity extends
 																	true,
 																	context));
 								} catch (MobyException e) {
-									// TODO keep the original wrapper
 									List innerList = new ArrayList();
-									/*
-									 * // simple didnt exist, so put an empty //
-									 * mobyData String qID =
-									 * XMLUtilities.getQueryID(outputXML);
-									 * Element empty =
-									 * XMLUtilities.createMobyDataWrapper(qID,
-									 * XMLUtilities
-									 * .getServiceNotesAsElement(outputXML));
-									 * XMLOutputter output = new
-									 * XMLOutputter(Format.getPrettyFormat());
-									 * innerList
-									 * .add(output.outputString(empty));
-									 */
 									outputMap
 											.put(
 													name,
@@ -1371,22 +1092,7 @@ public class BiomobyActivity extends
 														invocations[i]);
 										innerList.add(collection);
 									} catch (MobyException e) {
-										/*
-										 * // collection didnt exist, so put an
-										 * // empty // mobyData // TODO keep the
-										 * original wrapper String qID =
-										 * XMLUtilities
-										 * .getQueryID(invocations[i]); Element
-										 * empty =
-										 * XMLUtilities.createMobyDataWrapper
-										 * (qID,
-										 * XMLUtilities.getServiceNotesAsElement
-										 * (outputXML)); XMLOutputter output =
-										 * new XMLOutputter(Format
-										 * .getPrettyFormat());
-										 * innerList.add(output
-										 * .outputString(empty));
-										 */
+										
 									}
 								}
 
@@ -1413,22 +1119,7 @@ public class BiomobyActivity extends
 																	true,
 																	context));
 								} catch (MobyException e) {
-									// TODO keep the original wrapper
 									List innerList = new ArrayList();
-									// simple didnt exist, so put an empty
-									// mobyData
-									/*
-									 * String qID =
-									 * XMLUtilities.getQueryID(outputXML);
-									 * Element empty =
-									 * XMLUtilities.createMobyDataWrapper(qID,
-									 * XMLUtilities
-									 * .getServiceNotesAsElement(outputXML));
-									 * XMLOutputter output = new
-									 * XMLOutputter(Format.getPrettyFormat());
-									 * innerList
-									 * .add(output.outputString(empty));
-									 */
 									outputMap
 											.put(
 													name,
