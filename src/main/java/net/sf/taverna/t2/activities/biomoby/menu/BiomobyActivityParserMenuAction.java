@@ -4,7 +4,6 @@ import javax.swing.Action;
 
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivity;
 import net.sf.taverna.t2.activities.biomoby.actions.MobyParserAction;
-import net.sf.taverna.t2.activities.biomoby.actions.MobyServiceDetailsAction;
 import net.sf.taverna.t2.workbench.activitytools.AbstractConfigureActivityMenuAction;
 
 public class BiomobyActivityParserMenuAction extends
