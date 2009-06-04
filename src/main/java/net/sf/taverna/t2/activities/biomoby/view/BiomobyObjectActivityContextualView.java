@@ -53,7 +53,7 @@ public class BiomobyObjectActivityContextualView extends
 				+ getConfigBean().getMobyEndpoint() + "</td></tr>";
 		html += "<tr><td>Authority</td><td>"
 				+ getConfigBean().getAuthorityName() + "</td></tr>";
-		html += "<tr><td>Service</td><td>" + getConfigBean().getServiceName()
+		html += "<tr><td>Datatype</td><td>" + getConfigBean().getServiceName()
 				+ "</td></tr>";
 		return html;
 	}
