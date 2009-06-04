@@ -65,7 +65,6 @@ public class AddUpstreamObjectEdit extends AbstractDataflowEdit {
 	public AddUpstreamObjectEdit(Dataflow dataflow, Processor sinkProcessor,
 			BiomobyObjectActivity activity) {
 		super(dataflow);
-		// TODO Auto-generated constructor stub
 		this.sinkProcessor = sinkProcessor;
 		this.activity = activity;
 	}
@@ -91,8 +90,8 @@ public class AddUpstreamObjectEdit extends AbstractDataflowEdit {
 			List<Edit<?>> editList = new ArrayList<Edit<?>>();
 			String defaultName = inputPort.getName().split("\\(")[0];
 
-			String name = net.sf.taverna.t2.workflowmodel.impl.Tools
-					.uniqueProcessorName(defaultName, dataflow);
+			String name = Tools
+					.uniqueProcessorName(inputPort.getName(), dataflow);
 
 			BiomobyObjectActivityConfigurationBean configBean = new BiomobyObjectActivityConfigurationBean();
 			configBean.setMobyEndpoint(activity.getConfiguration()

@@ -86,7 +86,7 @@ public class AddBiomobyConsumingServiceEdit extends AbstractDataflowEdit {
 	@Override
 	protected void doEditAction(DataflowImpl dataflow) throws EditException {
 		String defaultName = serviceName;
-		String name = net.sf.taverna.t2.workflowmodel.impl.Tools
+		String name = Tools
 				.uniqueProcessorName(defaultName, dataflow);
 
 		List<Edit<?>> editList = new ArrayList<Edit<?>>();

@@ -63,10 +63,7 @@ public class AddBiomobyDataTypeEdit extends AbstractDataflowEdit {
 
 		String defaultName = objectName;
 		defaultName = defaultName.split("\\(")[0];
-		String name = net.sf.taverna.t2.workflowmodel.impl.Tools
-				.uniqueProcessorName(
-						defaultName,
-						dataflow);
+		String name = Tools.uniqueProcessorName(objectName, dataflow);
 
 		BiomobyObjectActivityConfigurationBean configBean = new BiomobyObjectActivityConfigurationBean();
 		configBean.setMobyEndpoint(activity
@@ -126,8 +123,10 @@ public class AddBiomobyDataTypeEdit extends AbstractDataflowEdit {
 		linkEdit = new CompoundEdit(linkEditList);
 		linkEdit.doEdit();
 		
-		if (!(defaultName.equalsIgnoreCase("Object")|| defaultName.equalsIgnoreCase("String")
+		if (!(defaultName.equalsIgnoreCase("Object")
+				|| defaultName.equalsIgnoreCase("String")
                 || defaultName.equalsIgnoreCase("Integer")
+                || defaultName.equalsIgnoreCase("Float")
                 || defaultName.equalsIgnoreCase("DateTime"))) {
 			upstreamObjectEdit=new AddUpstreamObjectEdit(dataflow,sourceProcessor,boActivity);
 			upstreamObjectEdit.doEdit();

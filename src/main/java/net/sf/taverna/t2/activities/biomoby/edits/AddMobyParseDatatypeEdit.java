@@ -69,7 +69,6 @@ public class AddMobyParseDatatypeEdit extends AbstractDataflowEdit {
 			BiomobyActivity activity, String objectName, boolean isCollection,
 			String potentialCollectionString) {
 		super(dataflow);
-		// TODO Auto-generated constructor stub
 		this.activity = activity;
 		this.objectName = objectName;
 		this.isCollection = isCollection;
@@ -92,7 +91,7 @@ public class AddMobyParseDatatypeEdit extends AbstractDataflowEdit {
 		if (defaultName.indexOf("(") > 0)
 			defaultName = defaultName.substring(0, defaultName.indexOf("("));
 
-		String name = net.sf.taverna.t2.workflowmodel.impl.Tools
+		String name = Tools
 				.uniqueProcessorName("Parse Moby Data(" + defaultName + ")",
 						dataflow);
 
