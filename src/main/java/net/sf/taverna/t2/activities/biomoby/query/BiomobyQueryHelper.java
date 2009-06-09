@@ -20,14 +20,15 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import net.sf.taverna.raven.appconfig.ApplicationRuntime;
 import net.sf.taverna.t2.activities.biomoby.GetOntologyThread;
+import net.sf.taverna.t2.activities.biomoby.datatypedescriptions.BiomobyDatatypeDescription;
 import net.sf.taverna.t2.activities.biomoby.servicedescriptions.BiomobyServiceDescription;
 import net.sf.taverna.t2.servicedescriptions.ServiceDescriptionProvider.FindServiceDescriptionsCallBack;
 
 import org.apache.log4j.Logger;
 import org.biomoby.client.CentralDigestCachedImpl;
 import org.biomoby.client.CentralImpl;
+import org.biomoby.shared.MobyDataType;
 import org.biomoby.shared.MobyException;
-import org.biomoby.shared.MobyResourceRef;
 import org.biomoby.shared.MobyService;
 import org.w3c.dom.Document;
 
@@ -49,7 +50,7 @@ public class BiomobyQueryHelper {
 	private String remoteServiceRdfUrl = null;
 
 	private static final String CACHE_NAME = "moby-cache";
-
+	
 	private ApplicationRuntime applicationRuntime = ApplicationRuntime
 			.getInstance();
 
@@ -83,7 +84,6 @@ public class BiomobyQueryHelper {
 			log.warn("There was a problem in initializing the caching agent, therefor caching is disabled.",
 							e);
 		}
-		// getRDFLocations();
 		// now we try to speed up the loading of the datatypes ontology
 		try {
 			new GetOntologyThread(central.getRegistryEndpoint()).start();
@@ -92,41 +92,7 @@ public class BiomobyQueryHelper {
 		}
 	}
 
-	@SuppressWarnings("unused")
-	private void getRDFLocations() {
-		try {
-
-			MobyResourceRef mrr[] = central.getResourceRefs();
-			remoteDatatypeRdfUrl = null;
-			for (int x = 0; x < mrr.length; x++) {
-				MobyResourceRef ref = mrr[x];
-				if (ref.getResourceName().equals("Object")) {
-					remoteDatatypeRdfUrl = ref.getResourceLocation()
-							.toExternalForm();
-					continue;
-				}
-				if (ref.getResourceName().equals("ServiceInstance")) {
-					remoteServiceRdfUrl = ref.getResourceLocation()
-							.toExternalForm();
-					continue;
-				}
-			}
-		} catch (MobyException e) {
-			return;
-		}
-
-		log.info("Service RDF @ "
-				+ (remoteServiceRdfUrl == null ? "(not used)"
-						: remoteServiceRdfUrl)
-				+ ", "
-				+ System.getProperty("line.separator")
-				+ "\tObjects @ "
-				+ (remoteDatatypeRdfUrl == null ? "(not used)"
-						: remoteDatatypeRdfUrl));
-		return;
-	}
-
-	/**
+		/**
 	 * 
 	 * @return an ArrayList of BiomobyActivityItem
 	 * @throws MobyException
@@ -250,5 +216,51 @@ public class BiomobyQueryHelper {
 		}
 		callBack.partialResults(serviceDescriptions);
 		callBack.finished();
+	}
+	
+	public List<BiomobyDatatypeDescription> findDatatypeDescriptions() {
+		try {
+			central.updateCache(CentralDigestCachedImpl.CACHE_PART_DATATYPES);
+		} catch (MobyException ex) {
+			
+			return new ArrayList<BiomobyDatatypeDescription>();
+		}
+		MobyDataType[] datatypes;
+		try {
+			datatypes = central.getDataTypes();
+		} catch (MobyException ex) {
+			
+			return new ArrayList<BiomobyDatatypeDescription>();
+		}
+		List<BiomobyDatatypeDescription> datatypeDescriptions = new ArrayList<BiomobyDatatypeDescription>();
+		for (MobyDataType datatype : datatypes) {
+			BiomobyDatatypeDescription dataDesc = new BiomobyDatatypeDescription();
+			dataDesc.setAuthorityName(datatype.getAuthority());
+			dataDesc.setDatatypeName(datatype.getName());
+			dataDesc.setEmailContact(datatype.getEmailContact());
+			dataDesc.setEndpoint(URI.create(registryEndpoint));
+			dataDesc.setNamespace(URI.create(registryNamespace));
+			dataDesc.setParent(datatype.getParentName());
+			dataDesc.setDescription(datatype.getDescription());
+			String lsid = datatype.getLSID();
+			if (lsid != null && lsid.length() > 0) {
+				try {
+					dataDesc.setLsid(URI.create(lsid));
+				} catch (Exception e) {
+					
+				}
+			}
+			ArrayList<String> lineage = new ArrayList<String>();
+			if (datatype.getParent() == null && !datatype.getName().equals("Object")) {
+				lineage.add("Object");
+				lineage.add(datatype.getName());
+			} else
+				for (MobyDataType d : datatype.getLineage())
+					if (!d.getName().equals(datatype.getName()))
+						lineage.add(d.getName());
+			dataDesc.setLineage(lineage.toArray(new String[]{}));
+			datatypeDescriptions.add(dataDesc);
+		}
+		return datatypeDescriptions;
 	}
 }

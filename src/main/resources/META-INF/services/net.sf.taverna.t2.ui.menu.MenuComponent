@@ -1,2 +1,4 @@
 net.sf.taverna.t2.activities.biomoby.menu.BiomobyActivityDetailsMenuAction
 net.sf.taverna.t2.activities.biomoby.menu.BiomobyActivityParserMenuAction
+net.sf.taverna.t2.activities.biomoby.actions.BiomobyAdvancedMenuAction
+
