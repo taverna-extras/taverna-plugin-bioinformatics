@@ -9,7 +9,7 @@ import net.sf.taverna.t2.workbench.activitytools.AbstractConfigureActivityMenuAc
 public class BiomobyActivityDetailsMenuAction extends
 		AbstractConfigureActivityMenuAction<BiomobyActivity> {
 
-	private static final String CONFIGURE_BIOMOBY_DETAILS = "View Biomoby details";
+	private static final String CONFIGURE_BIOMOBY_DETAILS = "Browse Biomoby service details";
 
 	public BiomobyActivityDetailsMenuAction() {
 		super(BiomobyActivity.class);

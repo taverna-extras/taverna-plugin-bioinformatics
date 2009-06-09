@@ -42,10 +42,12 @@ public class MobyObjectDetailsAction extends AbstractAction {
 	private final BiomobyObjectActivity activity;
 	private final Frame owner;
 
+	private static final String MOBY_OBJECT_DETAILS_ACTION = "Datatype registry query";
+	
 	public MobyObjectDetailsAction(BiomobyObjectActivity activity, Frame owner) {
 		this.activity = activity;
 		this.owner = owner;
-		putValue(NAME, "Moby object details");
+		putValue(NAME, MOBY_OBJECT_DETAILS_ACTION);
 		
 	}
 	

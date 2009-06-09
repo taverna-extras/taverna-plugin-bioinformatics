@@ -24,10 +24,11 @@ public class MobyServiceDetailsAction extends AbstractAction {
 	private final BiomobyActivity activity;
 	private final Frame owner;
 
+	private static final String MOBY_SERVICE_DETAILS_ACTION = "Browse Biomoby service details";
 	public MobyServiceDetailsAction(BiomobyActivity activity, Frame owner) {
 		this.activity = activity;
 		this.owner = owner;
-		putValue(NAME, "Moby service details");
+		putValue(NAME, MOBY_SERVICE_DETAILS_ACTION);
 		
 	}
 
