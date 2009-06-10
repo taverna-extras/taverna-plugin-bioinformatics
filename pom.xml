@@ -53,12 +53,12 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
+<!--	<dependency>
 			<groupId>net.sf.taverna.t2.ui-impl</groupId>
 			<artifactId>activity-palette-impl</artifactId>
 			<version>${t2.ui.impl.version}</version>
 			<scope>test</scope>
-		</dependency>		
+		</dependency>  -->		
 	</dependencies>
 </project>
 
