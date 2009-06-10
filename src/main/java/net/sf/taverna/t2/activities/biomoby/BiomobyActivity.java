@@ -4,8 +4,6 @@
  ******************************************************************************/
 package net.sf.taverna.t2.activities.biomoby;
 
-import java.io.IOException;
-import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -41,14 +39,9 @@ import org.biomoby.shared.MobyPrimaryDataSimple;
 import org.biomoby.shared.MobySecondaryData;
 import org.biomoby.shared.MobyService;
 import org.biomoby.shared.Utils;
-import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.Namespace;
-import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
-import org.xml.sax.InputSource;
 
 /**
  * An Activity based on the Biomoby compliant web services. This activity
@@ -68,11 +61,6 @@ public class BiomobyActivity extends
 		AbstractAsynchronousActivity<BiomobyActivityConfigurationBean> {
 
 	private static Logger logger = Logger.getLogger(BiomobyActivity.class);
-
-	private static final Namespace mobyNS = Namespace.getNamespace("moby",
-			"http://www.biomoby.org/moby");
-
-	private static int qCounter = 0;
 
 	protected BiomobyActivityConfigurationBean configurationBean = new BiomobyActivityConfigurationBean();
 
@@ -121,13 +109,7 @@ public class BiomobyActivity extends
 				Map<String, T2Reference> outputMap = new HashMap<String, T2Reference>();
 
 				if (logger.isDebugEnabled()) {
-					logger.debug("Service " + mobyService.getUniqueName() /*
-																		 * +
-																		 * proc
-																		 * .
-																		 * getName
-																		 * ()
-																		 */);
+					logger.debug("Service " + mobyService.getUniqueName());
 					for (Iterator it = inputMap.keySet().iterator(); it
 							.hasNext();) {
 						String key = (String) it.next();
@@ -785,19 +767,13 @@ public class BiomobyActivity extends
 				throw new ActivityConfigurationException(
 						formatError("Service has malformed endpoint: '"
 								+ serviceEndpoint + "'."));
-			}
+			}		
 
 		} catch (Exception e) {
 			if (e instanceof ActivityConfigurationException) {
 				throw (ActivityConfigurationException) e;
 			}
 			throw new ActivityConfigurationException(formatError(e.toString()));
-		}
-		// here we get the wsdl, as the biomoby api assumes ...
-		try {
-			new RetrieveWsdlThread(worker, mobyService).start();
-		} catch (Exception e) {
-			/* don't care if an exception occurs here ... */
 		}
 		// here we make sure that we have downloaded the ontology for the
 		// registry that we got this service from
@@ -1321,6 +1297,13 @@ public class BiomobyActivity extends
 
 	private String executeService(String url, String serviceName, String xml)
 			throws MobyException {
+		// here we get the wsdl before calling the service, as the biomoby api assumes ...
+		try {
+			new RetrieveWsdlThread(worker, mobyService).start();
+		} catch (Exception e) {
+			/* don't care if an exception occurs here ... */
+			logger.info("Problem getting the biomoby wsdl for " + mobyService.getUniqueName() + ".\n" + e.getLocalizedMessage());
+		}
 		String serviceCategory = mobyService.getCategory();
 		if (serviceCategory.equalsIgnoreCase(MobyService.CATEGORY_MOBY)) {
 			return ExecuteMobyService.executeMobyService(url, serviceName, xml);
