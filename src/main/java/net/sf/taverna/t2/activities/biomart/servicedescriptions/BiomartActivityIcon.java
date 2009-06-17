@@ -18,77 +18,40 @@
  *  License along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
  ******************************************************************************/
-package net.sf.taverna.t2.activities.biomart.query;
+package net.sf.taverna.t2.activities.biomart.servicedescriptions;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 import net.sf.taverna.t2.activities.biomart.BiomartActivity;
-import net.sf.taverna.t2.partition.AbstractActivityItem;
+import net.sf.taverna.t2.workbench.activityicons.ActivityIconSPI;
 import net.sf.taverna.t2.workflowmodel.processor.activity.Activity;
 
-import org.biomart.martservice.MartQuery;
-import org.biomart.martservice.MartServiceXMLHandler;
+/**
+ * 
+ * @author Alex Nenadic
+ * @author Alan R Williams
+ *
+ */
+public class BiomartActivityIcon implements ActivityIconSPI{
 
-public class BiomartActivityItem extends AbstractActivityItem {
-	
-	private String url;
-	private String dataset;
-	private String location;
-	private MartQuery biomartQuery;
+	static Icon icon = null;
 
-	public String getLocation() {
-		return location;
+	public int canProvideIconScore(Activity<?> activity) {
+		if (activity.getClass().getName().equals(BiomartActivity.class.getName()))
+			return DEFAULT_ICON + 1;
+		else
+			return NO_ICON;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public String getType() {
-		return "Biomart";
-	}
-	
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public String getDataset() {
-		return dataset;
-	}
-
-	public void setDataset(String dataset) {
-		this.dataset = dataset;
-	}
-
-	@Override
-	public Object getConfigBean() {
-		return MartServiceXMLHandler.martQueryToElement(biomartQuery, null);
-	}
-
-	@Override
-	public Icon getIcon() {
-		return new ImageIcon(BiomartActivityItem.class.getResource("/biomart.png"));
-	}
-
-	@Override
-	public Activity<?> getUnconfiguredActivity() {
-		return new BiomartActivity();
-	}
-
-	protected void setMartQuery(MartQuery biomartQuery) {
-		this.biomartQuery = biomartQuery;
-	}
-
-	@Override
-	public String toString() {
-		return dataset;
+	public Icon getIcon(Activity<?> activity) {
+		return getBiomartIcon();
 	}
 	
-	
-
+	public static Icon getBiomartIcon() {
+		if (icon == null) {
+			icon = new ImageIcon(BiomartActivityIcon.class.getResource("/biomart.png"));
+		}
+		return icon;
+	}
 }

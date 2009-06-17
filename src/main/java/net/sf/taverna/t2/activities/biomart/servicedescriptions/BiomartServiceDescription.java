@@ -23,10 +23,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 
 import net.sf.taverna.t2.activities.biomart.BiomartActivity;
-import net.sf.taverna.t2.activities.biomart.query.BiomartActivityItem;
 import net.sf.taverna.t2.servicedescriptions.ServiceDescription;
 
 import org.jdom.Element;
@@ -106,7 +104,7 @@ public class BiomartServiceDescription extends ServiceDescription<Element>{
 
 	@Override
 	public Icon getIcon() {
-		return new ImageIcon(BiomartActivityItem.class.getResource("/biomart.png"));
+		return BiomartActivityIcon.getBiomartIcon();
 	}
 
 	@Override
