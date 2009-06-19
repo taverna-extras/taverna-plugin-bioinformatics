@@ -52,21 +52,22 @@ public class BiomobyServiceProvider extends
 
 	public void findServiceDescriptionsAsync(
 			FindServiceDescriptionsCallBack callBack) {
+		boolean success = true;
 		try {
 			BiomobyQueryHelper helper = new BiomobyQueryHelper(
 					getConfiguration().getEndpoint().toASCIIString(),
 					getConfiguration().getNamespace().toASCIIString());
 			helper.findServiceDescriptionsAsync(callBack);
 		} catch (MobyException ex) {
+			success = false;
 			callBack.fail("Could not connect to Biomoby endpoint "
 					+ getConfiguration().getEndpoint(), ex);
 		}
-		
-		
-		BiomobyAdvancedMenuAction.addRegistry(
-				getConfiguration().getEndpoint().toASCIIString(),
-				getConfiguration().getNamespace().toASCIIString());
-		
+		if (success)
+			BiomobyAdvancedMenuAction.addRegistry(
+					getConfiguration().getEndpoint().toASCIIString(),
+					getConfiguration().getNamespace().toASCIIString());
+			
 		// here we add a listener for events regarding BiomobyServiceProvider
 		// TODO should find a better place for this so that we dont have to call addRegistry without
 		// listening for the add provider event
