@@ -90,6 +90,9 @@ public class BiomobyQueryHelper {
 		} catch (Exception e) {
 			/* don't care if an exception occurs here ... */
 		}
+		// just call this to ensure that the registry is valid
+		// throws exception if it isnt
+		central.getResourceRefs();
 	}
 
 		/**
