@@ -202,15 +202,20 @@ public class BiomobyObjectActionHelper  {
 				// show the progress bar
 				
 			    } else {
-				// start our search
-				setNamespaces(null);
-				setUpProgressBar("Getting BioMOBY details for " + activity.getConfiguration().getServiceName() + " ...");
-				getSemanticServiceTree();
+			    	// start our search
+			    	setNamespaces(null);
+			    	setUpProgressBar("Getting BioMOBY details for " + activity.getConfiguration().getServiceName() + " ...");
+			    	getSemanticServiceTree();
 			    }
 			} else {
-			    // start our search
-			    setNamespaces(null);
+				// search only for those services that consume the correct namespaces
+				if (this.action != null && this.action.getNamespaces() != null) {
+					setNamespaces(this.action.getNamespaces());
+				} else {
+					setNamespaces(null);
+				}
 			    setUpProgressBar("Getting BioMOBY details for " + activity.getConfiguration().getServiceName() + " ...");
+			    // start our search
 			    getSemanticServiceTree();
 			}
 			
