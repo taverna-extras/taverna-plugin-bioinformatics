@@ -9,7 +9,7 @@
 	<groupId>org.biomart</groupId>
 	<artifactId>martservice</artifactId>
 	<name>MartService</name>
-	<version>0.7.2</version>
+	<version>0.7.3-SNAPSHOT</version>
 	<description>Biomart webservice API</description>
 	<developers>
 		<developer>
@@ -109,9 +109,9 @@
 		</dependency>
 	</dependencies>
 	<scm>
-		<connection>scm:svn:http://taverna.googlecode.com/svn/taverna/utils/org.biomart.martservice/tags/martservice-0.7.2</connection>
-		<developerConnection>scm:svn:https://taverna.googlecode.com/svn/taverna/utils/org.biomart.martservice/tags/martservice-0.7.2</developerConnection>
-		<url>http://code.google.com/p/taverna/source/browse/#svn/taverna/utils/org.biomart.martservice/tags/martservice-0.7.2</url>
+		<connection>scm:svn:http://taverna.googlecode.com/svn/taverna/utils/org.biomart.martservice/trunk/</connection>
+		<developerConnection>scm:svn:https://taverna.googlecode.com/svn/taverna/utils/org.biomart.martservice/trunk/</developerConnection>
+		<url>http://code.google.com/p/taverna/source/browse/#svn/taverna/utils/org.biomart.martservice/trunk/</url>
 	</scm>
 	<reporting>
 		<plugins>
