@@ -213,7 +213,7 @@ public class BiomobyActivity extends
 
 					} catch (Exception ex) {
 						// details of other exceptions will appear only in a log
-						ex.printStackTrace();
+//						ex.printStackTrace();
 						logger.error(
 								"Error invoking biomoby service for biomoby",
 								ex);
@@ -724,7 +724,7 @@ public class BiomobyActivity extends
 
 					} catch (Exception ex) {
 						// details of other exceptions will appear only in a log
-						ex.printStackTrace();
+//						ex.();
 						logger.error(
 								"Error invoking biomoby service for biomoby",
 								ex);

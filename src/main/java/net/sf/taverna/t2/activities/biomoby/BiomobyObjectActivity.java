@@ -221,7 +221,7 @@ public class BiomobyObjectActivity extends AbstractAsynchronousActivity<BiomobyO
 						callback.receiveResult(outputMap, new int[0]);						
 					} catch (Exception ex) {
 						// details of other exceptions will appear only in a log
-						ex.printStackTrace();
+//						ex.printStackTrace();
 						logger.error("Error creating biomoby object for biomoby", ex);
 						callback.fail("Activity failed due to problem creating biomoby object (see details in log)", ex);
 					}
@@ -325,7 +325,7 @@ public class BiomobyObjectActivity extends AbstractAsynchronousActivity<BiomobyO
 						callback.receiveResult(outputMap, new int[0]);
 					} catch (Exception ex) {
 						// details of other exceptions will appear only in a log
-						ex.printStackTrace();
+//						ex.printStackTrace();
 						logger.error("Error creating biomoby object for biomoby", ex);
 						callback.fail("Activity failed due to problem creating biomoby object (see details in log)", ex);
 					}
