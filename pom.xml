@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>net.sf.taverna.t2</groupId>
 		<artifactId>activities</artifactId>
-		<version>0.7-SNAPSHOT</version>
+		<version>0.7</version>
 	</parent>
 	<groupId>net.sf.taverna.t2.activities</groupId>
 	<artifactId>biomart-activity</artifactId>
@@ -18,35 +18,19 @@
 		<dependency>
 			<groupId>net.sf.taverna.t2.core</groupId>
 			<artifactId>workflowmodel-api</artifactId>
-			<version>0.6</version>
+			<version>${t2.core.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.taverna.t2.core</groupId>
 			<artifactId>reference-api</artifactId>
-			<version>0.6</version>
+			<version>${t2.core.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.taverna.t2.activities</groupId>
 			<artifactId>activity-test-utils</artifactId>
-			<version>0.7-SNAPSHOT</version>
+			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<!--<dependency>
-			<groupId>org.biomoby</groupId>
-			<artifactId>jmoby</artifactId>
-			<version>1.1.1-taverna</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.biomoby</groupId>
-					<artifactId>taverna-for-moby</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>-->
-		<!--<dependency>
-			<groupId>org.biomoby</groupId>
-			<artifactId>jmoby-dashboard</artifactId>
-			<version>1.1.0-taverna-1</version>
-		</dependency>-->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
