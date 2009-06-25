@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>net.sf.taverna.t2</groupId>
 		<artifactId>activities</artifactId>
-		<version>0.8-SNAPSHOT</version>
+		<version>0.8</version>
 	</parent>
 	<groupId>net.sf.taverna.t2.activities</groupId>
 	<artifactId>biomart-activity</artifactId>
@@ -13,7 +13,7 @@
 		<dependency>
 			<groupId>org.biomart</groupId>
 			<artifactId>martservice</artifactId>
-			<version>0.7.2</version>
+			<version>${org.biomart.martservice.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.taverna.t2.core</groupId>
