@@ -36,9 +36,11 @@ public class BiomartActivityConfigurationAction extends ActivityConfigurationAct
 
 	private static final long serialVersionUID = 3782223454010961660L;
 	private final Frame owner;
+	public static final String CONFIGURE_BIOMART = "Configure Biomart query";
 
 	public BiomartActivityConfigurationAction(BiomartActivity activity,Frame owner) {
 		super(activity);
+		putValue(Action.NAME, CONFIGURE_BIOMART);
 		this.owner = owner;
 	}
 

@@ -9,8 +9,6 @@ import net.sf.taverna.t2.workbench.activitytools.AbstractConfigureActivityMenuAc
 public class BiomartConfigurationMenuAction extends
 AbstractConfigureActivityMenuAction<BiomartActivity>{
 
-	private static final String CONFIGURE_BIOMART = "Configure Biomart query";
-
 	public BiomartConfigurationMenuAction() {
 		super(BiomartActivity.class);
 	}
@@ -18,7 +16,7 @@ AbstractConfigureActivityMenuAction<BiomartActivity>{
 	@Override
 	protected Action createAction() {
 		BiomartActivityConfigurationAction configAction = new BiomartActivityConfigurationAction(findActivity(), getParentFrame());
-		configAction.putValue(Action.NAME, CONFIGURE_BIOMART);
+		configAction.putValue(Action.NAME, BiomartActivityConfigurationAction.CONFIGURE_BIOMART);
 		addMenuDots(configAction);
 		return configAction;
 	}
