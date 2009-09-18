@@ -42,7 +42,7 @@ public class BiomobyActivityConfigurationAction
 	public void actionPerformed(ActionEvent arg0) {
 		JComponent component = getActivity().getParameterTable().scrollable();
 		
-		final HelpEnabledDialog dialog = new HelpEnabledDialog(owner, "BioMoby Activity Configuration", true, null);
+		final HelpEnabledDialog dialog = new HelpEnabledDialog(owner, getRelativeName(), true, null);
 		
 		dialog.getContentPane().add(component);
 		dialog.pack();
