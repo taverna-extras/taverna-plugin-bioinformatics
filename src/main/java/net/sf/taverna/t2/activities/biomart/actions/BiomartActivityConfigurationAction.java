@@ -47,7 +47,7 @@ public class BiomartActivityConfigurationAction extends ActivityConfigurationAct
 	@SuppressWarnings("serial")
 	public void actionPerformed(ActionEvent action) {
 		final BiomartConfigurationPanel configurationPanel = new BiomartConfigurationPanel(getActivity().getConfiguration());
-		final HelpEnabledDialog dialog = new HelpEnabledDialog(owner, "Biomart Activity Configuration", true, null);
+		final HelpEnabledDialog dialog = new HelpEnabledDialog(owner, getRelativeName(), true, null);
 		
 		Action okAction = new AbstractAction("OK") {
 
