@@ -49,8 +49,8 @@ public class BiomartConfigurationPanel extends JPanel {
 	private static final long serialVersionUID = 1884045346293327621L;
 	
 	private Element bean;
-	private JButton okButton;
-	private JButton cancelButton;
+	private JButton applyButton;
+	private JButton closeButton;
 
 	private MartQuery biomartQuery;
 
@@ -62,8 +62,8 @@ public class BiomartConfigurationPanel extends JPanel {
 	private void initialise() {
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		
-		okButton=new JButton("OK");
-		cancelButton=new JButton("Cancel");
+		applyButton=new JButton("Apply");
+		closeButton=new JButton("Close");
 		
 		biomartQuery = MartServiceXMLHandler.elementToMartQuery(bean, null);
 		MartService service = biomartQuery.getMartService();
@@ -95,8 +95,8 @@ public class BiomartConfigurationPanel extends JPanel {
 	private JPanel buttonBar() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		panel.add(cancelButton);
-		panel.add(okButton);
+		panel.add(applyButton);
+		panel.add(closeButton);
 		return panel;
 	}
 
@@ -105,10 +105,10 @@ public class BiomartConfigurationPanel extends JPanel {
 	}
 
 	public void setOkAction(Action okAction) {
-		okButton.setAction(okAction);
+		applyButton.setAction(okAction);
 	}
 
 	public void setCancelAction(Action cancelAction) {
-		cancelButton.setAction(cancelAction);
+		closeButton.setAction(cancelAction);
 	}
 }

@@ -22,9 +22,12 @@ package net.sf.taverna.t2.activities.biomart.actions;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JDialog;
 
 import net.sf.taverna.t2.activities.biomart.BiomartActivity;
 import net.sf.taverna.t2.workbench.helper.HelpEnabledDialog;
@@ -46,33 +49,44 @@ public class BiomartActivityConfigurationAction extends ActivityConfigurationAct
 
 	@SuppressWarnings("serial")
 	public void actionPerformed(ActionEvent action) {
+		JDialog currentDialog = ActivityConfigurationAction.getDialog(getActivity());
+		if (currentDialog != null) {
+			currentDialog.toFront();
+			return;
+		}
+
 		final BiomartConfigurationPanel configurationPanel = new BiomartConfigurationPanel(getActivity().getConfiguration());
-		final HelpEnabledDialog dialog = new HelpEnabledDialog(owner, getRelativeName(), true, null);
+		final HelpEnabledDialog dialog = new HelpEnabledDialog((Frame) null, getRelativeName(), false, null);
 		
-		Action okAction = new AbstractAction("OK") {
+		Action applyAction = new AbstractAction("Apply") {
 
 			public void actionPerformed(ActionEvent arg0) {
 				Element query = configurationPanel.getQuery();
 				configureActivity(query);
-				dialog.setVisible(false);
 			}
 			
 		};
-		Action cancelAction = new AbstractAction("Cancel") {
+		Action closeAction = new AbstractAction("Close") {
 
 			public void actionPerformed(ActionEvent e) {
-				dialog.setVisible(false);
+            	ActivityConfigurationAction.clearDialog(dialog);  
 			}
 			
 		};
 
-		configurationPanel.setOkAction(okAction);
-		configurationPanel.setCancelAction(cancelAction);
+		configurationPanel.setOkAction(applyAction);
+		configurationPanel.setCancelAction(closeAction);
 		
 		dialog.getContentPane().add(configurationPanel);
 		dialog.pack();
-		dialog.setModal(true);
-		dialog.setVisible(true);
+		dialog.addWindowListener(new WindowAdapter() {
+
+			public void windowClosing(WindowEvent e) {
+				ActivityConfigurationAction.clearDialog(dialog);
+			}
+		});
+		ActivityConfigurationAction.setDialog(getActivity(), dialog);
+		
 	} 
 
 }
