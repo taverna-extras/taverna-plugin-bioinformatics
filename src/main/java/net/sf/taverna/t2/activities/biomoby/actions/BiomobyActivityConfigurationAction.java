@@ -4,11 +4,20 @@
  ******************************************************************************/
 package net.sf.taverna.t2.activities.biomoby.actions;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Map;
 
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
 
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivity;
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivityConfigurationBean;
@@ -40,15 +49,47 @@ public class BiomobyActivityConfigurationAction
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
+		JDialog currentDialog = ActivityConfigurationAction.getDialog(getActivity());
+		if (currentDialog != null) {
+			currentDialog.toFront();
+			return;
+		}
+		JPanel panel = new JPanel(new BorderLayout());
+		if (getActivity().getParameterTable() == null) {
+			return;
+		}
 		JComponent component = getActivity().getParameterTable().scrollable();
 		
-		final HelpEnabledDialog dialog = new HelpEnabledDialog(owner, getRelativeName(), true, null);
+		final HelpEnabledDialog dialog = new HelpEnabledDialog((Frame) null, getRelativeName(), false, null);
 		
-		dialog.getContentPane().add(component);
+		panel.add(component, BorderLayout.NORTH);
+		
+		JButton closeButton = new JButton(new AbstractAction() {
+
+			public void actionPerformed(ActionEvent e) {
+				BiomobyActivity activity = getActivity();
+				configureActivity(activity);
+				ActivityConfigurationAction.clearDialog(activity);
+			}
+		});
+
+		closeButton.setText("Close");
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		buttonPanel.add(closeButton);
+		panel.add(buttonPanel, BorderLayout.SOUTH);
+		dialog.getContentPane().add(panel);
 		dialog.pack();
-		dialog.setModal(true);
-		dialog.setVisible(true);
-		
+		dialog.addWindowListener(new WindowAdapter() {
+
+			public void windowClosing(WindowEvent e) {
+				configureActivity(getActivity());
+				ActivityConfigurationAction.clearDialog(dialog);
+			}
+		});
+		ActivityConfigurationAction.setDialog(getActivity(), dialog);		
+	}
+
+	private void configureActivity(BiomobyActivity activity) {
 		BiomobyActivityConfigurationBean bean = getActivity().getConfiguration();
 		Map<String,String> secondaries = bean.getSecondaries();
 		ParametersTable table = getActivity().getParameterTable();
@@ -76,5 +117,9 @@ public class BiomobyActivityConfigurationAction
 		}
 		
 	}
-
+	
+	public boolean isEnabled() {
+		BiomobyActivity activity = (BiomobyActivity)getActivity();
+		return (activity.getMobyService() != null && activity.containsSecondaries());
+	}
 }
