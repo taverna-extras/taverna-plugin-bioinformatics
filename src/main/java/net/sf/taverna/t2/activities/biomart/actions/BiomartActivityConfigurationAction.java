@@ -32,6 +32,7 @@ import javax.swing.JDialog;
 import net.sf.taverna.t2.activities.biomart.BiomartActivity;
 import net.sf.taverna.t2.workbench.helper.HelpEnabledDialog;
 import net.sf.taverna.t2.workbench.ui.actions.activity.ActivityConfigurationAction;
+import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ActivityConfigurationDialog;
 
 import org.jdom.Element;
 
@@ -49,44 +50,17 @@ public class BiomartActivityConfigurationAction extends ActivityConfigurationAct
 
 	@SuppressWarnings("serial")
 	public void actionPerformed(ActionEvent action) {
-		JDialog currentDialog = ActivityConfigurationAction.getDialog(getActivity());
+		ActivityConfigurationDialog currentDialog = ActivityConfigurationAction.getDialog(getActivity());
 		if (currentDialog != null) {
 			currentDialog.toFront();
 			return;
 		}
 
-		final BiomartConfigurationPanel configurationPanel = new BiomartConfigurationPanel(getActivity().getConfiguration());
-		final HelpEnabledDialog dialog = new HelpEnabledDialog((Frame) null, getRelativeName(), false, null);
+		final BiomartConfigurationPanel configurationPanel = new BiomartConfigurationPanel(getActivity());
+		final ActivityConfigurationDialog<BiomartActivity, Element> dialog =
+			new ActivityConfigurationDialog<BiomartActivity, Element>(getActivity(), configurationPanel);
 		
-		Action applyAction = new AbstractAction("Apply") {
-
-			public void actionPerformed(ActionEvent arg0) {
-				Element query = configurationPanel.getQuery();
-				configureActivity(query);
-			}
-			
-		};
-		Action closeAction = new AbstractAction("Close") {
-
-			public void actionPerformed(ActionEvent e) {
-            	ActivityConfigurationAction.clearDialog(dialog);  
-			}
-			
-		};
-
-		configurationPanel.setOkAction(applyAction);
-		configurationPanel.setCancelAction(closeAction);
-		
-		dialog.getContentPane().add(configurationPanel);
-		dialog.pack();
-		dialog.addWindowListener(new WindowAdapter() {
-
-			public void windowClosing(WindowEvent e) {
-				ActivityConfigurationAction.clearDialog(dialog);
-			}
-		});
-		ActivityConfigurationAction.setDialog(getActivity(), dialog);
-		
-	} 
+		ActivityConfigurationAction.setDialog(getActivity(), dialog);	
+	}
 
 }

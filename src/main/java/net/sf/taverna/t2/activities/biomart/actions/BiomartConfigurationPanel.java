@@ -20,17 +20,15 @@
  ******************************************************************************/
 package net.sf.taverna.t2.activities.biomart.actions;
 
-import java.awt.FlowLayout;
 import java.io.File;
 
-import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import net.sf.taverna.raven.appconfig.ApplicationRuntime;
+import net.sf.taverna.t2.activities.biomart.BiomartActivity;
+import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ActivityConfigurationPanel;
 
 import org.apache.log4j.Logger;
 import org.biomart.martservice.MartQuery;
@@ -41,31 +39,34 @@ import org.biomart.martservice.config.QueryConfigController;
 import org.biomart.martservice.config.ui.MartServiceQueryConfigUIFactory;
 import org.biomart.martservice.config.ui.QueryConfigUIFactory;
 import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 
-public class BiomartConfigurationPanel extends JPanel {
+public class BiomartConfigurationPanel extends ActivityConfigurationPanel<BiomartActivity, Element> {
 	private static Logger logger = Logger
 			.getLogger(BiomartConfigurationPanel.class);
 	
 	private static final long serialVersionUID = 1884045346293327621L;
 	
-	private Element bean;
-	private JButton applyButton;
-	private JButton closeButton;
+	private Element configuration;
+	private String configurationString;
 
 	private MartQuery biomartQuery;
 
-	public BiomartConfigurationPanel(Element bean) {
-		this.bean = bean;
+	private BiomartActivity activity;
+	
+	private static XMLOutputter outputter = new XMLOutputter();
+
+	public BiomartConfigurationPanel(BiomartActivity activity) {
+		this.activity = activity;
 		initialise();
 	}
 
 	private void initialise() {
+		this.configuration = activity.getConfiguration();
+		this.configurationString = outputter.outputString(this.configuration);
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		
-		applyButton=new JButton("Apply");
-		closeButton=new JButton("Close");
-		
-		biomartQuery = MartServiceXMLHandler.elementToMartQuery(bean, null);
+		biomartQuery = MartServiceXMLHandler.elementToMartQuery(configuration, null);
 		MartService service = biomartQuery.getMartService();
 		
 		File homeRoot=ApplicationRuntime.getInstance().getApplicationHomeDir();
@@ -83,32 +84,44 @@ public class BiomartConfigurationPanel extends JPanel {
 					service, controller, biomartQuery.getMartDataset());
 			add(queryConfigUIFactory.getDatasetConfigUI());
 			add(Box.createGlue());
-			add(buttonBar());
 		} catch (MartServiceException e) {
 			add(new JLabel("Error reading configuration properties"));
 			add(new JLabel(e.getMessage()));
 			add(Box.createGlue());
 		}
-		
+		this.validate();
 	}
 	
-	private JPanel buttonBar() {
-		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		panel.add(applyButton);
-		panel.add(closeButton);
-		return panel;
-	}
-
 	public Element getQuery() {
 		return MartServiceXMLHandler.martQueryToElement(biomartQuery, null);
 	}
 
-	public void setOkAction(Action okAction) {
-		applyButton.setAction(okAction);
+	@Override
+	public Element getConfiguration() {
+		return configuration;
 	}
 
-	public void setCancelAction(Action cancelAction) {
-		closeButton.setAction(cancelAction);
+	@Override
+	public boolean isConfigurationChanged() {
+		String queryString = outputter.outputString(getQuery());
+		return !queryString.equals(configurationString);
+	}
+
+	@Override
+	public void noteConfiguration() {
+		configuration = (Element) getQuery().clone();
+		configurationString = outputter.outputString(configuration);
+	}
+
+	@Override
+	public void refreshConfiguration() {
+		removeAll();
+		initialise();
+	}
+
+	@Override
+	public boolean checkValues() {
+		// TODO Not yet done
+		return true;
 	}
 }
