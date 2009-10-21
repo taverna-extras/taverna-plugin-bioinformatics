@@ -11,6 +11,9 @@
 	<name>MartService</name>
 	<version>0.7.3-SNAPSHOT</version>
 	<description>Biomart webservice API</description>
+	<properties>
+		<t2.lang.version>0.6-SNAPSHOT</t2.lang.version>
+	</properties>
 	<developers>
 		<developer>
 			<id>witherd5</id>
@@ -106,6 +109,11 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.12</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.lang</groupId>
+			<artifactId>ui</artifactId>
+			<version>${t2.lang.version}</version>
 		</dependency>
 	</dependencies>
 	<scm>
