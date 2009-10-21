@@ -82,7 +82,6 @@ import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.SwingConstants;
@@ -92,6 +91,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
+import net.sf.taverna.t2.lang.ui.DialogTextArea;
 
 import org.biomart.martservice.DatasetLink;
 import org.biomart.martservice.MartDataset;
@@ -1493,7 +1494,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 				} catch (MartServiceException e) {
 					e.printStackTrace();
-					JTextArea textArea = new JTextArea();
+					DialogTextArea textArea = new DialogTextArea();
 					textArea
 							.append("Error while fetching dataset configuration\n\n");
 					textArea.append(e.getMessage());
@@ -1501,7 +1502,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 					inputPanel.add(textArea);
 				} catch (Exception e) {
 					e.printStackTrace();
-					JTextArea textArea = new JTextArea();
+					DialogTextArea textArea = new DialogTextArea();
 					textArea
 							.append("Error while generating the Query Editor\n\n");
 					textArea.append(e.toString());
@@ -1987,7 +1988,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 		private JComboBox comboBox;
 
-		private JTextArea textArea;
+		private DialogTextArea textArea;
 
 		private Map<String, QueryComponent> componentMap = new HashMap<String, QueryComponent>();
 
@@ -2077,7 +2078,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 				}
 			});
 
-			textArea = new JTextArea();
+			textArea = new DialogTextArea();
 			textArea.getDocument().addDocumentListener(new DocumentListener() {
 				public void changedUpdate(DocumentEvent e) {
 				}
@@ -2571,7 +2572,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 												});
 
 							} catch (MartServiceException e2) {
-								JTextArea textArea = new JTextArea();
+								DialogTextArea textArea = new DialogTextArea();
 								textArea
 										.append("Error while fetching dataset configuration\n\n");
 								textArea.append(e2.getMessage());
@@ -2668,7 +2669,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 						}
 					} catch (MartServiceException e) {
-						JTextArea textArea = new JTextArea();
+						DialogTextArea textArea = new DialogTextArea();
 						textArea
 								.append("Error while fetching dataset links\n\n");
 						textArea.append(e.getMessage());
