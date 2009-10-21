@@ -15,9 +15,8 @@ import javax.swing.ImageIcon;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
-
+import net.sf.taverna.t2.lang.ui.DialogTextArea;
 
 /**
  * @author Eddie Kawas
@@ -28,7 +27,7 @@ public class MobyPanel extends JPanel {
 
 	
 	private static final long serialVersionUID = 1L;
-	private JTextArea textArea = null;
+	private DialogTextArea textArea = null;
 	private String text = "";
 	private String name = "";
 	private JLabel jLabel = new JLabel();
@@ -64,11 +63,11 @@ public class MobyPanel extends JPanel {
 	/**
 	 * This method initializes jTextArea	
 	 * 	
-	 * @return javax.swing.JTextArea	
+	 * @return DialogTextArea	
 	 */    
-	private JTextArea getTextArea() {
+	private DialogTextArea getTextArea() {
 		if (textArea == null) {
-			textArea = new JTextArea();
+			textArea = new DialogTextArea();
 		}
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
@@ -83,7 +82,7 @@ public class MobyPanel extends JPanel {
 	public void setText(String text) {
 	    this.text = text;
 	    if (textArea == null) {
-			textArea = new JTextArea(this.text);
+			textArea = new DialogTextArea(this.text);
 		}
 	    textArea.setText(text);
 	}
