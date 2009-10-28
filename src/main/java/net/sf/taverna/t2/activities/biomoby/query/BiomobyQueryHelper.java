@@ -218,6 +218,7 @@ public class BiomobyQueryHelper {
 			serviceDescriptions.add(serviceDesc);
 		}
 		callBack.partialResults(serviceDescriptions);
+		callBack.partialResults(findDatatypeDescriptions());
 		callBack.finished();
 	}
 	
