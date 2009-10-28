@@ -25,6 +25,7 @@ package net.sf.taverna.t2.activities.biomoby.edits;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.taverna.raven.log.Log;
 import net.sf.taverna.t2.activities.biomoby.BiomobyObjectActivity;
 import net.sf.taverna.t2.activities.biomoby.BiomobyObjectActivityConfigurationBean;
 import net.sf.taverna.t2.workflowmodel.CompoundEdit;
@@ -50,14 +51,14 @@ import net.sf.taverna.t2.workflowmodel.utils.Tools;
  * 
  */
 public class AddUpstreamObjectEdit extends AbstractDataflowEdit {
+	
+	private static Log logger = Log.getLogger(AddUpstreamObjectEdit.class);
 
 	private final Processor sinkProcessor;
 	private final BiomobyObjectActivity activity;
 	private Edits edits = EditsRegistry.getEdits();
 
-	private List<Edit<?>> compoundEdits = new ArrayList<Edit<?>>();
-	private List<Edit<?>> linkEdits = new ArrayList<Edit<?>>();
-	private Edit<?> upstreamObjectEdit;
+	private List<Edit<?>> subEdits = new ArrayList<Edit<?>>();
 
 	/**
 	 * @param dataflow
@@ -78,6 +79,7 @@ public class AddUpstreamObjectEdit extends AbstractDataflowEdit {
 	 */
 	@Override
 	protected void doEditAction(DataflowImpl dataflow) throws EditException {
+		subEdits.clear();
 
 		for (InputPort inputPort : activity.getInputPorts()) {
 			// ignore article name, id, namespace, value
@@ -117,7 +119,7 @@ public class AddUpstreamObjectEdit extends AbstractDataflowEdit {
 			editList.add(edits.getAddProcessorEdit(dataflow, sourceProcessor));
 
 			CompoundEdit compoundEdit = new CompoundEdit(editList);
-			compoundEdits.add(compoundEdit);
+			subEdits.add(compoundEdit);
 			compoundEdit.doEdit();
 
 			
@@ -129,15 +131,16 @@ public class AddUpstreamObjectEdit extends AbstractDataflowEdit {
 			linkEditList.add(Tools.getCreateAndConnectDatalinkEdit(dataflow,
 					sourcePort, sinkPort));
 			CompoundEdit linkEdit = new CompoundEdit(linkEditList);
-			linkEdits.add(linkEdit);
+			subEdits.add(linkEdit);
 			linkEdit.doEdit();
 
 			if (!(defaultName.equalsIgnoreCase("Object")
 					|| name.equalsIgnoreCase("String")
 					|| name.equalsIgnoreCase("Integer") || name
 					.equalsIgnoreCase("DateTime"))) {
-				upstreamObjectEdit = new AddUpstreamObjectEdit(dataflow,
+				Edit upstreamObjectEdit = new AddUpstreamObjectEdit(dataflow,
 						sourceProcessor, boActivity);
+				subEdits.add(upstreamObjectEdit);
 				upstreamObjectEdit.doEdit();
 			}
 		}
@@ -153,22 +156,13 @@ public class AddUpstreamObjectEdit extends AbstractDataflowEdit {
 	 */
 	@Override
 	protected void undoEditAction(DataflowImpl dataflow) {
-		if (linkEdits != null && linkEdits.size() > 0) {
-			for (int i = linkEdits.size() - 1; i >= 0; i--) {
-				Edit<?> edit = linkEdits.get(i);
+		if (subEdits != null && subEdits.size() > 0) {
+			for (int i = subEdits.size() - 1; i >= 0; i--) {
+				Edit<?> edit = subEdits.get(i);
 				if (edit.isApplied())
 					edit.undo();
 			}
 		}
-		
-		if (compoundEdits != null && compoundEdits.size() > 0) {
-			for (int i = compoundEdits.size() - 1; i >= 0; i--) {
-				Edit<?> edit = compoundEdits.get(i);
-				if (edit.isApplied())
-					edit.undo();
-			}
-		}
-		
 		
 
 	}
