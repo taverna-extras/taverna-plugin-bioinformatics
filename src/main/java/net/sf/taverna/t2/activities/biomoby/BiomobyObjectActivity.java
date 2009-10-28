@@ -364,6 +364,9 @@ public class BiomobyObjectActivity extends AbstractAsynchronousActivity<BiomobyO
     }
 
     private void generatePorts() {
+    	removeInputs();
+    	removeOutputs();
+    	
     	//inputs
 		addInput("namespace", 0, true,
 				new ArrayList<Class<? extends ExternalReferenceSPI>>(),
