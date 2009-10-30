@@ -25,18 +25,11 @@ import java.util.List;
 
 import javax.swing.Icon;
 
-import net.sf.taverna.t2.activities.biomoby.actions.BiomobyAdvancedMenuAction;
 import net.sf.taverna.t2.activities.biomoby.query.BiomobyActivityIcon;
 import net.sf.taverna.t2.activities.biomoby.query.BiomobyQueryHelper;
 import net.sf.taverna.t2.activities.biomoby.ui.AddBiomobyDialogue;
-import net.sf.taverna.t2.lang.observer.Observable;
-import net.sf.taverna.t2.lang.observer.Observer;
 import net.sf.taverna.t2.servicedescriptions.AbstractConfigurableServiceProvider;
 import net.sf.taverna.t2.servicedescriptions.CustomizedConfigurePanelProvider;
-import net.sf.taverna.t2.servicedescriptions.ServiceDescriptionRegistry;
-import net.sf.taverna.t2.servicedescriptions.events.RemovedProviderEvent;
-import net.sf.taverna.t2.servicedescriptions.events.ServiceDescriptionRegistryEvent;
-import net.sf.taverna.t2.servicedescriptions.impl.ServiceDescriptionRegistryImpl;
 
 import org.biomoby.client.CentralImpl;
 import org.biomoby.shared.MobyException;
@@ -59,33 +52,10 @@ public class BiomobyServiceProvider extends
 					getConfiguration().getEndpoint().toASCIIString(),
 					getConfiguration().getNamespace().toASCIIString());
 			helper.findServiceDescriptionsAsync(callBack);
-			// if it gets this far, the registry should be valid
-			BiomobyAdvancedMenuAction.addRegistry(
-					getConfiguration().getEndpoint().toASCIIString(),
-					getConfiguration().getNamespace().toASCIIString());
 		} catch (MobyException ex) {
 			callBack.fail("Could not connect to Biomoby endpoint "
 					+ getConfiguration().getEndpoint(), ex);
 		}
-		
-		// here we add a listener for events regarding BiomobyServiceProvider
-		// listening for the remove provider event
-		ServiceDescriptionRegistry serviceReg = ServiceDescriptionRegistryImpl.getInstance();
-		serviceReg.addObserver(new Observer<ServiceDescriptionRegistryEvent>(){
-			public void notify(
-					Observable<ServiceDescriptionRegistryEvent> subject,
-					ServiceDescriptionRegistryEvent event) throws Exception {
-				// check for removed provider events
-				if (event instanceof RemovedProviderEvent) {
-					if (((RemovedProviderEvent) event).getProvider() instanceof BiomobyServiceProvider) {
-						BiomobyServiceProvider bsp = (BiomobyServiceProvider) ((RemovedProviderEvent) event).getProvider();
-						// remove our menu item
-						BiomobyAdvancedMenuAction.removeRegistry(
-								bsp.getConfiguration().getEndpoint().toASCIIString(),
-								bsp.getConfiguration().getNamespace().toASCIIString());
-					}
-				}
-			}});
 	}
 
 	@Override
