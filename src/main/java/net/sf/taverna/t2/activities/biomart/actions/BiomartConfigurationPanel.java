@@ -20,6 +20,7 @@
  ******************************************************************************/
 package net.sf.taverna.t2.activities.biomart.actions;
 
+import java.awt.Dimension;
 import java.io.File;
 
 import javax.swing.Box;
@@ -89,6 +90,7 @@ public class BiomartConfigurationPanel extends ActivityConfigurationPanel<Biomar
 			add(new JLabel(e.getMessage()));
 			add(Box.createGlue());
 		}
+		this.setPreferredSize(new Dimension(900,500));
 		this.validate();
 	}
 	
