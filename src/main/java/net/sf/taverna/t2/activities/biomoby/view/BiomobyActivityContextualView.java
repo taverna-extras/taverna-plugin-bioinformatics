@@ -80,4 +80,9 @@ public class BiomobyActivityContextualView extends HTMLBasedActivityContextualVi
 		return mainFrame;
 	}
 
+	@Override
+	public int getPreferredPosition() {
+		return 100;
+	}
+
 }

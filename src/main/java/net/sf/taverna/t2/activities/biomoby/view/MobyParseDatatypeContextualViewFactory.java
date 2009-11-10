@@ -22,6 +22,9 @@
  */
 package net.sf.taverna.t2.activities.biomoby.view;
 
+import java.util.Arrays;
+import java.util.List;
+
 import net.sf.taverna.t2.activities.biomoby.MobyParseDatatypeActivity;
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.ContextualView;
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ContextualViewFactory;
@@ -43,8 +46,8 @@ public class MobyParseDatatypeContextualViewFactory implements
 	/* (non-Javadoc)
 	 * @see net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ContextualViewFactory#getView(java.lang.Object)
 	 */
-	public ContextualView getView(MobyParseDatatypeActivity activity) {
-		return new MobyParseDatatypeContextualView(activity);
+	public List<ContextualView> getViews(MobyParseDatatypeActivity activity) {
+		return Arrays.asList(new ContextualView[] {new MobyParseDatatypeContextualView(activity)});
 	}
 
 }

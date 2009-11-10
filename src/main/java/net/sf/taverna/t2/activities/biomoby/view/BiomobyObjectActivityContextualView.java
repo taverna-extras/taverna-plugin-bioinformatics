@@ -80,4 +80,9 @@ public class BiomobyObjectActivityContextualView extends
 		}
 		return mainFrame;
 	}
+
+	@Override
+	public int getPreferredPosition() {
+		return 100;
+	}
 }

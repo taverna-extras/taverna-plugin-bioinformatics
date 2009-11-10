@@ -6,9 +6,11 @@ package net.sf.taverna.t2.activities.biomoby.view;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivity;
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivityConfigurationBean;
-import net.sf.taverna.t2.activities.biomoby.actions.BiomobyActivityConfigurationAction;
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.ContextualView;
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ContextualViewFactory;
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ContextualViewFactoryRegistry;
@@ -41,10 +43,15 @@ public class BiomobyContextualViewFactoryTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testDisovery() throws Exception {
-		ContextualViewFactory factory = ContextualViewFactoryRegistry.getInstance().getViewFactoryForObject(activity);
-		assertTrue("Factory should be BiomobyActivityContextualViewFactory",factory instanceof BiomobyActivityContextualViewFactory);
-		ContextualView view = factory.getView(activity);
-		assertTrue("The view should be BiomobyActivityContextualView",view instanceof BiomobyActivityContextualView);
+		List<ContextualViewFactory> viewFactoriesForBeanType = ContextualViewFactoryRegistry.getInstance().getViewFactoriesForObject(activity);
+		assertTrue("The Biomoby view factory should not be empty", !viewFactoriesForBeanType.isEmpty());
+		BiomobyActivityContextualViewFactory factory = null;
+		for (ContextualViewFactory cvf : viewFactoriesForBeanType) {
+			if (cvf instanceof BiomobyActivityContextualViewFactory) {
+				factory = (BiomobyActivityContextualViewFactory) cvf;
+			}
+		}
+		assertTrue("No biomoby view factory", factory != null);
 	}
 	
 	@Test

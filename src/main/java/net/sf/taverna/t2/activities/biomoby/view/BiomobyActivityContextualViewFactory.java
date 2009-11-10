@@ -4,6 +4,9 @@
  ******************************************************************************/
 package net.sf.taverna.t2.activities.biomoby.view;
 
+import java.util.Arrays;
+import java.util.List;
+
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivity;
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.ContextualView;
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ContextualViewFactory;
@@ -14,7 +17,7 @@ public class BiomobyActivityContextualViewFactory implements ContextualViewFacto
 		return activity instanceof BiomobyActivity;
 	}
 
-	public ContextualView getView(BiomobyActivity activity) {
-		return new BiomobyActivityContextualView(activity);
+	public List<ContextualView> getViews(BiomobyActivity activity) {
+		return Arrays.asList(new ContextualView[] {new BiomobyActivityContextualView(activity)});
 	}
 }

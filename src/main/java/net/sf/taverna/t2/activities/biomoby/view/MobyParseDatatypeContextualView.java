@@ -54,4 +54,9 @@ public class MobyParseDatatypeContextualView extends
 		return "Moby parse datatype activity";
 	}
 
+	@Override
+	public int getPreferredPosition() {
+		return 100;
+	}
+
 }
