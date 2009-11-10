@@ -74,6 +74,11 @@ public class BiomartActivityContextualView extends HTMLBasedActivityContextualVi
 	public Action getConfigureAction(Frame owner) {
 		return new BiomartActivityConfigurationAction((BiomartActivity)getActivity(),owner);
 	}
+
+	@Override
+	public int getPreferredPosition() {
+		return 100;
+	}
 	
 	
 

@@ -25,12 +25,12 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import net.sf.taverna.t2.activities.biomart.BiomartActivity;
 import net.sf.taverna.t2.activities.biomart.actions.BiomartActivityConfigurationAction;
 import net.sf.taverna.t2.activities.biomart.views.BiomartActivityContextualView;
 import net.sf.taverna.t2.activities.biomart.views.BiomartActivityViewFactory;
-import net.sf.taverna.t2.workbench.ui.views.contextualviews.ContextualView;
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ContextualViewFactory;
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ContextualViewFactoryRegistry;
 import net.sf.taverna.t2.workflowmodel.processor.activity.Activity;
@@ -56,13 +56,15 @@ public class TestBiomartActivityContextualView {
 	public void testDisovery() throws Exception {
 		
 		
-		ContextualViewFactory factory = ContextualViewFactoryRegistry.getInstance()
-				.getViewFactoryForObject(activity);
-		assertTrue("Factory should be BiomartActivityViewFactory",
-				factory instanceof BiomartActivityViewFactory);
-		ContextualView view = factory.getView(activity);
-		assertTrue("The view should be BiomartActivityContextualView",
-				view instanceof BiomartActivityContextualView);
+		List<ContextualViewFactory> viewFactoriesForBeanType = ContextualViewFactoryRegistry.getInstance().getViewFactoriesForObject(activity);
+		assertTrue("The biomart view factory should not be empty", !viewFactoriesForBeanType.isEmpty());
+		BiomartActivityViewFactory factory = null;
+		for (ContextualViewFactory cvf : viewFactoriesForBeanType) {
+			if (cvf instanceof BiomartActivityViewFactory) {
+				factory = (BiomartActivityViewFactory) cvf;
+			}
+		}
+		assertTrue("No Biomart view factory", factory != null);
 	}
 	
 	@Test

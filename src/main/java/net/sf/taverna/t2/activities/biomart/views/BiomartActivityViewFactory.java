@@ -20,8 +20,11 @@
  ******************************************************************************/
 package net.sf.taverna.t2.activities.biomart.views;
 
+import java.util.Arrays;
+import java.util.List;
+
 import net.sf.taverna.t2.activities.biomart.BiomartActivity;
-import net.sf.taverna.t2.workbench.ui.actions.activity.ActivityContextualView;
+import net.sf.taverna.t2.workbench.ui.views.contextualviews.ContextualView;
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ContextualViewFactory;
 
 public class BiomartActivityViewFactory implements ContextualViewFactory<BiomartActivity> {
@@ -32,8 +35,8 @@ public class BiomartActivityViewFactory implements ContextualViewFactory<Biomart
 	}
 
 	
-	public ActivityContextualView<?> getView(BiomartActivity activity) {
-		return new BiomartActivityContextualView(activity);
+	public List<ContextualView> getViews(BiomartActivity activity) {
+		return Arrays.asList(new ContextualView[] {new BiomartActivityContextualView(activity)});
 	}
 
 }
