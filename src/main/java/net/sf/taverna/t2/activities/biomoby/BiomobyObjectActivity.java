@@ -221,9 +221,8 @@ public class BiomobyObjectActivity extends AbstractAsynchronousActivity<BiomobyO
 						callback.receiveResult(outputMap, new int[0]);						
 					} catch (Exception ex) {
 						// details of other exceptions will appear only in a log
-//						ex.printStackTrace();
 						logger.error("Error creating biomoby object for biomoby", ex);
-						callback.fail("Activity failed due to problem creating biomoby object (see details in log)", ex);
+						callback.fail("Service failed due to problem creating biomoby object (see details in log)", ex);
 					}
 				} else {
 					// Situation where simples are feeding into this non primitive type
@@ -325,9 +324,8 @@ public class BiomobyObjectActivity extends AbstractAsynchronousActivity<BiomobyO
 						callback.receiveResult(outputMap, new int[0]);
 					} catch (Exception ex) {
 						// details of other exceptions will appear only in a log
-//						ex.printStackTrace();
 						logger.error("Error creating biomoby object for biomoby", ex);
-						callback.fail("Activity failed due to problem creating biomoby object (see details in log)", ex);
+						callback.fail("Service failed due to problem creating biomoby object (see details in log)", ex);
 					}
 				}
 			}
