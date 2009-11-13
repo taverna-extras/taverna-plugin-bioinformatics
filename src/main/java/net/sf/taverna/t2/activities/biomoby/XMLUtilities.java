@@ -862,8 +862,6 @@ public class XMLUtilities {
 		Element[] invocations = getSingleInvokationsFromMultipleInvokations(e);
 		Vector vector = new Vector();
 		for (int i = 0; i < invocations.length; i++) {
-			// System.out.println(i + ":" + name + "\n" + new
-			// XMLOutputter(Format.getPrettyFormat().setOmitDeclaration(false)).outputString(invocations[i]));
 			Element collection = null;
 			try {
 				collection = getCollection(name, invocations[i]);
@@ -1139,16 +1137,13 @@ public class XMLUtilities {
 		try {
 			doc = builder.build(new StringReader(document));
 		} catch (JDOMException e) {
-			// e.printStackTrace();
 			throw new MobyException(newline + "Error parsing XML:->" + newline
 					+ document + newline
 					+ Utils.format(e.getLocalizedMessage(), 3) + ".");
 		} catch (IOException e) {
-			// e.printStackTrace();
 			throw new MobyException(newline + "Error parsing XML:->" + newline
 					+ Utils.format(e.getLocalizedMessage(), 3) + ".");
 		} catch (Exception e) {
-			// e.printStackTrace();
 			throw new MobyException(newline + "Error parsing XML:->" + newline
 					+ Utils.format(e.getLocalizedMessage(), 3) + ".");
 		}
@@ -1793,24 +1788,16 @@ public class XMLUtilities {
 			if (e.getChildren().size() > 0) {
 				// make sure we dont have empty collections or simples
 				if (e.getChild("Collection") != null) {
-					// System.out.println("1. collection with stuff in it: " +
-					// getQueryID(xml));
 					return e.getChild("Collection").getChildren().size() > 0;
 				}
 				if (e.getChild("Collection", MOBY_NS) != null) {
-					// System.out.println("2. collectionNS with stuff in it: " +
-					// getQueryID(xml));
 					return e.getChild("Collection", MOBY_NS).getChildren()
 							.size() > 0;
 				}
 				if (e.getChild("Simple") != null) {
-					// System.out.println("3. Simple with stuff in it: " +
-					// getQueryID(xml));
 					return e.getChild("Simple").getChildren().size() > 0;
 				}
 				if (e.getChild("Simple", MOBY_NS) != null) {
-					// System.out.println("4. SimpleNS with stuff in it: " +
-					// getQueryID(xml));
 					return e.getChild("Simple", MOBY_NS).getChildren().size() > 0;
 				}
 				return false;
