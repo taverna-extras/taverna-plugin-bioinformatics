@@ -94,6 +94,7 @@ import javax.swing.event.DocumentListener;
 
 import net.sf.taverna.t2.lang.ui.DialogTextArea;
 
+import org.apache.log4j.Logger;
 import org.biomart.martservice.DatasetLink;
 import org.biomart.martservice.MartDataset;
 import org.biomart.martservice.MartQuery;
@@ -129,6 +130,10 @@ import org.ensembl.mart.lib.config.PushAction;
  * @author David Withers
  */
 public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
+
+	private static Logger logger = Logger
+	.getLogger(MartServiceQueryConfigUIFactory.class);
+	
 	private String version;
 
 	private Color borderColor = new Color(202, 207, 213);
@@ -1287,7 +1292,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 				String displayName = filterDescriptions[i].getDisplayName();
 				if (displayName == null) {
-					System.out.println("Cant find a display name for filter '"
+					logger.info("Cant find a display name for filter '"
 							+ filterDescriptions[i].getInternalName() + "'");
 					displayName = filterDescriptions[i].getInternalName();
 				}
@@ -1493,7 +1498,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 					factory.selectAttributePage(attributePages);
 
 				} catch (MartServiceException e) {
-					e.printStackTrace();
+					logger.error("Error while fetching dataset configuration", e);
 					DialogTextArea textArea = new DialogTextArea();
 					textArea
 							.append("Error while fetching dataset configuration\n\n");
@@ -1501,7 +1506,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 					inputPanel.removeAll();
 					inputPanel.add(textArea);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("Error while generating the Query Editor", e);
 					DialogTextArea textArea = new DialogTextArea();
 					textArea
 							.append("Error while generating the Query Editor\n\n");
@@ -1933,7 +1938,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 		private void optionSelected(Option option) {
 			if (option == null) {
-				System.out.println("null option for " + getName());
+				logger.info("null option for " + getName());
 			} else {
 				PushAction[] pushActions = option.getPushActions();
 				for (int i = 0; i < pushActions.length; i++) {
