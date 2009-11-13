@@ -208,12 +208,10 @@ public class BiomobyActivity extends
 										"Error invoking biomoby service for biomoby. A MobyException caught",
 										ex);
 						callback.fail(
-								"Activity failed due to problem invoking biomoby service.\n"
+								"Service failed due to problem invoking remote biomoby service.\n"
 										+ ex.getMessage(), ex);
 
 					} catch (Exception ex) {
-						// details of other exceptions will appear only in a log
-//						ex.printStackTrace();
 						logger.error(
 								"Error invoking biomoby service for biomoby",
 								ex);
@@ -719,7 +717,7 @@ public class BiomobyActivity extends
 										"Error invoking biomoby service for biomoby. A MobyException caught",
 										ex);
 						callback.fail(
-								"Activity failed due to problem invoking biomoby service.\n"
+								"Service failed due to exception invoking remote biomoby service.\n"
 										+ ex.getMessage(), ex);
 
 					} catch (Exception ex) {
