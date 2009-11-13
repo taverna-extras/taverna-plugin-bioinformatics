@@ -33,7 +33,7 @@ public class AddBiomobyRegistryActionHandler extends AddQueryActionHandler {
 							registryNamespace));
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(null,
-							"Unable to create scavenger!\n" + ex.getMessage(),
+							"Unable to create service provider!\n" + ex.getMessage(),
 							"Exception!", JOptionPane.ERROR_MESSAGE);
 					logger.error("Exception thrown:", ex);
 				}
