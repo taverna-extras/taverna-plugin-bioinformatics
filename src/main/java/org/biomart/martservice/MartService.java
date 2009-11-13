@@ -359,9 +359,9 @@ public class MartService {
 						datasetConfig, doc);
 				if (!datasetConfig.getModified().trim().equals(
 						dataset.getModified().trim())) {
-					System.out.println(" " + datasetConfig.getModified().trim()
+					logger.info(" " + datasetConfig.getModified().trim()
 							+ " != " + dataset.getModified().trim());
-					System.out.println("  Database: "
+					logger.info("  Database: "
 							+ dataset.getMartURLLocation().getDatabase()
 							+ ", Dataset: " + dataset.getName());
 					datasetConfig = null;
@@ -454,7 +454,7 @@ public class MartService {
 	 *             if the MartService returns an error or is unavailable
 	 */
 	public Object[] executeQuery(Query query) throws MartServiceException {
-		// System.out.println(MartServiceUtils.queryToXML(query));
+		// logger.info(MartServiceUtils.queryToXML(query));
 		return MartServiceUtils.getResults(location, requestId, query);
 	}
 
