@@ -56,7 +56,7 @@ public class BiomobyActivityContextualView extends HTMLBasedActivityContextualVi
 
 	@Override
 	public String getViewTitle() {
-		return "Biomoby activity";
+		return "Biomoby service";
 	}
 	
 	/**
