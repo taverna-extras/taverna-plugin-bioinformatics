@@ -53,6 +53,7 @@ import net.sf.taverna.t2.workflowmodel.Edits;
 import net.sf.taverna.t2.workflowmodel.EditsRegistry;
 import net.sf.taverna.t2.workflowmodel.utils.Tools;
 
+import org.apache.log4j.Logger;
 import org.biomoby.client.CentralImpl;
 import org.biomoby.shared.MobyException;
 
@@ -65,6 +66,9 @@ import org.biomoby.shared.MobyException;
  */
 public class BiomobyObjectTree {
 
+	private static Logger logger = Logger
+	.getLogger(BiomobyObjectTree.class);
+	
 	private JTree tree;
 	private String registryEndpoint = "";
 	private String registryNamespace = "";
@@ -363,7 +367,7 @@ public class BiomobyObjectTree {
 							editManager.doDataflowEdit(dataflow, edit);
 
 						} catch (Exception e) {
-							e.printStackTrace();
+							logger.error("Could not add datatype", e);
 						}
 					}
 				});
