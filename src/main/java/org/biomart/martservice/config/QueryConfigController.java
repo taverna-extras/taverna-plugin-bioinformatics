@@ -36,8 +36,8 @@ package org.biomart.martservice.config;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.logging.Logger;
 
+import org.apache.log4j.Logger;
 import org.biomart.martservice.MartQuery;
 import org.biomart.martservice.config.event.QueryComponentEvent;
 import org.biomart.martservice.config.event.QueryComponentListener;
@@ -350,37 +350,37 @@ public class QueryConfigController {
 	static class QueryHandler implements QueryListener {
 
 		public void attributeAdded(Attribute attribute, Dataset dataset) {
-			logger.finer("Attribute Added " + attribute.getQualifiedName());
+			logger.info("Attribute Added " + attribute.getQualifiedName());
 		}
 
 		public void attributeRemoved(Attribute attribute, Dataset dataset) {
-			logger.finer("Attribute Removed " + attribute.getQualifiedName());
+			logger.info("Attribute Removed " + attribute.getQualifiedName());
 		}
 
 		public void filterAdded(Filter filter, Dataset dataset) {
-			logger.finer("Filter Added " + filter.getQualifiedName() + " "
+			logger.info("Filter Added " + filter.getQualifiedName() + " "
 					+ filter.getValue());
 		}
 
 		public void filterRemoved(Filter filter, Dataset dataset) {
-			logger.finer("Filter Removed " + filter.getQualifiedName());
+			logger.info("Filter Removed " + filter.getQualifiedName());
 		}
 
 		public void filterChanged(Filter filter, Dataset dataset) {
-			logger.finer("Filter Changed " + filter.getQualifiedName() + " "
+			logger.info("Filter Changed " + filter.getQualifiedName() + " "
 					+ filter.getValue());
 		}
 
 		public void formatterAdded(String formatter) {
-			logger.finer("Formatter Added " + formatter);
+			logger.info("Formatter Added " + formatter);
 		}
 
 		public void formatterRemoved(String formatter) {
-			logger.finer("Formatter Removed " + formatter);
+			logger.info("Formatter Removed " + formatter);
 		}
 
 		public void formatterChanged(String formatter) {
-			logger.finer("Formatter Changed to " + formatter);
+			logger.info("Formatter Changed to " + formatter);
 		}
 
 	}
