@@ -60,7 +60,7 @@ public class BiomobyObjectActivityContextualView extends
 
 	@Override
 	public String getViewTitle() {
-		return "Biomoby Object activity";
+		return "Biomoby Object service";
 	}
 
 	/**
