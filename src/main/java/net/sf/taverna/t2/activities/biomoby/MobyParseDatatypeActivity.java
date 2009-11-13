@@ -241,7 +241,7 @@ public class MobyParseDatatypeActivity extends AbstractAsynchronousActivity<Moby
 			}
 		}
 
-//		setDescription("Processor to parse the datatype " + this.datatype.getName());
+//		setDescription("Service to parse the datatype " + this.datatype.getName());
 		
 		ArrayList list = new ArrayList();
 		if (isPrimitive(this.datatype.getName())) {
