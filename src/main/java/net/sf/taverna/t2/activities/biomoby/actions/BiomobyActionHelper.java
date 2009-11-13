@@ -50,11 +50,8 @@ import net.sf.taverna.t2.workflowmodel.ProcessorInputPort;
 import net.sf.taverna.t2.workflowmodel.ProcessorOutputPort;
 import net.sf.taverna.t2.workflowmodel.processor.activity.Activity;
 import net.sf.taverna.t2.workflowmodel.utils.Tools;
-import net.sf.taverna.t2.activities.biomoby.actions.BioMobyServiceTreeCustomRenderer;
-import net.sf.taverna.t2.activities.biomoby.actions.MobyObjectTreeNode;
-import net.sf.taverna.t2.activities.biomoby.actions.MobyServiceTreeNode;
-import net.sf.taverna.t2.activities.biomoby.actions.MobyPanel;
 
+import org.apache.log4j.Logger;
 import org.biomoby.client.CentralImpl;
 import org.biomoby.shared.Central;
 import org.biomoby.shared.MobyData;
@@ -72,6 +69,9 @@ import org.biomoby.shared.NoSuccessException;
  * @auther Stuart Owen - helped port to T2 - but with the minimum code changes possible!
  */
 public class BiomobyActionHelper {
+
+	private static Logger logger = Logger
+	.getLogger(BiomobyActionHelper.class);
 
 	JProgressBar progressBar = new JProgressBar();
 	private Edits edits = EditsRegistry.getEdits();
@@ -283,7 +283,7 @@ public class BiomobyActionHelper {
 												currentDataflow, edit);
 
 									} catch (Exception e) {
-										e.printStackTrace();
+										logger.error("", e);
 									}
 								}
 							});
@@ -362,7 +362,7 @@ public class BiomobyActionHelper {
 												currentDataflow, edit);
 
 									} catch (Exception e) {
-										e.printStackTrace();
+										logger.error("Could not perform action", e);
 									}
 								}
 							});
@@ -754,7 +754,7 @@ public class BiomobyActionHelper {
 													currentDataflow, edit);
 
 										} catch (Exception e) {
-											e.printStackTrace();
+											logger.error("Could not perform action", e);
 										}
 
 									}
