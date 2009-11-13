@@ -243,7 +243,7 @@ public class SoaplabActivity extends
 					// success
 					callback.receiveResult(outputData, new int[0]);
 				} catch (ReferenceServiceException e) {
-					callback.fail("Error accessing beanshell input/output data", e);
+					callback.fail("Error accessing soaplab input/output data", e);
 				} catch (IOException e) {
 					callback.fail("Failure calling soaplab", e);
 				} catch (ServiceException e) {
