@@ -197,11 +197,11 @@ public class AddParserActionHelper  {
 									currentDataflow, edit);
 
 						} catch (Exception e) {
-							e.printStackTrace();
+							logger.error("", e);
 						}
 
 					} catch (Exception e) {
-					    logger.error(e);
+					    logger.error("", e);
 					}
 
 				    }
