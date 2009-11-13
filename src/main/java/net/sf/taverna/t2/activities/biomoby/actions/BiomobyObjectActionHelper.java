@@ -48,11 +48,8 @@ import net.sf.taverna.t2.workflowmodel.Dataflow;
 import net.sf.taverna.t2.workflowmodel.Edit;
 import net.sf.taverna.t2.workflowmodel.OutputPort;
 
+import org.apache.log4j.Logger;
 import org.biomoby.client.CentralImpl;
-import net.sf.taverna.t2.activities.biomoby.actions.BioMobyObjectTreeCustomRenderer;
-import net.sf.taverna.t2.activities.biomoby.actions.MobyObjectTreeNode;
-import net.sf.taverna.t2.activities.biomoby.actions.MobyPanel;
-import net.sf.taverna.t2.activities.biomoby.actions.MobyServiceTreeNode;
 import org.biomoby.registry.meta.Registry;
 import org.biomoby.shared.Central;
 import org.biomoby.shared.MobyData;
@@ -67,6 +64,9 @@ import org.biomoby.shared.data.MobyDataObject;
 import org.biomoby.shared.data.MobyDataObjectSet;
 
 public class BiomobyObjectActionHelper  {
+
+	private static Logger logger = Logger
+	.getLogger(BiomobyObjectActionHelper.class);
 
 	private boolean searchParentTypes = false;
 
@@ -194,7 +194,7 @@ public class BiomobyObjectActionHelper  {
 				    panel.add(namespacePanel, BorderLayout.CENTER);
 				    panel.updateUI();
 				} catch (MobyException e) {
-				    e.printStackTrace();
+				    logger.error("", e);
 				    takeDownProgressBar();
 				}
 				takeDownProgressBar();
@@ -365,7 +365,7 @@ public class BiomobyObjectActionHelper  {
 													currentDataflow, edit);
 
 										} catch (Exception e) {
-											e.printStackTrace();
+											logger.error("Could not perform action", e);
 										}
 		    						}
 		    					});
@@ -406,7 +406,8 @@ public class BiomobyObjectActionHelper  {
 		    								service = services[0];
 
 		    							} catch (MobyException e) {
-		    								e.printStackTrace();
+		    								logger.error("Could not retrieve a description on the BioMoby service "
+		    										+ selectedService, e);
 		    								return "Couldn't retrieve a description on the BioMoby service '"
 		    										+ selectedService + "'";
 		    							}
