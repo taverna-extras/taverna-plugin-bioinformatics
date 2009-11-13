@@ -51,7 +51,7 @@ public class MobyParseDatatypeContextualView extends
 
 	@Override
 	public String getViewTitle() {
-		return "Moby parse datatype activity";
+		return "Moby parse datatype service";
 	}
 
 	@Override
