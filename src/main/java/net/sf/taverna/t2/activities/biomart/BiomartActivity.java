@@ -186,7 +186,7 @@ public class BiomartActivity extends
 														.getDepth();
 												try {
 													T2Reference error = referenceService.getErrorDocumentService()
-															.registerError(message, outputDepth - 1).getId();
+															.registerError(message, outputDepth - 1, callback.getContext()).getId();
 													partialOutputData.put(
 															outputName, error);
 													outputLists.get(outputName)
