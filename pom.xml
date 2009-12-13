@@ -9,10 +9,10 @@
 	<groupId>org.biomart</groupId>
 	<artifactId>martservice</artifactId>
 	<name>MartService</name>
-	<version>0.7.4-SNAPSHOT</version>
+	<version>0.7.4</version>
 	<description>Biomart webservice API</description>
 	<properties>
-		<t2.lang.version>0.7-SNAPSHOT</t2.lang.version>
+		<t2.lang.version>1.0</t2.lang.version>
 	</properties>
 	<developers>
 		<developer>
