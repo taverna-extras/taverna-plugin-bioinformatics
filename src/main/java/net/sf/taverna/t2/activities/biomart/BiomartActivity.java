@@ -64,7 +64,7 @@ import org.jdom.Element;
 public class BiomartActivity extends
 		AbstractAsynchronousActivity<Element> {
 
-	private static boolean STREAM_RESULTS = true;
+	private static boolean STREAM_RESULTS = false;
 	
 	private Edits edits = EditsRegistry.getEdits();
 
