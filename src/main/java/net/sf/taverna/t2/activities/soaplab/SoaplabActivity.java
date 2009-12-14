@@ -323,8 +323,13 @@ public class SoaplabActivity extends
 							new ArrayList<Class<? extends ExternalReferenceSPI>>(), byte[].class);
 					inputTypeMap.put(input_name, byte[].class);
 				} else {
-					logger.warn("Soaplab input type unknown, will attempt to add as String");
-					addInput(input_name, 0, true,
+					// Count number of [] to get the arrays right
+					int depth = (input_type.split("\\[\\]", -1).length) -1 ;
+					logger.info("Soaplab input type '" + input_type
+							+ "' unknown for input '" + input_name + "' in "
+							+ configurationBean.getEndpoint()
+							+ ", will attempt to add as String depth " + depth);
+					addInput(input_name, depth, true,
 							new ArrayList<Class<? extends ExternalReferenceSPI>>(), String.class);
 					inputTypeMap.put(input_name, String.class);
 				}
@@ -344,6 +349,7 @@ public class SoaplabActivity extends
 				// which cases we ignore it, this is soaplab metadata rather
 				// than application data.
 				if ((!output_name.equalsIgnoreCase("detailed_status"))) {
+
 					// && (!output_name.equalsIgnoreCase("report"))) {
 					if (output_type.equals("string")) {
 						addOutput(output_name, 0, "text/plain");
@@ -354,8 +360,13 @@ public class SoaplabActivity extends
 					} else if (output_type.equals("byte[][]")) {
 						addOutput(output_name, 1, "application/octet-stream");
 					} else {
-						logger.warn("Soaplab output type unknown, will add output port anyway");
-						addOutput(output_name, 0, null);
+						// Count number of [] to get the arrays right
+						int depth = (output_type.split("\\[\\]", -1).length) -1 ;
+						logger.info("Soaplab output type '" + output_type
+								+ "' unknown for output '" + output_name + "' in "
+								+ configurationBean.getEndpoint()
+								+ ", will add as depth " + depth);
+						addOutput(output_name, depth, null);
 					}
 				}
 			}
