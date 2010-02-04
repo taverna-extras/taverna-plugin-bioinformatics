@@ -18,7 +18,7 @@
 		<dependency>
 			<groupId>net.sf.taverna.t2.activities</groupId>
 			<artifactId>wsdl-activity</artifactId>
-			<version>${t2.activities.version}</version>
+			<version>1.0.1</version>
 		</dependency>
 
 		<!--  testing dependencies -->
