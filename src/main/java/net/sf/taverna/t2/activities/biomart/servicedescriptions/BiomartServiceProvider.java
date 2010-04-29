@@ -3,6 +3,7 @@
  */
 package net.sf.taverna.t2.activities.biomart.servicedescriptions;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,6 +12,7 @@ import javax.swing.Icon;
 
 import net.sf.taverna.t2.servicedescriptions.AbstractConfigurableServiceProvider;
 import net.sf.taverna.t2.servicedescriptions.ServiceDescription;
+import net.sf.taverna.t2.servicedescriptions.impl.ServiceDescriptionRegistryImpl;
 
 import org.biomart.martservice.MartDataset;
 import org.biomart.martservice.MartQuery;
@@ -29,6 +31,9 @@ public class BiomartServiceProvider extends AbstractConfigurableServiceProvider<
 
 	private static final String TAVERNA = "taverna";
 	private static final String BIOMART_SERVICE = "Biomart service";
+	
+	private static final URI providerId = URI
+	.create("http://taverna.sf.net/2010/service-provider/biomart");
 	
 	public BiomartServiceProvider() {
 		super(new BiomartServiceProviderConfig("http://somehost/biomart"));
@@ -107,11 +112,18 @@ public class BiomartServiceProvider extends AbstractConfigurableServiceProvider<
 	}
 	
 	public List<BiomartServiceProviderConfig> getDefaultConfigurations() {
+		
 		List<BiomartServiceProviderConfig> defaults = new ArrayList<BiomartServiceProviderConfig>();
-		// TODO: Defaults should come from a config/resource file
-		defaults.add(new BiomartServiceProviderConfig(
-				"http://www.biomart.org/biomart/martservice"));
+
+		ServiceDescriptionRegistryImpl serviceRegistry = ServiceDescriptionRegistryImpl.getInstance();
+		// If defaults have failed to load from a configuration file then load them here.
+		if (!serviceRegistry.isDefaultSystemConfigurableProvidersLoaded()){
+			defaults.add(new BiomartServiceProviderConfig(
+					"http://www.biomart.org/biomart/martservice"));
+		} // else return an empty list
+		
 		return defaults;
+
 	}
 
 	@Override
@@ -119,6 +131,10 @@ public class BiomartServiceProvider extends AbstractConfigurableServiceProvider<
 		List<String> result;
 		result = Arrays.asList(getConfiguration().getUrl());
 		return result;
+	}
+
+	public String getId() {
+		return providerId.toString();
 	}
 
 
