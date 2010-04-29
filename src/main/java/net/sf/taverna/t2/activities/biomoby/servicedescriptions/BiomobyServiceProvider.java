@@ -20,6 +20,8 @@
  ******************************************************************************/
 package net.sf.taverna.t2.activities.biomoby.servicedescriptions;
 
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,6 +32,7 @@ import net.sf.taverna.t2.activities.biomoby.query.BiomobyQueryHelper;
 import net.sf.taverna.t2.activities.biomoby.ui.AddBiomobyDialogue;
 import net.sf.taverna.t2.servicedescriptions.AbstractConfigurableServiceProvider;
 import net.sf.taverna.t2.servicedescriptions.CustomizedConfigurePanelProvider;
+import net.sf.taverna.t2.servicedescriptions.impl.ServiceDescriptionRegistryImpl;
 
 import org.biomoby.client.CentralImpl;
 import org.biomoby.shared.MobyException;
@@ -39,6 +42,9 @@ public class BiomobyServiceProvider extends
 		implements
 		CustomizedConfigurePanelProvider<BiomobyServiceProviderConfig> {
 
+	private static final URI providerId = URI
+	.create("http://taverna.sf.net/2010/service-provider/biomoby");
+	
 	public BiomobyServiceProvider() {
 		super(new BiomobyServiceProviderConfig());
 	}
@@ -60,9 +66,18 @@ public class BiomobyServiceProvider extends
 
 	@Override
 	public List<BiomobyServiceProviderConfig> getDefaultConfigurations() {
-		return Arrays.asList(new BiomobyServiceProviderConfig(
-				CentralImpl.DEFAULT_ENDPOINT,
-				CentralImpl.DEFAULT_NAMESPACE));
+		
+		List<BiomobyServiceProviderConfig> defaults = new ArrayList<BiomobyServiceProviderConfig>();
+
+		ServiceDescriptionRegistryImpl serviceRegistry = ServiceDescriptionRegistryImpl.getInstance();
+		// If defaults have failed to load from a configuration file then load them here.
+		if (!serviceRegistry.isDefaultSystemConfigurableProvidersLoaded()){
+			defaults.add(new BiomobyServiceProviderConfig(
+					CentralImpl.DEFAULT_ENDPOINT,
+					CentralImpl.DEFAULT_NAMESPACE));
+		} // else return an empty list
+		
+		return defaults;
 	}
 
 	public String getName() {
@@ -98,6 +113,10 @@ public class BiomobyServiceProvider extends
 		List<String> result;
 		result = Arrays.asList(getConfiguration().getEndpoint().toString());
 		return result;
+	}
+
+	public String getId() {
+		return providerId.toString();
 	}
 
 }
