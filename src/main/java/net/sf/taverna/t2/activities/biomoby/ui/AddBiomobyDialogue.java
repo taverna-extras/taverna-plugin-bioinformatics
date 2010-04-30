@@ -8,6 +8,7 @@ import javax.swing.JButton;
 
 import net.sf.taverna.t2.activities.biomoby.actions.BiomobyScavengerDialog;
 import net.sf.taverna.t2.workbench.helper.HelpEnabledDialog;
+import net.sf.taverna.t2.workbench.ui.impl.Workbench;
 
 import org.apache.log4j.Logger;
 import org.biomoby.client.CentralImpl;
@@ -23,8 +24,9 @@ public abstract class AddBiomobyDialogue extends HelpEnabledDialog {
 	private String uri = CentralImpl.DEFAULT_NAMESPACE;
 
 	public AddBiomobyDialogue() {
-		super((Frame) null, "Add BioMoby Registry", true, null);
+		super(Workbench.getInstance(), "Add BioMoby Registry", true, null);
 		initialize();
+		setLocationRelativeTo(getParent());
 	}
 	public void initialize() {
 		final BiomobyScavengerDialog msp = new BiomobyScavengerDialog();
