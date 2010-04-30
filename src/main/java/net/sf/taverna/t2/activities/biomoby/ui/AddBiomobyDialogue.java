@@ -1,6 +1,5 @@
 package net.sf.taverna.t2.activities.biomoby.ui;
 
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
