@@ -26,68 +26,41 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 
+import net.sf.taverna.t2.workflowmodel.Processor;
+import net.sf.taverna.t2.workflowmodel.processor.activity.Activity;
+import net.sf.taverna.t2.workflowmodel.health.HealthCheck;
 import net.sf.taverna.t2.workflowmodel.health.HealthChecker;
-import net.sf.taverna.t2.workflowmodel.health.HealthReport;
-import net.sf.taverna.t2.workflowmodel.health.HealthReport.Status;
+import net.sf.taverna.t2.visit.VisitReport;
+import net.sf.taverna.t2.visit.VisitReport.Status;
 
-public class SoaplabActivityHealthChecker implements HealthChecker<SoaplabActivity> {
+import net.sf.taverna.t2.workflowmodel.health.RemoteHealthChecker;
+import net.sf.taverna.t2.workflowmodel.processor.activity.DisabledActivity;
 
-	public boolean canHandle(Object subject) {
-		return subject!=null && subject instanceof SoaplabActivity;
-	}
+public class SoaplabActivityHealthChecker extends RemoteHealthChecker {
 
-	public HealthReport checkHealth(SoaplabActivity activity) {
-		return testEndpoint(activity);
-	}
-
-	private int pingURL(HttpURLConnection httpConnection, int timeout)
-			throws IOException {
-		httpConnection.setRequestMethod("HEAD");
-		httpConnection.connect();
-		httpConnection.setReadTimeout(timeout);
-		return httpConnection.getResponseCode();
-	}
-
-	private HealthReport testEndpoint(SoaplabActivity activity) {
-		HealthReport report;
-		String endpoint = activity.getConfiguration().getEndpoint();
-
-		try {
-			URL url = new URL(endpoint);
-			URLConnection connection = url.openConnection();
-			if (connection instanceof HttpURLConnection) {
-				int code = pingURL((HttpURLConnection) connection, 15000);
-				if (code == 200) {
-					report = new HealthReport("SOAPLab Activity",
-							"The endpoint [" + endpoint
-									+ "] responded with a response code of "
-									+ code, Status.OK);
-
-				} else {
-					report = new HealthReport("SOAPLab Activity",
-							"The endpoint [" + endpoint
-									+ "] responded, but a response code of "
-									+ code, Status.WARNING);
-				}
-			}
-			else {
-				return new HealthReport("SOAPLab Activity","The endpoint["+endpoint+"] is not Http based and could not be tested for a http response",Status.OK);
-			}
-		} catch (MalformedURLException e) {
-			report = new HealthReport("SOAPLab Activity",
-					"There was a problem with the endpoint[" + endpoint
-							+ "] URL:" + e.getMessage(), Status.SEVERE);
-		} catch (SocketTimeoutException e) {
-			report = new HealthReport("SOAPLab Activity", "The endpoint["
-					+ endpoint + "] took more than 15 seconds to respond",
-					Status.SEVERE);
-		} catch (IOException e) {
-			report = new HealthReport("SOAPLab Activity",
-					"There was an error contacting the endpoint[" + endpoint
-							+ "]:" + e.getMessage(), Status.SEVERE);
+	public boolean canVisit(Object subject) {
+		if (subject == null) {
+			return false;
 		}
+		if (subject instanceof SoaplabActivity) {
+			return true;
+		}
+		if (subject instanceof DisabledActivity) {
+			return (((DisabledActivity) subject).getActivity() instanceof SoaplabActivity);
+		}
+		return false;
+	}
 
-		return report;
+	public VisitReport visit(Object o, List<Object> ancestors) {
+		SoaplabActivityConfigurationBean configuration = null;
+		Activity activity = (Activity) o;
+		if (activity instanceof SoaplabActivity) {
+			configuration = (SoaplabActivityConfigurationBean) activity.getConfiguration();
+		} else if (activity instanceof DisabledActivity) {
+			configuration = (SoaplabActivityConfigurationBean) ((DisabledActivity) activity).getActivityConfiguration();
+		}
+		return contactEndpoint(activity, configuration.getEndpoint());
 	}
 }
