@@ -41,6 +41,8 @@ import net.sf.taverna.t2.workflowmodel.processor.activity.AbstractAsynchronousAc
 import net.sf.taverna.t2.workflowmodel.processor.activity.ActivityConfigurationException;
 import net.sf.taverna.t2.workflowmodel.processor.activity.ActivityInputPort;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivityCallback;
+import net.sf.taverna.t2.workflowmodel.health.RemoteHealthChecker;
+import net.sf.taverna.t2.visit.VisitReport.Status;
 
 import org.biomart.martservice.MartQuery;
 import org.biomart.martservice.MartServiceException;
@@ -85,6 +87,10 @@ public class BiomartActivity extends
 			throws ActivityConfigurationException {
 		this.configurationBean = configurationBean;
 		biomartQuery = MartServiceXMLHandler.elementToMartQuery(configurationBean, null);
+		String location = biomartQuery.getMartService().getLocation();
+		if (!RemoteHealthChecker.contactEndpoint(this,location).getStatus().equals(Status.OK)) {
+			throw new ActivityConfigurationException("Could not contact endpoint");
+		}
 		List<Edit<?>> editList = new ArrayList<Edit<?>>();
 		buildInputPorts(editList);
 		buildOutputPorts(editList);
