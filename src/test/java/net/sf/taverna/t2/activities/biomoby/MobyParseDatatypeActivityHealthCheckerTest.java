@@ -30,16 +30,16 @@ public class MobyParseDatatypeActivityHealthCheckerTest {
 
 	@Test
 	public void testCanHandle() {
-		assertFalse(activityHealthChecker.canHandle(null));
-		assertFalse(activityHealthChecker.canHandle(new Object()));
-		assertFalse(activityHealthChecker.canHandle(new AbstractActivity<Object>() {
+		assertFalse(activityHealthChecker.canVisit(null));
+		assertFalse(activityHealthChecker.canVisit(new Object()));
+		assertFalse(activityHealthChecker.canVisit(new AbstractActivity<Object>() {
 			public void configure(Object conf) throws ActivityConfigurationException {
 			}
 			public Object getConfiguration() {
 				return null;
 			}
 		}));
-		assertTrue(activityHealthChecker.canHandle(activity));
+		assertTrue(activityHealthChecker.canVisit(activity));
 	}
 
 }
