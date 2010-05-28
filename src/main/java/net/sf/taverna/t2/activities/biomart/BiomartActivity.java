@@ -88,9 +88,6 @@ public class BiomartActivity extends
 		this.configurationBean = configurationBean;
 		biomartQuery = MartServiceXMLHandler.elementToMartQuery(configurationBean, null);
 		String location = biomartQuery.getMartService().getLocation();
-		if (!RemoteHealthChecker.contactEndpoint(this,location).getStatus().equals(Status.OK)) {
-			throw new ActivityConfigurationException("Could not contact endpoint");
-		}
 		List<Edit<?>> editList = new ArrayList<Edit<?>>();
 		buildInputPorts(editList);
 		buildOutputPorts(editList);
