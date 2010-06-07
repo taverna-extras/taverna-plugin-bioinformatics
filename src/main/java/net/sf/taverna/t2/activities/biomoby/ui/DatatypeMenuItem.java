@@ -21,6 +21,8 @@ import javax.swing.JProgressBar;
 
 import net.sf.taverna.t2.activities.biomoby.actions.MobyPanel;
 import net.sf.taverna.t2.activities.biomoby.query.BiomobyObjectActivityItem;
+import net.sf.taverna.t2.workbench.MainWindow;
+import net.sf.taverna.t2.workbench.helper.HelpEnabledDialog;
 
 import org.apache.log4j.Logger;
 import org.biomoby.client.CentralImpl;
@@ -92,9 +94,9 @@ public class DatatypeMenuItem extends JMenuItem {
 							bar.setIndeterminate(true);
 							bar.setString("Creating datatype tree ...");
 							bar.setStringPainted(true);
-							// a dialog to hold the bar
-							JDialog frame = new JDialog();
-							frame.setTitle("Datatype Tree Builder");
+							// a dialog frame hold the bar
+							String title = "Datatype Tree Builder";
+							JDialog frame = new HelpEnabledDialog(MainWindow.getMainWindow(), title, false, null);							
 							JLabel label = new JLabel(
 									"Constructing tree for:\n\t"
 											+ item.getEndpoint());

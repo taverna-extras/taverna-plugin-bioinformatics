@@ -13,6 +13,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JDialog;
 
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivity;
+import net.sf.taverna.t2.workbench.helper.HelpEnabledDialog;
 
 /**
  * @author Stuart Owen
@@ -44,13 +45,13 @@ public class MobyServiceDetailsAction extends AbstractAction {
 		Dimension size = helper.getFrameSize();
 		
 		Component component = helper.getComponent(activity);
-		final JDialog dialog = new JDialog(owner, false);
+		final JDialog dialog = new HelpEnabledDialog(owner, helper.getDescription(), false, null);
 
 		dialog.getContentPane().add(component);
 		dialog.pack();
-		dialog.setTitle(helper.getDescription());
+//		dialog.setTitle(helper.getDescription());
 		dialog.setSize(size);
-		dialog.setModal(false);
+//		dialog.setModal(false);
 		dialog.setVisible(true);
 
 	}

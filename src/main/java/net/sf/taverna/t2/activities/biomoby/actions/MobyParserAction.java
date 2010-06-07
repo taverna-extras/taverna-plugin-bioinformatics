@@ -30,6 +30,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JDialog;
 
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivity;
+import net.sf.taverna.t2.workbench.helper.HelpEnabledDialog;
 
 /**
  * @author Stuart Owen
@@ -50,13 +51,13 @@ public class MobyParserAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		AddParserActionHelper helper = new AddParserActionHelper();
 		Component component = helper.getComponent(activity);
-		final JDialog dialog = new JDialog(owner, false);
-
+		
+		final JDialog dialog = new HelpEnabledDialog(owner, helper.getDescription(), false, null);
 		dialog.getContentPane().add(component);
 		dialog.pack();
-		dialog.setSize(helper.getFrameSize());
+//		dialog.setSize(helper.getFrameSize());
 		dialog.setTitle(helper.getDescription());
-		dialog.setModal(false);
+//		dialog.setModal(false);
 		dialog.setVisible(true);
 	}
 
