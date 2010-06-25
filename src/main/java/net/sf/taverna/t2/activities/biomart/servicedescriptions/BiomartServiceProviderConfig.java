@@ -18,7 +18,7 @@ public class BiomartServiceProviderConfig  extends PropertyAnnotated {
 	}
 
 	public BiomartServiceProviderConfig(String url) {
-		this.url = url;
+		this.url = url.trim();
 	}
 
 	@PropertyAnnotation(displayName = "Biomart location", preferred = true)
@@ -27,7 +27,7 @@ public class BiomartServiceProviderConfig  extends PropertyAnnotated {
 	}
 
 	public void setUrl(String url) {
-		this.url = url;
+		this.url = url.trim();
 	}
 
 	public String toString() {
