@@ -82,7 +82,7 @@ public abstract class AddBiomobyDialogue extends HelpEnabledDialog {
 				}
 
 				try {
-					addRegistry(registryEndpoint, registryNamespace);
+					addRegistry(registryEndpoint.trim(), registryNamespace.trim());
 				} finally {
 					setVisible(false);
 					dispose();
