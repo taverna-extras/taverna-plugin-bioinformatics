@@ -14,8 +14,8 @@ public class BiomobyServiceProviderConfig extends PropertyAnnotated {
 	}
 
 	public BiomobyServiceProviderConfig(String endpoint, String namespace) {
-		this.endpoint = URI.create(endpoint);
-		this.namespace = URI.create(namespace);
+		this.endpoint = URI.create(endpoint.trim());
+		this.namespace = URI.create(namespace.trim());
 	}
 
 	public URI getEndpoint() {
