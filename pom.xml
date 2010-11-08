@@ -23,7 +23,7 @@
 		<dependency>
 			<groupId>org.biomoby</groupId>
 			<artifactId>jmoby</artifactId>
-			<version>1.1.4-taverna</version>
+			<version>${jmoby.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.biomoby</groupId>
@@ -45,17 +45,17 @@
 		<dependency>
 			<groupId>javax.xml.ws</groupId>
 			<artifactId>jaxws-api</artifactId>
-			<version>2.1</version>
+			<version>${jaxws.api.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.org.apache</groupId>
 			<artifactId>jaxp-ri</artifactId>
-			<version>1.4</version>
+			<version>${jaxp.ri.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.biomoby</groupId>
 			<artifactId>jmoby-dashboard</artifactId>
-			<version>1.1.4-taverna</version>
+			<version>${jmoby.version}</version>
 		</dependency>
 	</dependencies>
 </project>
