@@ -13,13 +13,11 @@ import net.sf.taverna.t2.reference.ExternalReferenceSPI;
 import net.sf.taverna.t2.reference.ReferenceService;
 import net.sf.taverna.t2.reference.T2Reference;
 import net.sf.taverna.t2.workflowmodel.EditException;
-import net.sf.taverna.t2.workflowmodel.EditsRegistry;
 import net.sf.taverna.t2.workflowmodel.OutputPort;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AbstractAsynchronousActivity;
 import net.sf.taverna.t2.workflowmodel.processor.activity.ActivityConfigurationException;
 import net.sf.taverna.t2.workflowmodel.processor.activity.ActivityInputPort;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivityCallback;
-import net.sf.taverna.t2.activities.biomoby.XMLUtilities;
 
 import org.apache.log4j.Logger;
 import org.biomoby.client.CentralImpl;
@@ -515,12 +513,12 @@ public class BiomobyObjectActivity extends AbstractAsynchronousActivity<BiomobyO
 	}
 
 	protected void addOutput(String portName, int portDepth, String type) {
-		OutputPort port = EditsRegistry.getEdits().createActivityOutputPort(
+		OutputPort port = edits.createActivityOutputPort(
 				portName, portDepth, portDepth);
 		MimeType mimeType = new MimeType();
 		mimeType.setText(type);
 		try {
-			EditsRegistry.getEdits().getAddAnnotationChainEdit(port, mimeType).doEdit();
+			edits.getAddAnnotationChainEdit(port, mimeType).doEdit();
 		} catch (EditException e) {
 			logger.debug("Error adding MimeType annotation to port", e);
 		}
