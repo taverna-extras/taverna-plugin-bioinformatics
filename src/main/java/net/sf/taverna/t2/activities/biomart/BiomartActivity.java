@@ -34,15 +34,11 @@ import net.sf.taverna.t2.reference.T2Reference;
 import net.sf.taverna.t2.workflowmodel.CompoundEdit;
 import net.sf.taverna.t2.workflowmodel.Edit;
 import net.sf.taverna.t2.workflowmodel.EditException;
-import net.sf.taverna.t2.workflowmodel.Edits;
-import net.sf.taverna.t2.workflowmodel.EditsRegistry;
 import net.sf.taverna.t2.workflowmodel.OutputPort;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AbstractAsynchronousActivity;
 import net.sf.taverna.t2.workflowmodel.processor.activity.ActivityConfigurationException;
 import net.sf.taverna.t2.workflowmodel.processor.activity.ActivityInputPort;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivityCallback;
-import net.sf.taverna.t2.workflowmodel.health.RemoteHealthChecker;
-import net.sf.taverna.t2.visit.VisitReport.Status;
 
 import org.biomart.martservice.MartQuery;
 import org.biomart.martservice.MartServiceException;
@@ -68,8 +64,6 @@ public class BiomartActivity extends
 
 	private static boolean STREAM_RESULTS = true;
 	
-	private Edits edits = EditsRegistry.getEdits();
-
 	private Element configurationBean;
 
 	private Map<String, OutputPort> outputMap = new HashMap<String, OutputPort>();
