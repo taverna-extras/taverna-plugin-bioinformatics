@@ -4,11 +4,15 @@
  ******************************************************************************/
 package net.sf.taverna.t2.activities.biomoby;
 
+import net.sf.taverna.t2.workflowmodel.processor.activity.config.ConfigurationBean;
+import net.sf.taverna.t2.workflowmodel.processor.activity.config.ConfigurationProperty;
+
 /**
  * A configuration bean specific to the Moby Parse Datatype activity.
  * 
  * @author David Withers
  */
+@ConfigurationBean(uri = MobyParseDatatypeActivity.URI + "/configuration")
 public class MobyParseDatatypeActivityConfigurationBean {
 
 	private String datatypeName="";
@@ -31,6 +35,7 @@ public class MobyParseDatatypeActivityConfigurationBean {
 	 *
 	 * @param datatypeName the new datatypeName
 	 */
+	@ConfigurationProperty(name = "datatypeName", label = "Datatype Name", description = "")
 	public void setDatatypeName(String datatypeName) {
 		this.datatypeName = datatypeName;
 	}
@@ -49,6 +54,7 @@ public class MobyParseDatatypeActivityConfigurationBean {
 	 *
 	 * @param registryEndpoint the new registryEndpoint
 	 */
+	@ConfigurationProperty(name = "registryEndpoint", label = "Registry Endpoint", description = "")
 	public void setRegistryEndpoint(String registryEndpoint) {
 		this.registryEndpoint = registryEndpoint;
 	}
@@ -67,6 +73,7 @@ public class MobyParseDatatypeActivityConfigurationBean {
 	 *
 	 * @param articleNameUsedByService the new articleNameUsedByService
 	 */
+	@ConfigurationProperty(name = "articleNameUsedByService", label = "Article Name Used By Service", description = "")
 	public void setArticleNameUsedByService(String articleNameUsedByService) {
 		this.articleNameUsedByService = articleNameUsedByService;
 	}

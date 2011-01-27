@@ -59,6 +59,8 @@ import org.jdom.output.XMLOutputter;
 public class BiomobyActivity extends
 		AbstractAsynchronousActivity<BiomobyActivityConfigurationBean> {
 
+	public static final String URI = "http://ns.taverna.org.uk/2010/activity/biomoby";
+
 	private static Logger logger = Logger.getLogger(BiomobyActivity.class);
 
 	protected BiomobyActivityConfigurationBean configurationBean = new BiomobyActivityConfigurationBean();

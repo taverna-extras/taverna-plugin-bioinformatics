@@ -43,6 +43,8 @@ import org.biomoby.shared.NoSuccessException;
  */
 public class MobyParseDatatypeActivity extends AbstractAsynchronousActivity<MobyParseDatatypeActivityConfigurationBean> {
 
+	public static final String URI = "http://ns.taverna.org.uk/2010/activity/mobyParseDatatype";
+
 	private static Logger logger = Logger.getLogger(MobyParseDatatypeActivity.class);
 			
 	private MobyParseDatatypeActivityConfigurationBean configurationBean = new MobyParseDatatypeActivityConfigurationBean();

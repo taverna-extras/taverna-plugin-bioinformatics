@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="biomobyActivityHealthChecker" class="net.sf.taverna.t2.activities.biomoby.BiomobyActivityHealthChecker" />
+	<bean id="biomobyObjectActivityHealthChecker" class="net.sf.taverna.t2.activities.biomoby.BiomobyObjectActivityHealthChecker" />
+	<bean id="mobyParseDatatypeActivityHealthChecker" class="net.sf.taverna.t2.activities.biomoby.MobyParseDatatypeActivityHealthChecker" />
+
+	<bean id="biomobyActivityFactory" class="net.sf.taverna.t2.activities.biomoby.BiomobyActivityFactory" />
+	<bean id="biomobyObjectActivityFactory" class="net.sf.taverna.t2.activities.biomoby.BiomobyObjectActivityFactory" />
+	<bean id="mobyParseDatatypeActivityFactory" class="net.sf.taverna.t2.activities.biomoby.MobyParseDatatypeActivityFactory" />
+
+</beans>

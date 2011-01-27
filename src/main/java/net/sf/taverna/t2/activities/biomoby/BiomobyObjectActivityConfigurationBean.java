@@ -4,11 +4,15 @@
  ******************************************************************************/
 package net.sf.taverna.t2.activities.biomoby;
 
+import net.sf.taverna.t2.workflowmodel.processor.activity.config.ConfigurationBean;
+import net.sf.taverna.t2.workflowmodel.processor.activity.config.ConfigurationProperty;
+
 /**
  * A configuration bean specific to the Biomoby Object activity.
  * 
  * @author David Withers
  */
+@ConfigurationBean(uri = BiomobyObjectActivity.URI + "/configuration")
 public class BiomobyObjectActivityConfigurationBean {
 
 	private String mobyEndpoint="";
@@ -31,6 +35,7 @@ public class BiomobyObjectActivityConfigurationBean {
 	 *
 	 * @param mobyEndpoint the new mobyEndpoint
 	 */
+	@ConfigurationProperty(name = "mobyEndpoint", label = "Moby Endpoint", description = "")
 	public void setMobyEndpoint(String mobyEndpoint) {
 		this.mobyEndpoint = mobyEndpoint;
 	}
@@ -49,6 +54,7 @@ public class BiomobyObjectActivityConfigurationBean {
 	 *
 	 * @param serviceName the new serviceName
 	 */
+	@ConfigurationProperty(name = "serviceName", label = "Service Name", description = "")
 	public void setServiceName(String serviceName) {
 		this.serviceName = serviceName;
 	}
@@ -67,6 +73,7 @@ public class BiomobyObjectActivityConfigurationBean {
 	 *
 	 * @param authorityName the new authorityName
 	 */
+	@ConfigurationProperty(name = "authorityName", label = "Authority Name", description = "")
 	public void setAuthorityName(String authorityName) {
 		this.authorityName = authorityName;
 	}
