@@ -56,6 +56,8 @@ import org.apache.log4j.Logger;
 public class SoaplabActivity extends
 		AbstractAsynchronousActivity<SoaplabActivityConfigurationBean> {
 
+	public static final String URI = "http://ns.taverna.org.uk/2010/activity/soaplab";
+
 	private static final Logger logger = Logger
 			.getLogger(SoaplabActivity.class);
 

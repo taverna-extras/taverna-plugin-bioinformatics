@@ -20,6 +20,8 @@
  ******************************************************************************/
 package net.sf.taverna.t2.activities.soaplab;
 
+import net.sf.taverna.t2.workflowmodel.processor.activity.config.ConfigurationBean;
+import net.sf.taverna.t2.workflowmodel.processor.activity.config.ConfigurationProperty;
 
 /**
  * A configuration bean specific to a Soaplab activity. In particular it provides details
@@ -27,6 +29,7 @@ package net.sf.taverna.t2.activities.soaplab;
  * 
  * @author David Withers
  */
+@ConfigurationBean(uri = SoaplabActivity.URI + "/configuration")
 public class SoaplabActivityConfigurationBean {
 
 	private String endpoint = null;
@@ -51,6 +54,7 @@ public class SoaplabActivityConfigurationBean {
 	 *
 	 * @param endpoint the new endpoint
 	 */
+	@ConfigurationProperty(name = "endpoint", label = "Soaplab Service Endpoint", description = "The endpoint of the Soaplab service")
 	public void setEndpoint(String endpoint) {
 		this.endpoint = endpoint;
 	}
@@ -69,6 +73,7 @@ public class SoaplabActivityConfigurationBean {
 	 *
 	 * @param pollingInterval the new pollingInterval
 	 */
+	@ConfigurationProperty(name = "pollingInterval", label = "Polling Interval", description = "The polling time interval (in milliseconds)", required = false)
 	public void setPollingInterval(int pollingInterval) {
 		this.pollingInterval = pollingInterval;
 	}
@@ -87,6 +92,7 @@ public class SoaplabActivityConfigurationBean {
 	 *
 	 * @param pollingBackoff the new pollingBackoff
 	 */
+	@ConfigurationProperty(name = "pollingBackoff", label = "Polling Backoff", description = "The polling backoff factor", required = false)
 	public void setPollingBackoff(double pollingBackoff) {
 		this.pollingBackoff = pollingBackoff;
 	}
@@ -105,10 +111,9 @@ public class SoaplabActivityConfigurationBean {
 	 *
 	 * @param pollingIntervalMax the new pollingIntervalMax
 	 */
+	@ConfigurationProperty(name = "pollingIntervalMax", label = "Max Polling Interval", description = "The maximum polling time interval (in milliseconds)", required = false)
 	public void setPollingIntervalMax(int pollingIntervalMax) {
 		this.pollingIntervalMax = pollingIntervalMax;
 	}
-	
-	
 
 }
