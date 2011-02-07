@@ -62,6 +62,8 @@ import org.jdom.Element;
 public class BiomartActivity extends
 		AbstractAsynchronousActivity<Element> {
 
+	public static final String URI = "http://ns.taverna.org.uk/2010/activity/biomart";
+
 	private static boolean STREAM_RESULTS = true;
 	
 	private Element configurationBean;

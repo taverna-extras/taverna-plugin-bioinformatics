@@ -8,7 +8,17 @@
 	</parent>
 	<groupId>net.sf.taverna.t2.activities</groupId>
 	<artifactId>biomart-activity</artifactId>
+	<packaging>bundle</packaging>
 	<name>Taverna 2 Biomart Activity.</name>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+			</plugin>
+		</plugins>
+	</build>
 	<dependencies>
 		<dependency>
 			<groupId>org.biomart</groupId>
@@ -25,6 +35,7 @@
 			<artifactId>reference-api</artifactId>
 			<version>${t2.core.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>net.sf.taverna.t2.activities</groupId>
 			<artifactId>activity-test-utils</artifactId>
