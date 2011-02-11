@@ -4,8 +4,8 @@
  ******************************************************************************/
 package net.sf.taverna.t2.activities.biomoby;
 
-import net.sf.taverna.t2.workflowmodel.processor.activity.config.ConfigurationBean;
-import net.sf.taverna.t2.workflowmodel.processor.activity.config.ConfigurationProperty;
+import net.sf.taverna.t2.workflowmodel.processor.config.ConfigurationBean;
+import net.sf.taverna.t2.workflowmodel.processor.config.ConfigurationProperty;
 
 /**
  * A configuration bean specific to the Biomoby Object activity.
