@@ -20,8 +20,8 @@
  ******************************************************************************/
 package net.sf.taverna.t2.activities.soaplab;
 
-import net.sf.taverna.t2.workflowmodel.processor.activity.config.ConfigurationBean;
-import net.sf.taverna.t2.workflowmodel.processor.activity.config.ConfigurationProperty;
+import net.sf.taverna.t2.workflowmodel.processor.config.ConfigurationBean;
+import net.sf.taverna.t2.workflowmodel.processor.config.ConfigurationProperty;
 
 /**
  * A configuration bean specific to a Soaplab activity. In particular it provides details
