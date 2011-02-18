@@ -15,7 +15,7 @@ import net.sf.taverna.t2.workflowmodel.processor.config.ConfigurationProperty;
  * 
  * @author David Withers
  */
-@ConfigurationBean(uri = BiomobyActivity.URI + "/configuration")
+@ConfigurationBean(uri = BiomobyActivity.URI + "#Config")
 public class BiomobyActivityConfigurationBean {
 
 	private String mobyEndpoint="";

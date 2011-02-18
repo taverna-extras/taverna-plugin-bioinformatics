@@ -12,7 +12,7 @@ import net.sf.taverna.t2.workflowmodel.processor.config.ConfigurationProperty;
  * 
  * @author David Withers
  */
-@ConfigurationBean(uri = MobyParseDatatypeActivity.URI + "/configuration")
+@ConfigurationBean(uri = MobyParseDatatypeActivity.URI + "#Config")
 public class MobyParseDatatypeActivityConfigurationBean {
 
 	private String datatypeName="";
