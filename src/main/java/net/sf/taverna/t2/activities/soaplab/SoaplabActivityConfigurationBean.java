@@ -29,7 +29,7 @@ import net.sf.taverna.t2.workflowmodel.processor.config.ConfigurationProperty;
  * 
  * @author David Withers
  */
-@ConfigurationBean(uri = SoaplabActivity.URI + "/configuration")
+@ConfigurationBean(uri = SoaplabActivity.URI + "#Config")
 public class SoaplabActivityConfigurationBean {
 
 	private String endpoint = null;
