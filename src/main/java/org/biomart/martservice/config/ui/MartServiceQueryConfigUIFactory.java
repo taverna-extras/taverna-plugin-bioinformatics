@@ -1230,33 +1230,35 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 			if (QueryConfigUtils.display(filterDescriptions[0])) {
 				Component filterComponent = getFilterDescriptionUI(
 						filterDescriptions[0], data);
-				filterToDisplayName.put(
-						filterDescriptions[0].getInternalName(), displayName);
-				if (QueryConfigUtils
-						.isReference(filterDescriptions[0], version)) {
-					MartDataset dataset = QueryConfigUtils
-							.getReferencedDataset(martService, martDataset,
-									filterDescriptions[0], version);
-					FilterDescription referencedFilter = QueryConfigUtils
-							.getReferencedFilterDescription(martService,
-									dataset, filterDescriptions[0], version);
-					filterToDisplayName.put(referencedFilter.getInternalName(),
-							displayName);
-				}
+				if (filterComponent != null) {
+					filterToDisplayName.put(
+							filterDescriptions[0].getInternalName(), displayName);
+					if (QueryConfigUtils
+							.isReference(filterDescriptions[0], version)) {
+						MartDataset dataset = QueryConfigUtils
+						.getReferencedDataset(martService, martDataset,
+								filterDescriptions[0], version);
+						FilterDescription referencedFilter = QueryConfigUtils
+						.getReferencedFilterDescription(martService,
+								dataset, filterDescriptions[0], version);
+						filterToDisplayName.put(referencedFilter.getInternalName(),
+								displayName);
+					}
 
-				box = createBox(null, false);
-				JComponent grid = new JPanel(new GridLayout(1, 2));
-				grid.setBackground(componentBackgroundColor);
-				JPanel buttonPanel = new JPanel(new MinimalLayout());
-				buttonPanel.setBackground(componentBackgroundColor);
-				buttonPanel.add(selectorButton);
-				grid.add(buttonPanel);
-				if (filterComponent instanceof QueryComponent) {
-					((QueryComponent) filterComponent)
-							.setSelectorButton(selectorButton);
+					box = createBox(null, false);
+					JComponent grid = new JPanel(new GridLayout(1, 2));
+					grid.setBackground(componentBackgroundColor);
+					JPanel buttonPanel = new JPanel(new MinimalLayout());
+					buttonPanel.setBackground(componentBackgroundColor);
+					buttonPanel.add(selectorButton);
+					grid.add(buttonPanel);
+					if (filterComponent instanceof QueryComponent) {
+						((QueryComponent) filterComponent)
+						.setSelectorButton(selectorButton);
+					}
+					grid.add(filterComponent);
+					box.add(grid);
 				}
-				grid.add(filterComponent);
-				box.add(grid);
 			}
 		} else {
 			Component component = getFilterDescriptionsUI(filterDescriptions,
@@ -1284,33 +1286,35 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 			if (QueryConfigUtils.display(filterDescriptions[i])) {
 				Component component = getFilterDescriptionUI(
 						filterDescriptions[i], data);
-				if (component instanceof QueryComponent
-						&& data instanceof AbstractButton) {
-					((QueryComponent) component)
-							.setSelectorButton((AbstractButton) data);
-				}
+				if (component != null) {
+					if (component instanceof QueryComponent
+							&& data instanceof AbstractButton) {
+						((QueryComponent) component)
+						.setSelectorButton((AbstractButton) data);
+					}
 
-				String displayName = filterDescriptions[i].getDisplayName();
-				if (displayName == null) {
-					logger.info("Cant find a display name for filter '"
-							+ filterDescriptions[i].getInternalName() + "'");
-					displayName = filterDescriptions[i].getInternalName();
-				}
-				filterToDisplayName.put(
-						filterDescriptions[i].getInternalName(), displayName);
-				JLabel displayLabel = new JLabel(QueryConfigUtils
-						.splitSentence(displayName));
-				displayLabel.setFont(displayLabel.getFont().deriveFont(
-						Font.PLAIN));
-				String description = filterDescriptions[i].getDescription();
-				if (description != null) {
-					displayLabel.setToolTipText(description);
-				}
-				displayLabel.setBackground(componentBackgroundColor);
-				displayLabel.setBorder(new EmptyBorder(0, 22, 0, 0));
+					String displayName = filterDescriptions[i].getDisplayName();
+					if (displayName == null) {
+						logger.info("Cant find a display name for filter '"
+								+ filterDescriptions[i].getInternalName() + "'");
+						displayName = filterDescriptions[i].getInternalName();
+					}
+					filterToDisplayName.put(
+							filterDescriptions[i].getInternalName(), displayName);
+					JLabel displayLabel = new JLabel(QueryConfigUtils
+							.splitSentence(displayName));
+					displayLabel.setFont(displayLabel.getFont().deriveFont(
+							Font.PLAIN));
+					String description = filterDescriptions[i].getDescription();
+					if (description != null) {
+						displayLabel.setToolTipText(description);
+					}
+					displayLabel.setBackground(componentBackgroundColor);
+					displayLabel.setBorder(new EmptyBorder(0, 22, 0, 0));
 
-				components.add(displayLabel);
-				components.add(component);
+					components.add(displayLabel);
+					components.add(component);
+				}
 			}
 		}
 
@@ -1345,8 +1349,14 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 		if (QueryConfigUtils.isReference(filterDescription, version)) {
 			dataset = QueryConfigUtils.getReferencedDataset(martService,
 					martDataset, filterDescription, version);
+			if (dataset == null) {
+				return null;
+			}
 			displayedFilter = QueryConfigUtils.getReferencedFilterDescription(
 					martService, dataset, filterDescription, version);
+			if (displayedFilter == null){ 
+				return null;
+			}
 			filterDescription.setDisplayName(displayedFilter.getDisplayName());
 		} else {
 			displayedFilter = filterDescription;
