@@ -515,8 +515,10 @@ public abstract class QueryConfigUtils {
 
 		String[] splitString = csv.split(",");
 		for (int i = 0; i < splitString.length; i++) {
+			if (i > 0) {
+				list.append(LINE_END);
+			}
 			list.append(splitString[i].trim());
-			list.append(LINE_END);
 		}
 
 		return list.toString();
