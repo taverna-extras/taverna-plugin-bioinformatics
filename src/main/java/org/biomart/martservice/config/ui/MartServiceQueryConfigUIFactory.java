@@ -1436,7 +1436,12 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 				componentRegister.add(component);
 			}
 		} else {
-			component = new TextFilterComponent(displayedFilter, martDataset);
+			String multipleValues = displayedFilter.getMultipleValues();
+			if ("1".equals(multipleValues)) {
+				component = new MultipleTextFilterComponent(displayedFilter, martDataset);
+			} else {
+				component = new TextFilterComponent(displayedFilter, martDataset);
+			}
 			component.setPointerDataset(pointerDataset);
 			componentRegister.add(component);
 			// mapping for hard coded rules
@@ -1767,6 +1772,106 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 		public String getValue() {
 			return textField.getText();
+		}
+
+	}
+
+	class MultipleTextFilterComponent extends QueryComponent {
+		private static final long serialVersionUID = 1L;
+
+		private DialogTextArea textArea;
+
+		public MultipleTextFilterComponent(FilterDescription filterDescription,
+				MartDataset dataset) {
+			setConfigObject(filterDescription);
+			setDataset(dataset);
+			setName(filterDescription.getInternalName());
+			setLayout(new MinimalLayout(MinimalLayout.HORIZONTAL));
+			setBackground(componentBackgroundColor);
+
+			textArea = new DialogTextArea();
+			textArea.getDocument().addDocumentListener(new DocumentListener() {
+				public void changedUpdate(DocumentEvent e) {
+				}
+
+				public void insertUpdate(DocumentEvent e) {
+					fireFilterChanged(new QueryComponentEvent(this, getName(),
+							getDataset(), getValue()));
+				}
+
+				public void removeUpdate(DocumentEvent e) {
+					fireFilterChanged(new QueryComponentEvent(this, getName(),
+							getDataset(), getValue()));
+				}
+			});
+
+			final JFileChooser chooser = new JFileChooser();
+			JButton chooserButton = new JButton("Browse...");
+			chooserButton.setBackground(componentBackgroundColor);
+			chooserButton.setFont(chooserButton.getFont()
+					.deriveFont(Font.PLAIN));
+			chooserButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					int returnVal = chooser
+							.showOpenDialog(MultipleTextFilterComponent.this);
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						File file = chooser.getSelectedFile();
+						if (file != null && file.exists() && file.canRead()
+								&& !file.isDirectory()) {
+							StringBuffer buffer = new StringBuffer();
+							BufferedReader in = null;
+							try {
+								in = new BufferedReader(new FileReader(file));
+								String line = in.readLine();
+								while (line != null) {
+									buffer.append(line);
+									buffer.append(QueryConfigUtils.LINE_END);
+									line = in.readLine();
+								}
+							} catch (IOException e1) {
+								// no action
+							} finally {
+								if (in != null) {
+									try {
+										in.close();
+									} catch (IOException e1) {
+										// give up
+									}
+								}
+							}
+							setValue(buffer.toString());
+						}
+					}
+				}
+			});
+
+			JPanel buttonPanel = new JPanel(new BorderLayout());
+			buttonPanel.setBackground(componentBackgroundColor);
+			buttonPanel.add(chooserButton, BorderLayout.WEST);
+
+			JScrollPane textScrollPane = new JScrollPane(textArea);
+			textScrollPane.setBackground(componentBackgroundColor);
+			textScrollPane.setPreferredSize(new Dimension(200, 80));
+
+			add(textScrollPane, BorderLayout.CENTER);
+			add(buttonPanel, BorderLayout.SOUTH);
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryComponent#getType()
+		 */
+		public int getType() {
+			return FILTER;
+		}
+
+		public void setValue(String value) {
+			textArea.setText(QueryConfigUtils.csvToValuePerLine(value));
+		}
+
+		public String getValue() {
+			return QueryConfigUtils.valuePerLineToCsv(textArea.getText());
 		}
 
 	}
