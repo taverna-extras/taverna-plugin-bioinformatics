@@ -431,7 +431,8 @@ public abstract class QueryConfigUtils {
 	public static boolean isReference(BaseNamedConfigurationObject bnco,
 			String softwareVersion) {
 		if ("0.5".equals(softwareVersion)) {
-			return bnco.getAttribute("pointerDataset") != null;
+			return bnco.getAttribute("pointerDataset") != null 
+			&& (bnco.getAttribute("pointerAttribute") != null || bnco.getAttribute("pointerFilter") != null);
 		} else {
 			return bnco.getInternalName().indexOf(".") != -1;
 		}
