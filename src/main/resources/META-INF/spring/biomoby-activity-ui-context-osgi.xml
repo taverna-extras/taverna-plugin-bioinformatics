@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                      http://www.springframework.org/schema/beans/spring-beans.xsd
+                      http://www.springframework.org/schema/osgi 
+                      http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+
+	<service ref="BiomobyQueryFactory" interface="net.sf.taverna.t2.partition.QueryFactory" />
+
+	<service ref="BiomobyActivityIcon" interface="net.sf.taverna.t2.workbench.activityicons.ActivityIconSPI" />
+	<service ref="BiomobyObjectActivityIcon" interface="net.sf.taverna.t2.workbench.activityicons.ActivityIconSPI" />
+
+	<service ref="BiomobyPropertyExtractor" interface="net.sf.taverna.t2.partition.PropertyExtractorSPI" />
+
+	<service ref="BiomobyServiceProvider" interface="net.sf.taverna.t2.servicedescriptions.ServiceDescriptionProvider" />
+
+	<service ref="BiomobyActivityDetailsMenuAction" interface="net.sf.taverna.t2.ui.menu.MenuComponent" />
+	<service ref="BiomobyActivityParserMenuAction" interface="net.sf.taverna.t2.ui.menu.MenuComponent" />
+	<service ref="ConfigureBiomobyMenuAction" interface="net.sf.taverna.t2.ui.menu.MenuComponent" />
+
+	<service ref="BiomobyPartitionAlgorithmSetSPI" interface="net.sf.taverna.t2.partition.PartitionAlgorithmSetSPI" />
+
+	<service ref="BiomobyActivityContextualViewFactory" interface="net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ContextualViewFactory" />
+	<service ref="BiomobyObjectActivityContextualViewFactory" interface="net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ContextualViewFactory" />
+	<service ref="MobyParseDatatypeContextualViewFactory" interface="net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ContextualViewFactory" />
+
+</beans:beans>
