@@ -323,9 +323,9 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 		final JComponent datasetPanel = new DatasetPanel();
 		inputPanel.add(datasetPanel);
 
-		final Component linkComponent = new DatasetLinkComponent(inputPanel,
-				summaryPanel);
-		componentRegister.add(linkComponent);
+//		final Component linkComponent = new DatasetLinkComponent(inputPanel,
+//				summaryPanel);
+//		componentRegister.add(linkComponent);
 
 		final JComponent attributePanel = createVerticalBox(backgroundColor);
 		attributePanel.setBorder(new EmptyBorder(10, 5, 10, 5));
@@ -343,15 +343,15 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 					}
 				});
 
-		summaryPanel.getDataset2Button().addActionListener(
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						inputPanel.removeAll();
-						inputPanel.add(linkComponent);
-						inputPanel.revalidate();
-						inputPanel.repaint();
-					}
-				});
+//		summaryPanel.getDataset2Button().addActionListener(
+//				new ActionListener() {
+//					public void actionPerformed(ActionEvent e) {
+//						inputPanel.removeAll();
+//						inputPanel.add(linkComponent);
+//						inputPanel.revalidate();
+//						inputPanel.repaint();
+//					}
+//				});
 
 		generateConfiguration(this, summaryPanel, inputPanel, attributePanel,
 				filterPanel);
@@ -2975,26 +2975,26 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 			add(getAttributes1List(), constraints);
 			// constraints.insets = new Insets(5, 15, 0, 5);
 
-			Component line = new JPanel();
-			line.setPreferredSize(new Dimension(0, 1));
-			line.setBackground(Color.BLACK);
+//			Component line = new JPanel();
+//			line.setPreferredSize(new Dimension(0, 1));
+//			line.setBackground(Color.BLACK);
 
-			constraints.fill = GridBagConstraints.HORIZONTAL;
-			constraints.insets = new Insets(20, 15, 15, 0);
-			add(line, constraints);
-			constraints.fill = GridBagConstraints.NONE;
+//			constraints.fill = GridBagConstraints.HORIZONTAL;
+//			constraints.insets = new Insets(20, 15, 15, 0);
+//			add(line, constraints);
+//			constraints.fill = GridBagConstraints.NONE;
 
 			constraints.insets = new Insets(5, 5, 0, 5);
-			constraints.weightx = 0.0;
-			add(getDataset2Button(), constraints);
-			constraints.gridx = 1;
-			constraints.gridy = 7;
+//			constraints.weightx = 0.0;
+//			add(getDataset2Button(), constraints);
+//			constraints.gridx = 1;
+//			constraints.gridy = 7;
 			constraints.weightx = 1.0;
-			add(getDataset2CountLabel(), constraints);
+//			add(getDataset2CountLabel(), constraints);
 			constraints.gridx = 0;
 			constraints.gridy = GridBagConstraints.RELATIVE;
 			constraints.gridwidth = 2;
-			add(getDataset2Label(), constraints);
+//			add(getDataset2Label(), constraints);
 
 			constraints.fill = GridBagConstraints.VERTICAL;
 			constraints.weighty = 1.0;
