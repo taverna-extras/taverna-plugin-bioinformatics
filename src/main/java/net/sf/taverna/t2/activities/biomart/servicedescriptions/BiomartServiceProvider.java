@@ -69,9 +69,12 @@ public class BiomartServiceProvider extends AbstractConfigurableServiceProvider<
 						descriptions.add(item);
 					}
 				}
+				if (descriptions.size() > 0) {
+					callBack.partialResults(descriptions);
+					descriptions.clear();
+				}
 			}
 		}
-		callBack.partialResults(descriptions);
 		callBack.finished();
 		}
 		catch (MartServiceException e) {
