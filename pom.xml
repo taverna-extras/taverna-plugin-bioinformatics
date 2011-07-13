@@ -25,7 +25,7 @@
 		<dependency>
 			<groupId>org.biomoby</groupId>
 			<artifactId>jmoby</artifactId>
-			<version>1.1.4-taverna</version>
+			<version>${jmoby.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.biomoby</groupId>
@@ -60,7 +60,7 @@
 		<dependency>
 			<groupId>org.biomoby</groupId>
 			<artifactId>jmoby-dashboard</artifactId>
-			<version>1.1.4-taverna</version>
+			<version>${jmoby.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jdom</groupId>
