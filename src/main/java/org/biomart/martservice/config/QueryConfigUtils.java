@@ -431,7 +431,8 @@ public abstract class QueryConfigUtils {
 	public static boolean isReference(BaseNamedConfigurationObject bnco,
 			String softwareVersion) {
 		if ("0.5".equals(softwareVersion)) {
-			return bnco.getAttribute("pointerDataset") != null;
+			return bnco.getAttribute("pointerDataset") != null 
+			&& (bnco.getAttribute("pointerAttribute") != null || bnco.getAttribute("pointerFilter") != null);
 		} else {
 			return bnco.getInternalName().indexOf(".") != -1;
 		}
@@ -514,8 +515,10 @@ public abstract class QueryConfigUtils {
 
 		String[] splitString = csv.split(",");
 		for (int i = 0; i < splitString.length; i++) {
+			if (i > 0) {
+				list.append(LINE_END);
+			}
 			list.append(splitString[i].trim());
-			list.append(LINE_END);
 		}
 
 		return list.toString();

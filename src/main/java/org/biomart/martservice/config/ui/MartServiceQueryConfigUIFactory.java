@@ -323,9 +323,9 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 		final JComponent datasetPanel = new DatasetPanel();
 		inputPanel.add(datasetPanel);
 
-		final Component linkComponent = new DatasetLinkComponent(inputPanel,
-				summaryPanel);
-		componentRegister.add(linkComponent);
+//		final Component linkComponent = new DatasetLinkComponent(inputPanel,
+//				summaryPanel);
+//		componentRegister.add(linkComponent);
 
 		final JComponent attributePanel = createVerticalBox(backgroundColor);
 		attributePanel.setBorder(new EmptyBorder(10, 5, 10, 5));
@@ -343,15 +343,15 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 					}
 				});
 
-		summaryPanel.getDataset2Button().addActionListener(
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						inputPanel.removeAll();
-						inputPanel.add(linkComponent);
-						inputPanel.revalidate();
-						inputPanel.repaint();
-					}
-				});
+//		summaryPanel.getDataset2Button().addActionListener(
+//				new ActionListener() {
+//					public void actionPerformed(ActionEvent e) {
+//						inputPanel.removeAll();
+//						inputPanel.add(linkComponent);
+//						inputPanel.revalidate();
+//						inputPanel.repaint();
+//					}
+//				});
 
 		generateConfiguration(this, summaryPanel, inputPanel, attributePanel,
 				filterPanel);
@@ -1230,33 +1230,35 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 			if (QueryConfigUtils.display(filterDescriptions[0])) {
 				Component filterComponent = getFilterDescriptionUI(
 						filterDescriptions[0], data);
-				filterToDisplayName.put(
-						filterDescriptions[0].getInternalName(), displayName);
-				if (QueryConfigUtils
-						.isReference(filterDescriptions[0], version)) {
-					MartDataset dataset = QueryConfigUtils
-							.getReferencedDataset(martService, martDataset,
-									filterDescriptions[0], version);
-					FilterDescription referencedFilter = QueryConfigUtils
-							.getReferencedFilterDescription(martService,
-									dataset, filterDescriptions[0], version);
-					filterToDisplayName.put(referencedFilter.getInternalName(),
-							displayName);
-				}
+				if (filterComponent != null) {
+					filterToDisplayName.put(
+							filterDescriptions[0].getInternalName(), displayName);
+					if (QueryConfigUtils
+							.isReference(filterDescriptions[0], version)) {
+						MartDataset dataset = QueryConfigUtils
+						.getReferencedDataset(martService, martDataset,
+								filterDescriptions[0], version);
+						FilterDescription referencedFilter = QueryConfigUtils
+						.getReferencedFilterDescription(martService,
+								dataset, filterDescriptions[0], version);
+						filterToDisplayName.put(referencedFilter.getInternalName(),
+								displayName);
+					}
 
-				box = createBox(null, false);
-				JComponent grid = new JPanel(new GridLayout(1, 2));
-				grid.setBackground(componentBackgroundColor);
-				JPanel buttonPanel = new JPanel(new MinimalLayout());
-				buttonPanel.setBackground(componentBackgroundColor);
-				buttonPanel.add(selectorButton);
-				grid.add(buttonPanel);
-				if (filterComponent instanceof QueryComponent) {
-					((QueryComponent) filterComponent)
-							.setSelectorButton(selectorButton);
+					box = createBox(null, false);
+					JComponent grid = new JPanel(new GridLayout(1, 2));
+					grid.setBackground(componentBackgroundColor);
+					JPanel buttonPanel = new JPanel(new MinimalLayout());
+					buttonPanel.setBackground(componentBackgroundColor);
+					buttonPanel.add(selectorButton);
+					grid.add(buttonPanel);
+					if (filterComponent instanceof QueryComponent) {
+						((QueryComponent) filterComponent)
+						.setSelectorButton(selectorButton);
+					}
+					grid.add(filterComponent);
+					box.add(grid);
 				}
-				grid.add(filterComponent);
-				box.add(grid);
 			}
 		} else {
 			Component component = getFilterDescriptionsUI(filterDescriptions,
@@ -1284,33 +1286,35 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 			if (QueryConfigUtils.display(filterDescriptions[i])) {
 				Component component = getFilterDescriptionUI(
 						filterDescriptions[i], data);
-				if (component instanceof QueryComponent
-						&& data instanceof AbstractButton) {
-					((QueryComponent) component)
-							.setSelectorButton((AbstractButton) data);
-				}
+				if (component != null) {
+					if (component instanceof QueryComponent
+							&& data instanceof AbstractButton) {
+						((QueryComponent) component)
+						.setSelectorButton((AbstractButton) data);
+					}
 
-				String displayName = filterDescriptions[i].getDisplayName();
-				if (displayName == null) {
-					logger.info("Cant find a display name for filter '"
-							+ filterDescriptions[i].getInternalName() + "'");
-					displayName = filterDescriptions[i].getInternalName();
-				}
-				filterToDisplayName.put(
-						filterDescriptions[i].getInternalName(), displayName);
-				JLabel displayLabel = new JLabel(QueryConfigUtils
-						.splitSentence(displayName));
-				displayLabel.setFont(displayLabel.getFont().deriveFont(
-						Font.PLAIN));
-				String description = filterDescriptions[i].getDescription();
-				if (description != null) {
-					displayLabel.setToolTipText(description);
-				}
-				displayLabel.setBackground(componentBackgroundColor);
-				displayLabel.setBorder(new EmptyBorder(0, 22, 0, 0));
+					String displayName = filterDescriptions[i].getDisplayName();
+					if (displayName == null) {
+						logger.info("Cant find a display name for filter '"
+								+ filterDescriptions[i].getInternalName() + "'");
+						displayName = filterDescriptions[i].getInternalName();
+					}
+					filterToDisplayName.put(
+							filterDescriptions[i].getInternalName(), displayName);
+					JLabel displayLabel = new JLabel(QueryConfigUtils
+							.splitSentence(displayName));
+					displayLabel.setFont(displayLabel.getFont().deriveFont(
+							Font.PLAIN));
+					String description = filterDescriptions[i].getDescription();
+					if (description != null) {
+						displayLabel.setToolTipText(description);
+					}
+					displayLabel.setBackground(componentBackgroundColor);
+					displayLabel.setBorder(new EmptyBorder(0, 22, 0, 0));
 
-				components.add(displayLabel);
-				components.add(component);
+					components.add(displayLabel);
+					components.add(component);
+				}
 			}
 		}
 
@@ -1345,8 +1349,14 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 		if (QueryConfigUtils.isReference(filterDescription, version)) {
 			dataset = QueryConfigUtils.getReferencedDataset(martService,
 					martDataset, filterDescription, version);
+			if (dataset == null) {
+				return null;
+			}
 			displayedFilter = QueryConfigUtils.getReferencedFilterDescription(
 					martService, dataset, filterDescription, version);
+			if (displayedFilter == null){ 
+				return null;
+			}
 			filterDescription.setDisplayName(displayedFilter.getDisplayName());
 		} else {
 			displayedFilter = filterDescription;
@@ -1426,7 +1436,12 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 				componentRegister.add(component);
 			}
 		} else {
-			component = new TextFilterComponent(displayedFilter, martDataset);
+			String multipleValues = displayedFilter.getMultipleValues();
+			if ("1".equals(multipleValues)) {
+				component = new MultipleTextFilterComponent(displayedFilter, martDataset);
+			} else {
+				component = new TextFilterComponent(displayedFilter, martDataset);
+			}
 			component.setPointerDataset(pointerDataset);
 			componentRegister.add(component);
 			// mapping for hard coded rules
@@ -1757,6 +1772,106 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 		public String getValue() {
 			return textField.getText();
+		}
+
+	}
+
+	class MultipleTextFilterComponent extends QueryComponent {
+		private static final long serialVersionUID = 1L;
+
+		private DialogTextArea textArea;
+
+		public MultipleTextFilterComponent(FilterDescription filterDescription,
+				MartDataset dataset) {
+			setConfigObject(filterDescription);
+			setDataset(dataset);
+			setName(filterDescription.getInternalName());
+			setLayout(new MinimalLayout(MinimalLayout.HORIZONTAL));
+			setBackground(componentBackgroundColor);
+
+			textArea = new DialogTextArea();
+			textArea.getDocument().addDocumentListener(new DocumentListener() {
+				public void changedUpdate(DocumentEvent e) {
+				}
+
+				public void insertUpdate(DocumentEvent e) {
+					fireFilterChanged(new QueryComponentEvent(this, getName(),
+							getDataset(), getValue()));
+				}
+
+				public void removeUpdate(DocumentEvent e) {
+					fireFilterChanged(new QueryComponentEvent(this, getName(),
+							getDataset(), getValue()));
+				}
+			});
+
+			final JFileChooser chooser = new JFileChooser();
+			JButton chooserButton = new JButton("Browse...");
+			chooserButton.setBackground(componentBackgroundColor);
+			chooserButton.setFont(chooserButton.getFont()
+					.deriveFont(Font.PLAIN));
+			chooserButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					int returnVal = chooser
+							.showOpenDialog(MultipleTextFilterComponent.this);
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						File file = chooser.getSelectedFile();
+						if (file != null && file.exists() && file.canRead()
+								&& !file.isDirectory()) {
+							StringBuffer buffer = new StringBuffer();
+							BufferedReader in = null;
+							try {
+								in = new BufferedReader(new FileReader(file));
+								String line = in.readLine();
+								while (line != null) {
+									buffer.append(line);
+									buffer.append(QueryConfigUtils.LINE_END);
+									line = in.readLine();
+								}
+							} catch (IOException e1) {
+								// no action
+							} finally {
+								if (in != null) {
+									try {
+										in.close();
+									} catch (IOException e1) {
+										// give up
+									}
+								}
+							}
+							setValue(buffer.toString());
+						}
+					}
+				}
+			});
+
+			JPanel buttonPanel = new JPanel(new BorderLayout());
+			buttonPanel.setBackground(componentBackgroundColor);
+			buttonPanel.add(chooserButton, BorderLayout.WEST);
+
+			JScrollPane textScrollPane = new JScrollPane(textArea);
+			textScrollPane.setBackground(componentBackgroundColor);
+			textScrollPane.setPreferredSize(new Dimension(200, 80));
+
+			add(textScrollPane, BorderLayout.CENTER);
+			add(buttonPanel, BorderLayout.SOUTH);
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryComponent#getType()
+		 */
+		public int getType() {
+			return FILTER;
+		}
+
+		public void setValue(String value) {
+			textArea.setText(QueryConfigUtils.csvToValuePerLine(value));
+		}
+
+		public String getValue() {
+			return QueryConfigUtils.valuePerLineToCsv(textArea.getText());
 		}
 
 	}
@@ -2860,26 +2975,26 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 			add(getAttributes1List(), constraints);
 			// constraints.insets = new Insets(5, 15, 0, 5);
 
-			Component line = new JPanel();
-			line.setPreferredSize(new Dimension(0, 1));
-			line.setBackground(Color.BLACK);
+//			Component line = new JPanel();
+//			line.setPreferredSize(new Dimension(0, 1));
+//			line.setBackground(Color.BLACK);
 
-			constraints.fill = GridBagConstraints.HORIZONTAL;
-			constraints.insets = new Insets(20, 15, 15, 0);
-			add(line, constraints);
-			constraints.fill = GridBagConstraints.NONE;
+//			constraints.fill = GridBagConstraints.HORIZONTAL;
+//			constraints.insets = new Insets(20, 15, 15, 0);
+//			add(line, constraints);
+//			constraints.fill = GridBagConstraints.NONE;
 
 			constraints.insets = new Insets(5, 5, 0, 5);
-			constraints.weightx = 0.0;
-			add(getDataset2Button(), constraints);
-			constraints.gridx = 1;
-			constraints.gridy = 7;
+//			constraints.weightx = 0.0;
+//			add(getDataset2Button(), constraints);
+//			constraints.gridx = 1;
+//			constraints.gridy = 7;
 			constraints.weightx = 1.0;
-			add(getDataset2CountLabel(), constraints);
+//			add(getDataset2CountLabel(), constraints);
 			constraints.gridx = 0;
 			constraints.gridy = GridBagConstraints.RELATIVE;
 			constraints.gridwidth = 2;
-			add(getDataset2Label(), constraints);
+//			add(getDataset2Label(), constraints);
 
 			constraints.fill = GridBagConstraints.VERTICAL;
 			constraints.weighty = 1.0;
