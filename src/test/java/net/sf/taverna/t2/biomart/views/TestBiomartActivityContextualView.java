@@ -1,19 +1,19 @@
 /*******************************************************************************
- * Copyright (C) 2007 The University of Manchester   
- * 
+ * Copyright (C) 2007 The University of Manchester
+ *
  *  Modifications to the initial code base are copyright of their
  *  respective authors, or their employers as appropriate.
- * 
+ *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public License
  *  as published by the Free Software Foundation; either version 2.1 of
  *  the License, or (at your option) any later version.
- *    
+ *
  *  This program is distributed in the hope that it will be useful, but
  *  WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- *    
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
@@ -45,17 +45,17 @@ public class TestBiomartActivityContextualView {
 	@Before
 	public void setup() throws Exception {
 		activity = new BiomartActivity();
-		
+
 		Element el = getQueryElement("biomart-query.xml");
-		
+
 		((BiomartActivity)activity).configure(el);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testDisovery() throws Exception {
-		
-		
+
+
 		List<ContextualViewFactory> viewFactoriesForBeanType = ContextualViewFactoryRegistry.getInstance().getViewFactoriesForObject(activity);
 		assertTrue("The biomart view factory should not be empty", !viewFactoriesForBeanType.isEmpty());
 		BiomartActivityViewFactory factory = null;
@@ -66,10 +66,10 @@ public class TestBiomartActivityContextualView {
 		}
 		assertTrue("No Biomart view factory", factory != null);
 	}
-	
+
 	@Test
 	public void testConfigurationAction() throws Exception {
-		BiomartActivityContextualView view = new BiomartActivityContextualView(activity);
+		BiomartActivityContextualView view = new BiomartActivityContextualView(activity, null, null);
 		assertNotNull("The view should provide a configuration action",view.getConfigureAction(null));
 		assertTrue("The configuration action should be an instance of BiomartActivityConfigurationAction",view.getConfigureAction(null) instanceof BiomartActivityConfigurationAction);
 	}
@@ -85,10 +85,10 @@ public class TestBiomartActivityContextualView {
 		SAXBuilder builder = new SAXBuilder();
 		return builder.build(inStream).detachRootElement();
 	}
-	
+
 	private void run() throws Exception {
 		setup();
-		BiomartActivityContextualView view = new BiomartActivityContextualView(activity);
+		BiomartActivityContextualView view = new BiomartActivityContextualView(activity, null, null);
 		view.setVisible(true);
 	}
 	public static void main(String[] args) throws Exception {
