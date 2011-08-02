@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2007 The University of Manchester 
+ * Copyright (C) 2007 The University of Manchester
  *
  * Modifications to the initial code base are copyright of their
  * respective authors, or their employers as appropriate.
@@ -8,12 +8,12 @@
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1 of
  * the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
@@ -33,7 +33,6 @@ import net.sf.taverna.t2.workflowmodel.Dataflow;
 import net.sf.taverna.t2.workflowmodel.Edit;
 import net.sf.taverna.t2.workflowmodel.EditException;
 import net.sf.taverna.t2.workflowmodel.Edits;
-import net.sf.taverna.t2.workflowmodel.EditsRegistry;
 import net.sf.taverna.t2.workflowmodel.EventForwardingOutputPort;
 import net.sf.taverna.t2.workflowmodel.EventHandlingInputPort;
 import net.sf.taverna.t2.workflowmodel.InputPort;
@@ -48,15 +47,15 @@ import net.sf.taverna.t2.workflowmodel.utils.Tools;
 
 /**
  * @author Stuart Owen
- * 
+ *
  */
 public class AddUpstreamObjectEdit extends AbstractDataflowEdit {
-	
+
 	private static Log logger = Log.getLogger(AddUpstreamObjectEdit.class);
 
 	private final Processor sinkProcessor;
 	private final BiomobyObjectActivity activity;
-	private Edits edits = EditsRegistry.getEdits();
+	private Edits edits;
 
 	private List<Edit<?>> subEdits = new ArrayList<Edit<?>>();
 
@@ -64,15 +63,16 @@ public class AddUpstreamObjectEdit extends AbstractDataflowEdit {
 	 * @param dataflow
 	 */
 	public AddUpstreamObjectEdit(Dataflow dataflow, Processor sinkProcessor,
-			BiomobyObjectActivity activity) {
+			BiomobyObjectActivity activity, Edits edits) {
 		super(dataflow);
 		this.sinkProcessor = sinkProcessor;
 		this.activity = activity;
+		this.edits = edits;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * net.sf.taverna.t2.workflowmodel.impl.AbstractDataflowEdit#doEditAction
 	 * (net.sf.taverna.t2.workflowmodel.impl.DataflowImpl)
@@ -114,7 +114,7 @@ public class AddUpstreamObjectEdit extends AbstractDataflowEdit {
 					sourceProcessor, boActivity);
 			editList.add(addActivityToProcessorEdit);
 
-			
+
 
 			editList.add(edits.getAddProcessorEdit(dataflow, sourceProcessor));
 
@@ -122,14 +122,14 @@ public class AddUpstreamObjectEdit extends AbstractDataflowEdit {
 			subEdits.add(compoundEdit);
 			compoundEdit.doEdit();
 
-			
+
 			List<Edit<?>> linkEditList = new ArrayList<Edit<?>>();
-			
+
 			EventForwardingOutputPort sourcePort = getSourcePort(
 					sourceProcessor, boActivity, "mobyData", linkEditList);
 			EventHandlingInputPort sinkPort = getSinkPort(sinkProcessor, activity, inputPort.getName(), linkEditList);
 			linkEditList.add(Tools.getCreateAndConnectDatalinkEdit(dataflow,
-					sourcePort, sinkPort));
+					sourcePort, sinkPort, edits));
 			CompoundEdit linkEdit = new CompoundEdit(linkEditList);
 			subEdits.add(linkEdit);
 			linkEdit.doEdit();
@@ -139,7 +139,7 @@ public class AddUpstreamObjectEdit extends AbstractDataflowEdit {
 					|| name.equalsIgnoreCase("Integer") || name
 					.equalsIgnoreCase("DateTime"))) {
 				Edit upstreamObjectEdit = new AddUpstreamObjectEdit(dataflow,
-						sourceProcessor, boActivity);
+						sourceProcessor, boActivity, edits);
 				subEdits.add(upstreamObjectEdit);
 				upstreamObjectEdit.doEdit();
 			}
@@ -149,7 +149,7 @@ public class AddUpstreamObjectEdit extends AbstractDataflowEdit {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * net.sf.taverna.t2.workflowmodel.impl.AbstractDataflowEdit#undoEditAction
 	 * (net.sf.taverna.t2.workflowmodel.impl.DataflowImpl)
@@ -163,10 +163,10 @@ public class AddUpstreamObjectEdit extends AbstractDataflowEdit {
 					edit.undo();
 			}
 		}
-		
+
 
 	}
-	
+
 	private EventHandlingInputPort getSinkPort(
 			net.sf.taverna.t2.workflowmodel.Processor processor,
 			Activity<?> activity, String portName, List<Edit<?>> editList) {

@@ -50,7 +50,6 @@ import net.sf.taverna.t2.workflowmodel.CompoundEdit;
 import net.sf.taverna.t2.workflowmodel.Dataflow;
 import net.sf.taverna.t2.workflowmodel.Edit;
 import net.sf.taverna.t2.workflowmodel.Edits;
-import net.sf.taverna.t2.workflowmodel.EditsRegistry;
 import net.sf.taverna.t2.workflowmodel.utils.Tools;
 
 import org.apache.log4j.Logger;
@@ -60,39 +59,43 @@ import org.biomoby.shared.MobyException;
 /**
  * Creates a Datatype tree for any BioMOBY registry. The tree allows the user to
  * add nodes to the workflow. Includes the ability to search for datatypes too.
- * 
+ *
  * @author Eddie Kawas, The BioMoby Project
- * 
+ *
  */
 public class BiomobyObjectTree {
 
 	private static Logger logger = Logger
 	.getLogger(BiomobyObjectTree.class);
-	
+
 	private JTree tree;
 	private String registryEndpoint = "";
 	private String registryNamespace = "";
 	private static String SEARCH_DATATYPE_TEXT = "Type to search!";
 	private FilterTreeModel model;
+	private final EditManager editManager;
+	private final FileManager fileManager;
 
 	/**
 	 * Default constructor. Creates a BiomobyObjectTree for the default Biomoby
 	 * registry
 	 */
-	public BiomobyObjectTree() {
-		this(CentralImpl.DEFAULT_ENDPOINT, CentralImpl.DEFAULT_NAMESPACE);
+	public BiomobyObjectTree(EditManager editManager, FileManager fileManager) {
+		this(CentralImpl.DEFAULT_ENDPOINT, CentralImpl.DEFAULT_NAMESPACE, editManager, fileManager);
 	}
 
 	/**
-	 * 
+	 *
 	 * @param url
 	 *            the Biomoby registry endpoint URL to build a tree for
 	 * @param uri
 	 *            the Biomoby registry namespace URI to build a tree for
 	 */
-	public BiomobyObjectTree(String url, String uri) {
+	public BiomobyObjectTree(String url, String uri, EditManager editManager, FileManager fileManager) {
 		this.registryEndpoint = url;
 		this.registryNamespace = uri;
+		this.editManager = editManager;
+		this.fileManager = fileManager;
 	}
 
 	/*
@@ -117,7 +120,7 @@ public class BiomobyObjectTree {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return a Tree containing the datatype ontology for the specified biomoby
 	 *         registry
 	 * @throws MobyException
@@ -241,7 +244,7 @@ public class BiomobyObjectTree {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param registryEndpoint
 	 *            the endpoint to set
 	 */
@@ -250,7 +253,7 @@ public class BiomobyObjectTree {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param registryNamespace
 	 *            the namespace to set
 	 */
@@ -259,7 +262,7 @@ public class BiomobyObjectTree {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the registry endpoint that this tree is using
 	 */
 	public String getRegistryEndpoint() {
@@ -267,7 +270,7 @@ public class BiomobyObjectTree {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the registry namespace that this tree is using
 	 */
 	public String getRegistryNamespace() {
@@ -319,9 +322,7 @@ public class BiomobyObjectTree {
 					public void actionPerformed(ActionEvent ae) {
 
 						try {
-							Dataflow dataflow = FileManager.getInstance()
-									.getCurrentDataflow();
-							Edits edits = EditsRegistry.getEdits();
+							Dataflow dataflow = fileManager.getCurrentDataflow();
 							List<Edit<?>> compoundEdits = new ArrayList<Edit<?>>();
 							List<Edit<?>> editList = new ArrayList<Edit<?>>();
 
@@ -335,6 +336,7 @@ public class BiomobyObjectTree {
 							configBean.setAuthorityName("");
 							configBean.setServiceName(selectedObject);
 
+							Edits edits = editManager.getEdits();
 							net.sf.taverna.t2.workflowmodel.Processor sourceProcessor = edits
 									.createProcessor(name);
 							BiomobyObjectActivity boActivity = new BiomobyObjectActivity();
@@ -362,8 +364,7 @@ public class BiomobyObjectTree {
 
 							// process relationships
 							Edit<?> edit = new AddUpstreamObjectEdit(dataflow,
-									sourceProcessor, boActivity);
-							EditManager editManager = EditManager.getInstance();
+									sourceProcessor, boActivity, edits);
 							editManager.doDataflowEdit(dataflow, edit);
 
 						} catch (Exception e) {
@@ -394,7 +395,7 @@ public class BiomobyObjectTree {
 		private static final long serialVersionUID = 7287097980554656834L;
 
 		// the max tool tip length
-		private static int MAX_TOOLTIP_LENGTH = 300; 
+		private static int MAX_TOOLTIP_LENGTH = 300;
 
 		@Override
 		public Component getTreeCellRendererComponent(JTree tree, Object value,
@@ -410,7 +411,7 @@ public class BiomobyObjectTree {
 						d = d.substring(0, MAX_TOOLTIP_LENGTH) + "...";
 					setToolTipText("<html><body><div style='width:200px;'><span>"
 							+ d + "</span></div></body></html>");
-					
+
 					ToolTipManager.sharedInstance().setDismissDelay(
 							Integer.MAX_VALUE);
 				}
@@ -430,7 +431,7 @@ public class BiomobyObjectTree {
 		String currentFilter;
 
 		/**
-		 * 
+		 *
 		 * @param node
 		 *            the node to apply filtering to
 		 */
@@ -439,7 +440,7 @@ public class BiomobyObjectTree {
 		}
 
 		/**
-		 * 
+		 *
 		 * @param node
 		 *            the node to apply filtering to
 		 * @param filter
@@ -452,7 +453,7 @@ public class BiomobyObjectTree {
 		}
 
 		/**
-		 * 
+		 *
 		 * @param filter
 		 *            the filter to set and apply to our node
 		 */
@@ -467,7 +468,7 @@ public class BiomobyObjectTree {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see
 		 * javax.swing.tree.DefaultTreeModel#getChildCount(java.lang.Object)
 		 */
@@ -480,7 +481,7 @@ public class BiomobyObjectTree {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see javax.swing.tree.DefaultTreeModel#getChild(java.lang.Object,
 		 * int)
 		 */
@@ -493,7 +494,7 @@ public class BiomobyObjectTree {
 
 		/**
 		 * Getter
-		 * 
+		 *
 		 * @return the filter that we are currently using
 		 */
 		public String getCurrentFilter() {
@@ -561,7 +562,7 @@ public class BiomobyObjectTree {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see javax.swing.tree.DefaultMutableTreeNode#remove(int)
 		 */
 		public void remove(int childIndex) {
@@ -575,7 +576,7 @@ public class BiomobyObjectTree {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see javax.swing.tree.DefaultMutableTreeNode#getChildCount()
 		 */
 		public int getChildCount() {
@@ -587,7 +588,7 @@ public class BiomobyObjectTree {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see javax.swing.tree.DefaultMutableTreeNode#getChildAt(int)
 		 */
 		public FilterTreeNode getChildAt(int index) {
@@ -598,7 +599,7 @@ public class BiomobyObjectTree {
 		}
 
 		/**
-		 * 
+		 *
 		 * @return
 		 */
 		public boolean isPassed() {
@@ -614,9 +615,9 @@ public class BiomobyObjectTree {
 		// Create a component to add to the frame
 /*		Component comp = new BiomobyObjectTree(CentralImpl.DEFAULT_ENDPOINT,
 				CentralImpl.DEFAULT_NAMESPACE).getDatatypeTree();*/
-		
+
 		Component comp = new BiomobyObjectTree("http://cropwiki.irri.org/cgi-bin/MOBY-Central.pl",
-				CentralImpl.DEFAULT_NAMESPACE).getDatatypeTree();
+				CentralImpl.DEFAULT_NAMESPACE, null, null).getDatatypeTree();
 
 		// Add the component to the frame's content pane;
 		// by default, the content pane has a border layout

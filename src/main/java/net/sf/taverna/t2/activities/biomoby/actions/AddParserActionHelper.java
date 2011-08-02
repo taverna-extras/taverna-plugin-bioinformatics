@@ -26,9 +26,6 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivity;
-import net.sf.taverna.t2.activities.biomoby.actions.BioMobyServiceTreeCustomRenderer;
-import net.sf.taverna.t2.activities.biomoby.actions.MobyObjectTreeNode;
-import net.sf.taverna.t2.activities.biomoby.actions.MobyServiceTreeNode;
 import net.sf.taverna.t2.activities.biomoby.edits.AddMobyParseDatatypeEdit;
 import net.sf.taverna.t2.workbench.edits.EditManager;
 import net.sf.taverna.t2.workbench.file.FileManager;
@@ -43,22 +40,30 @@ import org.biomoby.shared.MobyPrimaryDataSimple;
 
 /**
  * An action to add a parser from within the Workflow editor
- * 
+ *
  * @author Eddie Kawas
  * @author Stuart Owen - adapted for Taverna 2
  */
 public class AddParserActionHelper  {
     private static Logger logger = Logger.getLogger(AddParserActionHelper.class);
 
-    /*
-         * (non-Javadoc)
-         * 
-         * @see org.embl.ebi.escience.scuflui.processoractions.AbstractProcessorAction#getComponent(org.embl.ebi.escience.scufl.Processor)
-         */
+    private EditManager editManager;
 
+	private final FileManager fileManager;
+
+    public AddParserActionHelper(EditManager editManager, FileManager fileManager) {
+		this.editManager = editManager;
+		this.fileManager = fileManager;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.embl.ebi.escience.scuflui.processoractions.AbstractProcessorAction#getComponent(org.embl.ebi.escience.scufl.Processor)
+	 */
     public JComponent getComponent(final BiomobyActivity activity) {
-	
-	
+
+
 	// set up the root node
 	String serviceName = activity.getMobyService().getName();
 	String description = activity.getMobyService().getDescription();
@@ -185,14 +190,10 @@ public class AddParserActionHelper  {
 					// selectedObject
 					try {
 						try {
-							Dataflow currentDataflow = FileManager
-									.getInstance()
-									.getCurrentDataflow();
+							Dataflow currentDataflow = fileManager.getCurrentDataflow();
 							Edit<?> edit = new AddMobyParseDatatypeEdit(
 									currentDataflow, activity,
-									selectedObject,isCollection, potentialCollectionString);
-							EditManager editManager = EditManager
-									.getInstance();
+									selectedObject,isCollection, potentialCollectionString, editManager.getEdits());
 							editManager.doDataflowEdit(
 									currentDataflow, edit);
 
@@ -243,7 +244,7 @@ public class AddParserActionHelper  {
 
     /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.embl.ebi.escience.scuflui.processoractions.ProcessorActionSPI#getDescription()
          */
     public String getDescription() {
@@ -252,7 +253,7 @@ public class AddParserActionHelper  {
 
     /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.embl.ebi.escience.scuflui.processoractions.ProcessorActionSPI#getIcon()
          */
     public ImageIcon getIcon() {
@@ -269,7 +270,7 @@ public class AddParserActionHelper  {
 
     /**
          * Return an Icon to represent this action
-         * 
+         *
          * @param loc
          *                the location of the image to use as an icon
          */

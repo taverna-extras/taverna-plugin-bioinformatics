@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.sf.taverna.t2.activities.biomoby.view;
 
@@ -7,31 +7,20 @@ import java.awt.BorderLayout;
 import java.util.Map;
 
 import javax.swing.JComponent;
-import javax.swing.JTable;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-
-import org.apache.commons.beanutils.BeanToPropertyValueTransformer;
-import org.apache.log4j.Logger;
-import org.biomoby.service.dashboard.data.ParametersTable;
 
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivity;
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivityConfigurationBean;
-import net.sf.taverna.t2.activities.biomoby.actions.BiomobyActivityConfigurationAction;
-import net.sf.taverna.t2.workbench.edits.EditManager;
-import net.sf.taverna.t2.workbench.file.FileManager;
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ActivityConfigurationPanel;
-import net.sf.taverna.t2.workflowmodel.Dataflow;
-import net.sf.taverna.t2.workflowmodel.Edit;
-import net.sf.taverna.t2.workflowmodel.EditException;
-import net.sf.taverna.t2.workflowmodel.EditsRegistry;
+
+import org.apache.log4j.Logger;
+import org.biomoby.service.dashboard.data.ParametersTable;
 
 /**
  * @author alanrw
  *
  */
 public class BiomobyConfigView extends ActivityConfigurationPanel<BiomobyActivity, BiomobyActivityConfigurationBean> {
-	
+
 	private BiomobyActivity activity;
 	private BiomobyActivityConfigurationBean configuration;
 	private boolean changed = false;

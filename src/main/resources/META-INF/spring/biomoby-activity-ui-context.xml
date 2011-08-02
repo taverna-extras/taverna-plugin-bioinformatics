@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
                       http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<bean id="BiomobyQueryFactory" class="net.sf.taverna.t2.activities.biomoby.query.BiomobyQueryFactory" />
@@ -12,14 +12,29 @@
 
 	<bean id="BiomobyServiceProvider" class="net.sf.taverna.t2.activities.biomoby.servicedescriptions.BiomobyServiceProvider" />
 
-	<bean id="BiomobyActivityDetailsMenuAction" class="net.sf.taverna.t2.activities.biomoby.menu.BiomobyActivityDetailsMenuAction" />
-	<bean id="BiomobyActivityParserMenuAction" class="net.sf.taverna.t2.activities.biomoby.menu.BiomobyActivityParserMenuAction" />
-	<bean id="ConfigureBiomobyMenuAction" class="net.sf.taverna.t2.activities.biomoby.menu.ConfigureBiomobyMenuAction" />
+	<bean id="BiomobyActivityDetailsMenuAction" class="net.sf.taverna.t2.activities.biomoby.menu.BiomobyActivityDetailsMenuAction">
+			<property name="editManager" ref="editManager" />
+			<property name="fileManager" ref="fileManager" />
+	</bean>
+	<bean id="BiomobyActivityParserMenuAction" class="net.sf.taverna.t2.activities.biomoby.menu.BiomobyActivityParserMenuAction">
+			<property name="editManager" ref="editManager" />
+			<property name="fileManager" ref="fileManager" />
+	</bean>
+	<bean id="ConfigureBiomobyMenuAction" class="net.sf.taverna.t2.activities.biomoby.menu.ConfigureBiomobyMenuAction">
+			<property name="editManager" ref="editManager" />
+			<property name="fileManager" ref="fileManager" />
+	</bean>
 
 	<bean id="BiomobyPartitionAlgorithmSetSPI" class="net.sf.taverna.t2.activities.biomoby.partition.BiomobyPartitionAlgorithmSetSPI" />
 
-	<bean id="BiomobyActivityContextualViewFactory" class="net.sf.taverna.t2.activities.biomoby.view.BiomobyActivityContextualViewFactory" />
-	<bean id="BiomobyObjectActivityContextualViewFactory" class="net.sf.taverna.t2.activities.biomoby.view.BiomobyObjectActivityContextualViewFactory" />
+	<bean id="BiomobyActivityContextualViewFactory" class="net.sf.taverna.t2.activities.biomoby.view.BiomobyActivityContextualViewFactory">
+			<property name="editManager" ref="editManager" />
+			<property name="fileManager" ref="fileManager" />
+	</bean>
+	<bean id="BiomobyObjectActivityContextualViewFactory" class="net.sf.taverna.t2.activities.biomoby.view.BiomobyObjectActivityContextualViewFactory">
+			<property name="editManager" ref="editManager" />
+			<property name="fileManager" ref="fileManager" />
+	</bean>
 	<bean id="MobyParseDatatypeContextualViewFactory" class="net.sf.taverna.t2.activities.biomoby.view.MobyParseDatatypeContextualViewFactory" />
 
 </beans>

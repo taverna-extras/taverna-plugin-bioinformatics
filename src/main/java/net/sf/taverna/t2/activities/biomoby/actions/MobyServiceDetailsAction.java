@@ -13,37 +13,43 @@ import javax.swing.AbstractAction;
 import javax.swing.JDialog;
 
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivity;
+import net.sf.taverna.t2.workbench.edits.EditManager;
+import net.sf.taverna.t2.workbench.file.FileManager;
 import net.sf.taverna.t2.workbench.helper.HelpEnabledDialog;
 
 /**
  * @author Stuart Owen
- * 
+ *
  */
 @SuppressWarnings("serial")
 public class MobyServiceDetailsAction extends AbstractAction {
 
 	private final BiomobyActivity activity;
 	private final Frame owner;
+	private EditManager editManager;
 
 	private static final String MOBY_SERVICE_DETAILS_ACTION = "Browse Biomoby service details";
-	public MobyServiceDetailsAction(BiomobyActivity activity, Frame owner) {
+	private final FileManager fileManager;
+	public MobyServiceDetailsAction(BiomobyActivity activity, Frame owner, EditManager editManager, FileManager fileManager) {
 		this.activity = activity;
 		this.owner = owner;
+		this.editManager = editManager;
+		this.fileManager = fileManager;
 		putValue(NAME, MOBY_SERVICE_DETAILS_ACTION);
-		
+
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-		
-		BiomobyActionHelper helper = new BiomobyActionHelper();
+
+		BiomobyActionHelper helper = new BiomobyActionHelper(editManager, fileManager);
 		Dimension size = helper.getFrameSize();
-		
+
 		Component component = helper.getComponent(activity);
 		final JDialog dialog = new HelpEnabledDialog(owner, helper.getDescription(), false, null);
 

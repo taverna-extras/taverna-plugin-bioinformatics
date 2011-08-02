@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -40,15 +39,7 @@ import net.sf.taverna.t2.workbench.edits.EditManager;
 import net.sf.taverna.t2.workbench.file.FileManager;
 import net.sf.taverna.t2.workflowmodel.Dataflow;
 import net.sf.taverna.t2.workflowmodel.Edit;
-import net.sf.taverna.t2.workflowmodel.Edits;
-import net.sf.taverna.t2.workflowmodel.EditsRegistry;
-import net.sf.taverna.t2.workflowmodel.EventForwardingOutputPort;
-import net.sf.taverna.t2.workflowmodel.EventHandlingInputPort;
-import net.sf.taverna.t2.workflowmodel.InputPort;
 import net.sf.taverna.t2.workflowmodel.OutputPort;
-import net.sf.taverna.t2.workflowmodel.ProcessorInputPort;
-import net.sf.taverna.t2.workflowmodel.ProcessorOutputPort;
-import net.sf.taverna.t2.workflowmodel.processor.activity.Activity;
 import net.sf.taverna.t2.workflowmodel.utils.Tools;
 
 import org.apache.log4j.Logger;
@@ -64,7 +55,7 @@ import org.biomoby.shared.NoSuccessException;
 
 
 /**
- * 
+ *
  * @author Eddie An action that for BioMobyProcessors
  * @auther Stuart Owen - helped port to T2 - but with the minimum code changes possible!
  */
@@ -74,11 +65,19 @@ public class BiomobyActionHelper {
 	.getLogger(BiomobyActionHelper.class);
 
 	JProgressBar progressBar = new JProgressBar();
-	private Edits edits = EditsRegistry.getEdits();
+
+    private EditManager editManager;
+
+	private final FileManager fileManager;
+
+    public BiomobyActionHelper(EditManager editManager, FileManager fileManager) {
+		this.editManager = editManager;
+		this.fileManager = fileManager;
+	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.embl.ebi.escience.scuflui.processoractions.AbstractProcessorAction
 	 * #getComponent(org.embl.ebi.escience.scufl.Processor)
@@ -270,15 +269,11 @@ public class BiomobyActionHelper {
 								public void actionPerformed(ActionEvent ae) {
 
 									try {
-										Dataflow currentDataflow = FileManager
-												.getInstance()
-												.getCurrentDataflow();
+										Dataflow currentDataflow = fileManager.getCurrentDataflow();
 										Edit<?> edit = new AddBiomobyCollectionDataTypeEdit(
 												currentDataflow, activity,
 												selectedObject,
-												theCollectionName);
-										EditManager editManager = EditManager
-												.getInstance();
+												theCollectionName, editManager.getEdits());
 										editManager.doDataflowEdit(
 												currentDataflow, edit);
 
@@ -294,13 +289,13 @@ public class BiomobyActionHelper {
 									.setIcon(MobyPanel.getIcon("/Information24.gif"));
 							details.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent ae) {
-									
+
 									// TODO Create a frame
 	    						    Frame frame = MobyPanel.CreateFrame("A BioMoby Object Description");
 									JPanel panel = new MobyPanel(
 											selectedObject,
 											"A BioMoby Object Description", "");
-									
+
 									frame.add(panel);
 									frame.setSize(getFrameSize());
 	    							frame.pack();
@@ -350,14 +345,10 @@ public class BiomobyActionHelper {
 								public void actionPerformed(ActionEvent ae) {
 
 									try {
-										Dataflow currentDataflow = FileManager
-												.getInstance()
-												.getCurrentDataflow();
+										Dataflow currentDataflow = fileManager.getCurrentDataflow();
 										Edit<?> edit = new AddBiomobyDataTypeEdit(
 												currentDataflow, activity,
-												selectedObject);
-										EditManager editManager = EditManager
-												.getInstance();
+												selectedObject, editManager.getEdits());
 										editManager.doDataflowEdit(
 												currentDataflow, edit);
 
@@ -375,7 +366,7 @@ public class BiomobyActionHelper {
 							details.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent ae) {
 									// TODO Create a frame
-	    						    Frame frame = MobyPanel.CreateFrame("A BioMoby Object Description");	    						    
+	    						    Frame frame = MobyPanel.CreateFrame("A BioMoby Object Description");
 									JPanel panel = new MobyPanel(
 											// TODO create a valid description
 											selectedObject,
@@ -504,7 +495,7 @@ public class BiomobyActionHelper {
 													boAct.configure(bean);
 
 													OutputPort theServiceport = null;
-													
+
 													try {
 														if (isCollection)
 															theServiceport = Tools
@@ -531,11 +522,11 @@ public class BiomobyActionHelper {
 
 													if (theServiceport == null) {
 														boa = new BiomobyObjectActionHelper(
-																false);
+																false, editManager, fileManager);
 													} else {
 														boa = new BiomobyObjectActionHelper(
 																theServiceport,
-																false);
+																false, editManager, fileManager);
 													}
 
 													if (selectedMobyObjectTreeNodeHolder instanceof DefaultMutableTreeNode
@@ -668,11 +659,11 @@ public class BiomobyActionHelper {
 
 													if (theServiceport == null)
 														boa = new BiomobyObjectActionHelper(
-																true);
+																true, editManager, fileManager);
 													else
 														boa = new BiomobyObjectActionHelper(
 																theServiceport,
-																true);
+																true, editManager, fileManager);
 													if (selectedMobyObjectTreeNodeHolder instanceof DefaultMutableTreeNode
 															&& ((DefaultMutableTreeNode) selectedMobyObjectTreeNodeHolder)
 																	.getUserObject() instanceof MobyObjectTreeNode) {
@@ -740,16 +731,12 @@ public class BiomobyActionHelper {
 								item3.addActionListener(new ActionListener() {
 
 									public void actionPerformed(ActionEvent ae) {
-										
+
 										try {
-											Dataflow currentDataflow = FileManager
-													.getInstance()
-													.getCurrentDataflow();
+											Dataflow currentDataflow = fileManager.getCurrentDataflow();
 											Edit<?> edit = new AddMobyParseDatatypeEdit(
 													currentDataflow, activity,
-													selectedObject,isCollection, potentialCollectionString);
-											EditManager editManager = EditManager
-													.getInstance();
+													selectedObject,isCollection, potentialCollectionString, editManager.getEdits());
 											editManager.doDataflowEdit(
 													currentDataflow, edit);
 
@@ -804,7 +791,7 @@ public class BiomobyActionHelper {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @seeorg.embl.ebi.escience.scuflui.processoractions.ProcessorActionSPI#
 	 * getDescription()
 	 */
@@ -814,7 +801,7 @@ public class BiomobyActionHelper {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.embl.ebi.escience.scuflui.processoractions.ProcessorActionSPI#getIcon
 	 * ()
@@ -833,59 +820,12 @@ public class BiomobyActionHelper {
 
 	/**
 	 * Return an Icon to represent this action
-	 * 
+	 *
 	 * @param loc
 	 *            the location of the image to use as an icon
 	 */
 	public ImageIcon getIcon(String loc) {
 		return MobyPanel.getIcon(loc);
-	}
-
-	@SuppressWarnings("unused")
-	private EventHandlingInputPort getSinkPort(
-			net.sf.taverna.t2.workflowmodel.Processor processor,
-			Activity<?> activity, String portName, List<Edit<?>> editList) {
-		InputPort activityPort = net.sf.taverna.t2.workflowmodel.utils.Tools
-				.getActivityInputPort(activity, portName);
-		// check if processor port exists
-		EventHandlingInputPort input = net.sf.taverna.t2.workflowmodel.utils.Tools
-				.getProcessorInputPort(processor, activity, activityPort);
-		if (input == null) {
-			// port doesn't exist so create a processor port and map it
-			ProcessorInputPort processorInputPort = edits
-					.createProcessorInputPort(processor,
-							activityPort.getName(), activityPort.getDepth());
-			editList.add(edits.getAddProcessorInputPortEdit(processor,
-					processorInputPort));
-			editList.add(edits.getAddActivityInputPortMappingEdit(activity,
-					activityPort.getName(), activityPort.getName()));
-			input = processorInputPort;
-		}
-		return input;
-	}
-
-	@SuppressWarnings("unused")
-	private EventForwardingOutputPort getSourcePort(
-			net.sf.taverna.t2.workflowmodel.Processor processor,
-			Activity<?> activity, String portName, List<Edit<?>> editList) {
-		OutputPort activityPort = net.sf.taverna.t2.workflowmodel.utils.Tools
-				.getActivityOutputPort(activity, portName);
-		// check if processor port exists
-		EventForwardingOutputPort output = net.sf.taverna.t2.workflowmodel.utils.Tools
-				.getProcessorOutputPort(processor, activity, activityPort);
-		if (output == null) {
-			// port doesn't exist so create a processor port and map it
-			ProcessorOutputPort processorOutputPort = edits
-					.createProcessorOutputPort(processor, activityPort
-							.getName(), activityPort.getDepth(), activityPort
-							.getGranularDepth());
-			editList.add(edits.getAddProcessorOutputPortEdit(processor,
-					processorOutputPort));
-			editList.add(edits.getAddActivityOutputPortMappingEdit(activity,
-					activityPort.getName(), activityPort.getName()));
-			output = processorOutputPort;
-		}
-		return output;
 	}
 
 	/**

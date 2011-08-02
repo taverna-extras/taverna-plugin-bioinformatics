@@ -19,25 +19,33 @@ import net.sf.taverna.t2.activities.biomoby.BiomobyActivityConfigurationBean;
 import net.sf.taverna.t2.activities.biomoby.actions.BiomobyActivityConfigurationAction;
 import net.sf.taverna.t2.activities.biomoby.actions.MobyParserAction;
 import net.sf.taverna.t2.activities.biomoby.actions.MobyServiceDetailsAction;
+import net.sf.taverna.t2.workbench.edits.EditManager;
+import net.sf.taverna.t2.workbench.file.FileManager;
 import net.sf.taverna.t2.workbench.ui.actions.activity.HTMLBasedActivityContextualView;
 import net.sf.taverna.t2.workflowmodel.processor.activity.Activity;
 
 @SuppressWarnings("serial")
 public class BiomobyActivityContextualView extends HTMLBasedActivityContextualView<BiomobyActivityConfigurationBean> {
 
+	private EditManager editManager;
+	private final FileManager fileManager;
+
 	@Override
 	public Action getConfigureAction(Frame owner) {
 		BiomobyActivity activity = (BiomobyActivity)getActivity();
 		if (activity.getMobyService() != null && activity.containsSecondaries()) {
-			return new BiomobyActivityConfigurationAction((BiomobyActivity)getActivity(),owner);
+			return new BiomobyActivityConfigurationAction((BiomobyActivity)getActivity(),owner, editManager, fileManager);
 		}
 		else {
 			return null;
-		}	
+		}
 	}
 
-	public BiomobyActivityContextualView(Activity<?> activity) {
+	public BiomobyActivityContextualView(Activity<?> activity, EditManager editManager, FileManager fileManager) {
 		super(activity);
+		this.editManager = editManager;
+		this.editManager = editManager;
+		this.fileManager = fileManager;
 	}
 
 	@Override
@@ -58,7 +66,7 @@ public class BiomobyActivityContextualView extends HTMLBasedActivityContextualVi
 	public String getViewTitle() {
 		return "Biomoby service";
 	}
-	
+
 	/**
 	 * Gets the component from the {@link HTMLBasedActivityContextualView} and
 	 * adds buttons to it allowing Moby service details
@@ -67,13 +75,13 @@ public class BiomobyActivityContextualView extends HTMLBasedActivityContextualVi
 	public JComponent getMainFrame() {
 		final JComponent mainFrame = super.getMainFrame();
 		JPanel flowPanel = new JPanel(new FlowLayout());
-		
+
 		BiomobyActivity activity = (BiomobyActivity)getActivity();
 
-		JButton button = new JButton(new MobyServiceDetailsAction(activity,null));
+		JButton button = new JButton(new MobyServiceDetailsAction(activity,null, editManager, fileManager));
 		flowPanel.add(button);
 		if (activity.getMobyService()!=null) {
-			JButton button2 = new JButton(new MobyParserAction(activity,null));
+			JButton button2 = new JButton(new MobyParserAction(activity,null, editManager, fileManager));
 			flowPanel.add(button2);
 		}
 		mainFrame.add(flowPanel, BorderLayout.SOUTH);

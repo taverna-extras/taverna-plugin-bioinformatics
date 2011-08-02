@@ -6,9 +6,6 @@ package net.sf.taverna.t2.activities.biomoby.actions;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
-import java.util.Map;
-
-import javax.swing.JDialog;
 
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivity;
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivityConfigurationBean;
@@ -17,13 +14,8 @@ import net.sf.taverna.t2.workbench.edits.EditManager;
 import net.sf.taverna.t2.workbench.file.FileManager;
 import net.sf.taverna.t2.workbench.ui.actions.activity.ActivityConfigurationAction;
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ActivityConfigurationDialog;
-import net.sf.taverna.t2.workflowmodel.Dataflow;
-import net.sf.taverna.t2.workflowmodel.Edit;
-import net.sf.taverna.t2.workflowmodel.EditException;
-import net.sf.taverna.t2.workflowmodel.EditsRegistry;
 
 import org.apache.log4j.Logger;
-import org.biomoby.service.dashboard.data.ParametersTable;
 
 @SuppressWarnings("serial")
 public class BiomobyActivityConfigurationAction
@@ -33,11 +25,15 @@ public class BiomobyActivityConfigurationAction
 	private final Frame owner;
 	private static Logger logger = Logger
 			.getLogger(BiomobyActivityConfigurationAction.class);
+	private final EditManager editManager;
+	private final FileManager fileManager;
 
 	public BiomobyActivityConfigurationAction(BiomobyActivity activity,
-			Frame owner) {
+			Frame owner, EditManager editManager, FileManager fileManager) {
 		super(activity);
 		this.owner = owner;
+		this.editManager = editManager;
+		this.fileManager = fileManager;
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
@@ -46,14 +42,14 @@ public class BiomobyActivityConfigurationAction
 			currentDialog.toFront();
 			return;
 		}
-		
+
 		final BiomobyConfigView biomobyConfigView = new BiomobyConfigView((BiomobyActivity)getActivity());
 		final ActivityConfigurationDialog<BiomobyActivity, BiomobyActivityConfigurationBean> dialog =
-			new ActivityConfigurationDialog<BiomobyActivity, BiomobyActivityConfigurationBean>(getActivity(), biomobyConfigView);
+			new ActivityConfigurationDialog<BiomobyActivity, BiomobyActivityConfigurationBean>(getActivity(), biomobyConfigView, editManager, fileManager);
 
-		ActivityConfigurationAction.setDialog(getActivity(), dialog);	
+		ActivityConfigurationAction.setDialog(getActivity(), dialog, fileManager);
 	}
-	
+
 	public boolean isEnabled() {
 		BiomobyActivity activity = (BiomobyActivity)getActivity();
 		return (activity.getMobyService() != null && activity.containsSecondaries());

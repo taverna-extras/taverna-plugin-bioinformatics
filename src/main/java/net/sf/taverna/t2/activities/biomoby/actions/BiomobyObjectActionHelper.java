@@ -46,6 +46,7 @@ import net.sf.taverna.t2.workbench.edits.EditManager;
 import net.sf.taverna.t2.workbench.file.FileManager;
 import net.sf.taverna.t2.workflowmodel.Dataflow;
 import net.sf.taverna.t2.workflowmodel.Edit;
+import net.sf.taverna.t2.workflowmodel.Edits;
 import net.sf.taverna.t2.workflowmodel.OutputPort;
 
 import org.apache.log4j.Logger;
@@ -74,19 +75,29 @@ public class BiomobyObjectActionHelper  {
 
 	private MobyNamespace[] namespaces = null;
 
-	public BiomobyObjectActionHelper(boolean searchParentTypes) {
+    private EditManager editManager;
+
+	private final FileManager fileManager;
+
+	public BiomobyObjectActionHelper(boolean searchParentTypes, EditManager editManager, FileManager fileManager) {
 		super();
 		this.searchParentTypes = searchParentTypes;
+		this.editManager = editManager;
+		this.fileManager = fileManager;
 	}
 
-	public BiomobyObjectActionHelper(OutputPort outputPort, boolean searchParentTypes) {
+	public BiomobyObjectActionHelper(OutputPort outputPort, boolean searchParentTypes, EditManager editManager, FileManager fileManager) {
 		super();
 		this.searchParentTypes = searchParentTypes;
 		this.outputPort = outputPort;
+		this.editManager = editManager;
+		this.fileManager = fileManager;
 	}
 
-	public BiomobyObjectActionHelper() {
+	public BiomobyObjectActionHelper(EditManager editManager, FileManager fileManager) {
 		super();
+		this.editManager = editManager;
+		this.fileManager = fileManager;
 	}
 
 	private class Worker extends Thread {
@@ -97,15 +108,15 @@ public class BiomobyObjectActionHelper  {
 		private JPanel panel = new JPanel(new BorderLayout());
 
 		private JPanel namespacePanel = new JPanel(new BorderLayout());
-		
+
 		private JProgressBar bar = new JProgressBar();
 
 		private JTree namespaceList = null;
-		
+
 		public Worker(BiomobyObjectActivity activity, BiomobyObjectActionHelper object) {
 			super("Biomoby object action worker");
 			this.activity = activity;
-			this.action = object;			
+			this.action = object;
 		}
 
 		/*
@@ -123,15 +134,15 @@ public class BiomobyObjectActionHelper  {
 			panel.updateUI();
 		    }
 		}
-		
+
 		private void takeDownProgressBar() {
 		    if (panel != null) {
 			panel.remove(bar);
 			panel.updateUI();
 		    }
-		    
+
 		}
-		
+
 		public JPanel getPanel() {
 			return this.panel;
 		}
@@ -141,15 +152,15 @@ public class BiomobyObjectActionHelper  {
 			// ask if we should restrict query by namespace
 			// only do this if we dont have an output port
 			if (action.outputPort == null) {
-			    if (JOptionPane.YES_OPTION == 
+			    if (JOptionPane.YES_OPTION ==
 				JOptionPane.showConfirmDialog(null, "Would you like to restrict your search by based upon a namespace?\n" +
 						"This can allow you to find only those services that operate on a specific kind of data.",
 						"Restrict query space", JOptionPane.YES_NO_OPTION)) {
-				// create a JList chooser with a done button here				
+				// create a JList chooser with a done button here
 				setUpProgressBar("Getting namespaces list");
 				try {
 				    namespacePanel = new JPanel(new BorderLayout());
-				    createNamespaceList(central.getFullNamespaces());				    
+				    createNamespaceList(central.getFullNamespaces());
 				    JButton button = new JButton("Done");
 				    button.addActionListener(new ActionListener(){
 					@SuppressWarnings("unchecked")
@@ -163,7 +174,7 @@ public class BiomobyObjectActionHelper  {
 						    if (node.isRoot()) {
 							chosen = new ArrayList<MobyNamespace>();
 							break;
-						    } 
+						    }
 						    if (!node.isLeaf()) {
 							// get the children and add them to chosen
 							Enumeration<DefaultMutableTreeNode> children = node.children();
@@ -186,7 +197,7 @@ public class BiomobyObjectActionHelper  {
 					    }};
 					    t.setDaemon(true);
 					    t.start();
-					    
+
 					}});
 				    // add the list and button to the panel
 				    namespacePanel.add(new JScrollPane(namespaceList), BorderLayout.CENTER);
@@ -200,7 +211,7 @@ public class BiomobyObjectActionHelper  {
 				takeDownProgressBar();
 				// once done is pressed, insert selected namespace into the namespaces array
 				// show the progress bar
-				
+
 			    } else {
 			    	// start our search
 			    	setNamespaces(null);
@@ -218,8 +229,8 @@ public class BiomobyObjectActionHelper  {
 			    // start our search
 			    getSemanticServiceTree();
 			}
-			
-			
+
+
 		}
 
 		/**
@@ -254,7 +265,7 @@ public class BiomobyObjectActionHelper  {
 		    Set<MobyService> theServices = new TreeSet<MobyService>();
 		    try {
 		    	services = central.findService(template, null, true, action.searchParentTypes);
-		    	
+
 		    	theServices.addAll(Arrays.asList(services));
 		    	MobyDataObjectSet set = new MobyDataObjectSet("");
 		    	set.add(data);
@@ -348,19 +359,15 @@ public class BiomobyObjectActionHelper  {
 		    							.setIcon(MobyPanel.getIcon("/Add24.gif"));
 		    					item.addActionListener(new ActionListener() {
 		    						public void actionPerformed(ActionEvent ae) {
-		    							
+
 		    							try {
 		    								if (outputPort==null) {
 		    									outputPort = activity.getOutputPorts().iterator().next();
 		    								}
-											Dataflow currentDataflow = FileManager
-													.getInstance()
-													.getCurrentDataflow();
+											Dataflow currentDataflow = fileManager.getCurrentDataflow();
 											Edit<?> edit = new AddBiomobyConsumingServiceEdit(
 													currentDataflow, activity,
-													selectedService,selectedAuthority,outputPort);
-											EditManager editManager = EditManager
-													.getInstance();
+													selectedService,selectedAuthority,outputPort, editManager.getEdits());
 											editManager.doDataflowEdit(
 													currentDataflow, edit);
 
@@ -656,11 +663,11 @@ public class BiomobyObjectActionHelper  {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflui.processoractions.AbstractProcessorAction#getComponent(org.embl.ebi.escience.scufl.Processor)
 	 */
 	public JComponent getComponent(BiomobyObjectActivity activity) {
-		
+
 		// this was done so that for longer requests, something is shown visually and the user then wont think that nothing happened.
 		Worker worker = new Worker(activity, this);
 		worker.start();
@@ -743,10 +750,10 @@ public class BiomobyObjectActionHelper  {
 		}
 	}
 
-	
+
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflui.processoractions.ProcessorActionSPI#getDescription()
 	 */
 	public String getDescription() {
@@ -754,7 +761,7 @@ public class BiomobyObjectActionHelper  {
 	}
 
 	/*
-	 * 
+	 *
 	 */
 	public ImageIcon getIcon() {
 		return MobyPanel.getIcon("/moby_small.gif");

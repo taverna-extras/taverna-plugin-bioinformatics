@@ -15,7 +15,6 @@ import net.sf.taverna.t2.workflowmodel.Dataflow;
 import net.sf.taverna.t2.workflowmodel.Edit;
 import net.sf.taverna.t2.workflowmodel.EditException;
 import net.sf.taverna.t2.workflowmodel.Edits;
-import net.sf.taverna.t2.workflowmodel.EditsRegistry;
 import net.sf.taverna.t2.workflowmodel.EventForwardingOutputPort;
 import net.sf.taverna.t2.workflowmodel.EventHandlingInputPort;
 import net.sf.taverna.t2.workflowmodel.InputPort;
@@ -32,26 +31,27 @@ import net.sf.taverna.t2.workflowmodel.utils.Tools;
  *
  */
 public class AddBiomobyDataTypeEdit extends AbstractDataflowEdit {
-	
+
 	private final BiomobyActivity activity;
-	private Edits edits = EditsRegistry.getEdits();
+	private Edits edits;
 	private final String objectName;
-	
+
 	private Edit<?> compoundEdit = null;
 	private Edit<?> linkEdit = null;
 	private Edit<?> upstreamObjectEdit = null;
 
-	
-	public AddBiomobyDataTypeEdit(Dataflow dataflow,BiomobyActivity activity,String objectName) {
+
+	public AddBiomobyDataTypeEdit(Dataflow dataflow,BiomobyActivity activity,String objectName, Edits edits) {
 		super(dataflow);
 		this.activity = activity;
 		this.objectName = objectName;
-		
+		this.edits = edits;
+
 	}
 
-	
-	
-	
+
+
+
 
 	/* (non-Javadoc)
 	 * @see net.sf.taverna.t2.workflowmodel.impl.AbstractDataflowEdit#doEditAction(net.sf.taverna.t2.workflowmodel.impl.DataflowImpl)
@@ -59,7 +59,7 @@ public class AddBiomobyDataTypeEdit extends AbstractDataflowEdit {
 	@Override
 	protected void doEditAction(DataflowImpl dataflow) throws EditException {
 		List<Edit<?>> editList = new ArrayList<Edit<?>>();
-		
+
 
 		String defaultName = objectName;
 		defaultName = defaultName.split("\\(")[0];
@@ -71,7 +71,7 @@ public class AddBiomobyDataTypeEdit extends AbstractDataflowEdit {
 				.getMobyEndpoint());
 		configBean.setAuthorityName("");
 		configBean.setServiceName(defaultName);
-		
+
 
 		net.sf.taverna.t2.workflowmodel.Processor sourceProcessor = edits
 				.createProcessor(name);
@@ -93,7 +93,7 @@ public class AddBiomobyDataTypeEdit extends AbstractDataflowEdit {
 				.add(addActivityToProcessorEdit);
 
 		String inputPortName = determineInputPortName(defaultName,objectName);
-		
+
 		editList.add(edits.getAddProcessorEdit(
 				dataflow,
 				sourceProcessor));
@@ -119,21 +119,21 @@ public class AddBiomobyDataTypeEdit extends AbstractDataflowEdit {
 		linkEditList.add(Tools
 				.getCreateAndConnectDatalinkEdit(
 						dataflow,
-						sourcePort, sinkPort));
+						sourcePort, sinkPort, edits));
 		linkEdit = new CompoundEdit(linkEditList);
 		linkEdit.doEdit();
-		
+
 		if (!(defaultName.equalsIgnoreCase("Object")
 				|| defaultName.equalsIgnoreCase("String")
                 || defaultName.equalsIgnoreCase("Integer")
                 || defaultName.equalsIgnoreCase("Float")
                 || defaultName.equalsIgnoreCase("DateTime"))) {
-			upstreamObjectEdit=new AddUpstreamObjectEdit(dataflow,sourceProcessor,boActivity);
+			upstreamObjectEdit=new AddUpstreamObjectEdit(dataflow,sourceProcessor,boActivity, edits);
 			upstreamObjectEdit.doEdit();
-			
+
 		}
 	}
-	
+
 	protected String determineInputPortName(String defaultName,String objectName) {
 		String inputPortName = objectName
 				.replaceAll("'", "");
@@ -156,9 +156,9 @@ public class AddBiomobyDataTypeEdit extends AbstractDataflowEdit {
 		if (upstreamObjectEdit!=null && upstreamObjectEdit.isApplied()) {
 			upstreamObjectEdit.undo();
 		}
-		
+
 	}
-	
+
 	private EventHandlingInputPort getSinkPort(
 			net.sf.taverna.t2.workflowmodel.Processor processor,
 			Activity<?> activity, String portName, List<Edit<?>> editList) {

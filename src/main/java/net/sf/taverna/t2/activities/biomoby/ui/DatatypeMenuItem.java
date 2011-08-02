@@ -22,6 +22,8 @@ import javax.swing.JProgressBar;
 import net.sf.taverna.t2.activities.biomoby.actions.MobyPanel;
 import net.sf.taverna.t2.activities.biomoby.query.BiomobyObjectActivityItem;
 import net.sf.taverna.t2.workbench.MainWindow;
+import net.sf.taverna.t2.workbench.edits.EditManager;
+import net.sf.taverna.t2.workbench.file.FileManager;
 import net.sf.taverna.t2.workbench.helper.HelpEnabledDialog;
 
 import org.apache.log4j.Logger;
@@ -33,9 +35,9 @@ import com.sun.java.help.impl.SwingWorker;
 /**
  * DatatypeMenuItem is a JMenuItem that onClick produces a biomoby datatype tree
  * that workbench users can utilize to add datatypes to any workflow.
- * 
+ *
  * @author Edward Kawas
- * 
+ *
  */
 public class DatatypeMenuItem extends JMenuItem {
 
@@ -45,33 +47,38 @@ public class DatatypeMenuItem extends JMenuItem {
 	private String endpoint;
 	private String namespace;
 
+	private final EditManager editManager;
+	private final FileManager fileManager;
+
 	/**
 	 * Default constructor; Creates a menu item for the default registry
 	 */
-	public DatatypeMenuItem() {
-		this(CentralImpl.DEFAULT_ENDPOINT, CentralImpl.DEFAULT_NAMESPACE);
+	public DatatypeMenuItem(EditManager editManager, FileManager fileManager) {
+		this(CentralImpl.DEFAULT_ENDPOINT, CentralImpl.DEFAULT_NAMESPACE, editManager, fileManager);
 	}
 
 	/**
 	 * Create a Datatype menu item for a biomoby registry given a specific
 	 * endpoint and namespace
-	 * 
+	 *
 	 * @param endpoint
 	 *            the registry endpoint
 	 * @param namespace
 	 *            the registry namespace
 	 */
-	public DatatypeMenuItem(String endpoint, String namespace) {
-		this(endpoint, namespace, endpoint);
+	public DatatypeMenuItem(String endpoint, String namespace, EditManager editManager, FileManager fileManager) {
+		this(endpoint, namespace, endpoint, editManager, fileManager);
 	}
 
 	/*
 	 * A private constructor. Every constructor ends up here
 	 */
-	private DatatypeMenuItem(String endpoint, String namespace, String label) {
+	private DatatypeMenuItem(String endpoint, String namespace, String label, EditManager editManager, FileManager fileManager) {
 		// set up some specifics
 		this.endpoint = endpoint;
 		this.namespace = namespace;
+		this.editManager = editManager;
+		this.fileManager = fileManager;
 		// set up the name, label and icon for this menu item
 		setName(label);
 		setText(label);
@@ -96,7 +103,7 @@ public class DatatypeMenuItem extends JMenuItem {
 							bar.setStringPainted(true);
 							// a dialog frame hold the bar
 							String title = "Datatype Tree Builder";
-							JDialog frame = new HelpEnabledDialog(MainWindow.getMainWindow(), title, false, null);							
+							JDialog frame = new HelpEnabledDialog(MainWindow.getMainWindow(), title, false, null);
 							JLabel label = new JLabel(
 									"Constructing tree for:\n\t"
 											+ item.getEndpoint());
@@ -131,7 +138,7 @@ public class DatatypeMenuItem extends JMenuItem {
 
 	/**
 	 * Set the registry namespace
-	 * 
+	 *
 	 * @param namespace
 	 *            the registry namespace that this menu item will use
 	 */
@@ -141,7 +148,7 @@ public class DatatypeMenuItem extends JMenuItem {
 
 	/**
 	 * Set the registry endpoint
-	 * 
+	 *
 	 * @param endpoint
 	 *            the registry endpoint that this menu item will use
 	 */
@@ -151,7 +158,7 @@ public class DatatypeMenuItem extends JMenuItem {
 
 	/**
 	 * Get the registry endpoint
-	 * 
+	 *
 	 * @return the registry endpoint that this menu item is using
 	 */
 	public String getEndpoint() {
@@ -160,7 +167,7 @@ public class DatatypeMenuItem extends JMenuItem {
 
 	/**
 	 * Get the registry namespace
-	 * 
+	 *
 	 * @return the registry namespace that this menu item is using
 	 */
 	public String getNamespace() {
@@ -173,7 +180,7 @@ public class DatatypeMenuItem extends JMenuItem {
 	private void getTreeForRegistry(String endpoint, String namespace) {
 		Frame f = MobyPanel.CreateFrame("Datatype Viewer for " + endpoint);
 		try {
-			Component c = new BiomobyObjectTree(endpoint, namespace)
+			Component c = new BiomobyObjectTree(endpoint, namespace, editManager, fileManager)
 					.getDatatypeTree();
 			f.add(c);
 			f.setPreferredSize(c.getPreferredSize());

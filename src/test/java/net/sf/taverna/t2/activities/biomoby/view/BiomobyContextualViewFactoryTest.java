@@ -31,7 +31,7 @@ public class BiomobyContextualViewFactoryTest {
 					throws ActivityConfigurationException {
 				this.configurationBean=configurationBean;
 			}
-			
+
 		};
 		BiomobyActivityConfigurationBean b = new BiomobyActivityConfigurationBean();
 		b.setAuthorityName("a");
@@ -39,7 +39,7 @@ public class BiomobyContextualViewFactoryTest {
 		b.setServiceName("s");
 		activity.configure(b);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testDisovery() throws Exception {
@@ -53,10 +53,10 @@ public class BiomobyContextualViewFactoryTest {
 		}
 		assertTrue("No biomoby view factory", factory != null);
 	}
-	
+
 	@Test
 	public void testGetConfigureAction() throws Exception {
-		ContextualView view = new BiomobyActivityContextualView(activity);
+		ContextualView view = new BiomobyActivityContextualView(activity, null, null);
 		//will be null because its not a valid activity so therefore has no secondaries
 		assertNull("The action should be null",view.getConfigureAction(null));
 	}

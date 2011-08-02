@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2007 The University of Manchester 
+ * Copyright (C) 2007 The University of Manchester
  *
  * Modifications to the initial code base are copyright of their
  * respective authors, or their employers as appropriate.
@@ -8,12 +8,12 @@
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1 of
  * the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
@@ -33,7 +33,6 @@ import net.sf.taverna.t2.workflowmodel.Dataflow;
 import net.sf.taverna.t2.workflowmodel.Edit;
 import net.sf.taverna.t2.workflowmodel.EditException;
 import net.sf.taverna.t2.workflowmodel.Edits;
-import net.sf.taverna.t2.workflowmodel.EditsRegistry;
 import net.sf.taverna.t2.workflowmodel.EventForwardingOutputPort;
 import net.sf.taverna.t2.workflowmodel.EventHandlingInputPort;
 import net.sf.taverna.t2.workflowmodel.InputPort;
@@ -48,7 +47,7 @@ import net.sf.taverna.t2.workflowmodel.utils.Tools;
 
 /**
  * @author Stuart Owen
- * 
+ *
  */
 public class AddMobyParseDatatypeEdit extends AbstractDataflowEdit {
 
@@ -60,24 +59,25 @@ public class AddMobyParseDatatypeEdit extends AbstractDataflowEdit {
 	private Edit<?> compoundEdit = null;
 	private Edit<?> linkEdit = null;
 
-	private Edits edits = EditsRegistry.getEdits();
+	private Edits edits;
 
 	/**
 	 * @param dataflow
 	 */
 	public AddMobyParseDatatypeEdit(Dataflow dataflow,
 			BiomobyActivity activity, String objectName, boolean isCollection,
-			String potentialCollectionString) {
+			String potentialCollectionString, Edits edits) {
 		super(dataflow);
 		this.activity = activity;
 		this.objectName = objectName;
 		this.isCollection = isCollection;
 		this.potentialCollectionString = potentialCollectionString;
+		this.edits = edits;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * net.sf.taverna.t2.workflowmodel.impl.AbstractEdit#doEditAction(java.lang
 	 * .Object)
@@ -137,8 +137,8 @@ public class AddMobyParseDatatypeEdit extends AbstractDataflowEdit {
 				.next().getName();
 		EventHandlingInputPort sinkPort = getSinkPort(sinkProcessor,
 				mobyDatatypeActivity, inputName, linkEditList);
-		
-		
+
+
 		String outputPortName;
 		if (isCollection) {
 		outputPortName = defaultName + "(Collection - '"
@@ -151,7 +151,7 @@ public class AddMobyParseDatatypeEdit extends AbstractDataflowEdit {
 		EventForwardingOutputPort sourcePort = getSourcePort(sourceProcessor,
 				activity, outputPortName, linkEditList);
 		linkEditList.add(Tools.getCreateAndConnectDatalinkEdit(dataflow,
-				sourcePort, sinkPort));
+				sourcePort, sinkPort, edits));
 		linkEdit = new CompoundEdit(linkEditList);
 		linkEdit.doEdit();
 
@@ -159,7 +159,7 @@ public class AddMobyParseDatatypeEdit extends AbstractDataflowEdit {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * net.sf.taverna.t2.workflowmodel.impl.AbstractEdit#undoEditAction(java
 	 * .lang.Object)

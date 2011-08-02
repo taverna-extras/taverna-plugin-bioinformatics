@@ -9,12 +9,8 @@ import javax.swing.Icon;
 
 import net.sf.taverna.t2.activities.biomoby.BiomobyObjectActivity;
 import net.sf.taverna.t2.activities.biomoby.BiomobyObjectActivityConfigurationBean;
-import net.sf.taverna.t2.activities.biomoby.edits.AddUpstreamObjectEdit;
 import net.sf.taverna.t2.activities.biomoby.query.BiomobyObjectActivityItem;
 import net.sf.taverna.t2.servicedescriptions.ServiceDescription;
-import net.sf.taverna.t2.workflowmodel.Dataflow;
-import net.sf.taverna.t2.workflowmodel.Edit;
-import net.sf.taverna.t2.workflowmodel.Processor;
 import net.sf.taverna.t2.workflowmodel.processor.activity.Activity;
 
 public class BiomobyDatatypeDescription extends
@@ -26,10 +22,10 @@ public class BiomobyDatatypeDescription extends
 	private URI lsid;
 	private String parent;
 	private String[] lineage;
-	
+
 	private URI endpoint;
 	private URI namespace;
-	
+
 	@Override
 	public Class<? extends Activity<BiomobyObjectActivityConfigurationBean>> getActivityClass() {
 		return BiomobyObjectActivity.class;
@@ -99,7 +95,7 @@ public class BiomobyDatatypeDescription extends
 	public void setNamespace(URI namespace) {
 		this.namespace = namespace;
 	}
-	
+
 	public String[] getLineage() {
 		return lineage;
 	}
@@ -117,7 +113,7 @@ public class BiomobyDatatypeDescription extends
 	protected List<Object> getIdentifyingData() {
 		return Arrays.<Object>asList(getNamespace(), getEndpoint(), getAuthorityName(), getDatatypeName());
 	}
-	
+
 	@Override
 	public List<String> getPath() {
 		ArrayList<String> list = new ArrayList<String>();
@@ -126,7 +122,7 @@ public class BiomobyDatatypeDescription extends
 		list.addAll(Arrays.asList(getLineage()));
 		return list;
 	}
-	
+
 	@Override
 	public Icon getIcon() {
 		return new BiomobyObjectActivityItem().getIcon();
@@ -135,11 +131,11 @@ public class BiomobyDatatypeDescription extends
 	public String toString() {
 		return getName();
 	}
-	
-	public Edit getInsertionEdit(Dataflow dataflow, Processor p, Activity a) {
-		if (a instanceof BiomobyObjectActivity) {
-			return new AddUpstreamObjectEdit(dataflow, p, (BiomobyObjectActivity) a);
-		}
-		return null;
-	}
+
+//	public Edit getInsertionEdit(Dataflow dataflow, Processor p, Activity a) {
+//		if (a instanceof BiomobyObjectActivity) {
+//			return new AddUpstreamObjectEdit(dataflow, p, (BiomobyObjectActivity) a);
+//		}
+//		return null;
+//	}
 }
