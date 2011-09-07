@@ -4,14 +4,8 @@
  ******************************************************************************/
 package net.sf.taverna.t2.activities.biomoby.query;
 
-import javax.swing.Icon;
 
-import net.sf.taverna.t2.activities.biomoby.BiomobyActivity;
-import net.sf.taverna.t2.activities.biomoby.BiomobyActivityConfigurationBean;
-import net.sf.taverna.t2.partition.AbstractActivityItem;
-import net.sf.taverna.t2.workflowmodel.processor.activity.Activity;
-
-public class BiomobyActivityItem extends AbstractActivityItem {
+public class BiomobyActivityItem /*extends AbstractActivityItem */{
 
 	String registryUrl;
 	String serviceName;
@@ -19,7 +13,7 @@ public class BiomobyActivityItem extends AbstractActivityItem {
 	String registryUri;
 	String category;
 	String serviceType;
-	
+
 	public String getRegistryUri() {
 		return registryUri;
 	}
@@ -52,25 +46,25 @@ public class BiomobyActivityItem extends AbstractActivityItem {
 		this.authorityName = authorityName;
 	}
 
-	@Override
-	public Object getConfigBean() {
-		BiomobyActivityConfigurationBean bean = new BiomobyActivityConfigurationBean();
-		bean.setAuthorityName(getAuthorityName());
-		bean.setServiceName(getServiceName());
-		bean.setMobyEndpoint(getRegistryUrl());
-		return bean;
-	}
+//	@Override
+//	public Object getConfigBean() {
+//		BiomobyActivityConfigurationBean bean = new BiomobyActivityConfigurationBean();
+//		bean.setAuthorityName(getAuthorityName());
+//		bean.setServiceName(getServiceName());
+//		bean.setMobyEndpoint(getRegistryUrl());
+//		return bean;
+//	}
+//
+//	@Override
+//	public Icon getIcon() {
+//		return BiomobyActivityIcon.getBiomobyIcon();
+//	}
+//
+//	@Override
+//	public Activity<?> getUnconfiguredActivity() {
+//		return new BiomobyActivity();
+//	}
 
-	@Override
-	public Icon getIcon() {
-		return BiomobyActivityIcon.getBiomobyIcon();
-	}
-
-	@Override
-	public Activity<?> getUnconfiguredActivity() {
-		return new BiomobyActivity();
-	}
-	
 	public String getType() {
 		return "Biomoby";
 	}
@@ -95,6 +89,6 @@ public class BiomobyActivityItem extends AbstractActivityItem {
 	public void setServiceType(String serviceType) {
 		this.serviceType = serviceType;
 	}
-	
-	
+
+
 }

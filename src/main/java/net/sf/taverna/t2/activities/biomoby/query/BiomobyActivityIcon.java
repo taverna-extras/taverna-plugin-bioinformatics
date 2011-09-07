@@ -12,7 +12,7 @@ import net.sf.taverna.t2.workbench.activityicons.ActivityIconSPI;
 import net.sf.taverna.t2.workflowmodel.processor.activity.Activity;
 
 /**
- * 
+ *
  * @author Alex Nenadic
  *
  */
@@ -30,7 +30,7 @@ public class BiomobyActivityIcon implements ActivityIconSPI{
 	}
 
 	public static Icon getBiomobyIcon() {
-		return new ImageIcon(BiomobyActivityItem.class.getResource("/registry.gif"));
+		return new ImageIcon(BiomobyActivityIcon.class.getResource("/registry.gif"));
 	}
 
 }

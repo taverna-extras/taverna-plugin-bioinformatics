@@ -9,7 +9,7 @@ import javax.swing.Icon;
 
 import net.sf.taverna.t2.activities.biomoby.BiomobyObjectActivity;
 import net.sf.taverna.t2.activities.biomoby.BiomobyObjectActivityConfigurationBean;
-import net.sf.taverna.t2.activities.biomoby.query.BiomobyObjectActivityItem;
+import net.sf.taverna.t2.activities.biomoby.query.BiomobyObjectActivityIcon;
 import net.sf.taverna.t2.servicedescriptions.ServiceDescription;
 import net.sf.taverna.t2.workflowmodel.processor.activity.Activity;
 
@@ -111,13 +111,14 @@ public class BiomobyDatatypeDescription extends
 
 	@Override
 	protected List<Object> getIdentifyingData() {
-		return Arrays.<Object>asList(getNamespace(), getEndpoint(), getAuthorityName(), getDatatypeName());
+		return Arrays.<Object> asList(getNamespace(), getEndpoint(), getAuthorityName(),
+				getDatatypeName());
 	}
 
 	@Override
 	public List<String> getPath() {
 		ArrayList<String> list = new ArrayList<String>();
-		list.add("Biomoby @ "  + getEndpoint());
+		list.add("Biomoby @ " + getEndpoint());
 		list.add("MOBY Objects");
 		list.addAll(Arrays.asList(getLineage()));
 		return list;
@@ -125,17 +126,18 @@ public class BiomobyDatatypeDescription extends
 
 	@Override
 	public Icon getIcon() {
-		return new BiomobyObjectActivityItem().getIcon();
+		return new BiomobyObjectActivityIcon().getIcon(new BiomobyObjectActivity());
 	}
+
 	@Override
 	public String toString() {
 		return getName();
 	}
 
-//	public Edit getInsertionEdit(Dataflow dataflow, Processor p, Activity a) {
-//		if (a instanceof BiomobyObjectActivity) {
-//			return new AddUpstreamObjectEdit(dataflow, p, (BiomobyObjectActivity) a);
-//		}
-//		return null;
-//	}
+	// public Edit getInsertionEdit(Dataflow dataflow, Processor p, Activity a) {
+	// if (a instanceof BiomobyObjectActivity) {
+	// return new AddUpstreamObjectEdit(dataflow, p, (BiomobyObjectActivity) a);
+	// }
+	// return null;
+	// }
 }

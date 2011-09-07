@@ -40,23 +40,9 @@ public class BiomobyContextualViewFactoryTest {
 		activity.configure(b);
 	}
 
-	@SuppressWarnings("unchecked")
-	@Test
-	public void testDisovery() throws Exception {
-		List<ContextualViewFactory> viewFactoriesForBeanType = ContextualViewFactoryRegistry.getInstance().getViewFactoriesForObject(activity);
-		assertTrue("The Biomoby view factory should not be empty", !viewFactoriesForBeanType.isEmpty());
-		BiomobyActivityContextualViewFactory factory = null;
-		for (ContextualViewFactory cvf : viewFactoriesForBeanType) {
-			if (cvf instanceof BiomobyActivityContextualViewFactory) {
-				factory = (BiomobyActivityContextualViewFactory) cvf;
-			}
-		}
-		assertTrue("No biomoby view factory", factory != null);
-	}
-
 	@Test
 	public void testGetConfigureAction() throws Exception {
-		ContextualView view = new BiomobyActivityContextualView(activity, null, null);
+		ContextualView view = new BiomobyActivityContextualView(activity, null, null, null, null);
 		//will be null because its not a valid activity so therefore has no secondaries
 		assertNull("The action should be null",view.getConfigureAction(null));
 	}
