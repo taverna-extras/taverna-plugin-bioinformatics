@@ -20,30 +20,28 @@
  ******************************************************************************/
 package net.sf.taverna.t2.activities.biomart;
 
-import java.net.URI;
+import net.sf.taverna.t2.workflowmodel.processor.config.ConfigurationBean;
+import net.sf.taverna.t2.workflowmodel.processor.config.ConfigurationProperty;
 
-import net.sf.taverna.t2.workflowmodel.processor.activity.ActivityFactory;
+import org.jdom.Element;
 
 /**
- * An {@link ActivityFactory} for creating <code>BiomartActivity</code>.
+ * Biomart configuration.
  *
  * @author David Withers
  */
-public class BiomartActivityFactory implements ActivityFactory {
+@ConfigurationBean(uri = BiomartActivity.URI + "#Config")
+public class BiomartActivityConfigurationBean {
 
-	@Override
-	public BiomartActivity createActivity() {
-		return new BiomartActivity();
+	private Element martQuery;
+
+	public Element getMartQuery() {
+		return martQuery;
 	}
 
-	@Override
-	public URI getActivityURI() {
-		return URI.create(BiomartActivity.URI);
-	}
-
-	@Override
-	public Object createActivityConfiguration() {
-		return new BiomartActivityConfigurationBean();
+	@ConfigurationProperty(name = "martQuery", label = "Mart Query", description = "Biomart query in XML")
+	public void setMartQuery(Element martQuery) {
+		this.martQuery = martQuery;
 	}
 
 }
