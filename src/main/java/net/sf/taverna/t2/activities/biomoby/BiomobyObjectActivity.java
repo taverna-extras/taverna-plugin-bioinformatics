@@ -39,17 +39,17 @@ import org.jdom.Element;
 
 /**
  * An Activity providing Biomoby Object functionality.
- * 
+ *
  * Copied from org.biomoby.client.taverna.plugin.BiomobyObjectProcessor and
  * org.biomoby.client.taverna.plugin.BiomobyObjectTask and converted to a Taverna 2
  * Activity.
- * 
+ *
  * @author Edward Kawas
  * @author David Withers
  */
 public class BiomobyObjectActivity extends AbstractAsynchronousActivity<BiomobyObjectActivityConfigurationBean> {
 
-	public static final String URI = "http://ns.taverna.org.uk/2010/activity/biomobyObject";
+	public static final String URI = "http://ns.taverna.org.uk/2010/activity/biomoby/object";
 
 	private static Logger logger = Logger.getLogger(BiomobyObjectActivity.class);
 
@@ -88,7 +88,7 @@ public class BiomobyObjectActivity extends AbstractAsynchronousActivity<BiomobyO
 				Registry mRegistry = new Registry(registryEndpoint,registryEndpoint,"http://domain.com/MOBY/Central");
 
                 BiomobyCache.cacheForRegistry(mRegistry);
-                
+
 				if (isPrimitiveType) {
 					try {
 
@@ -218,7 +218,7 @@ public class BiomobyObjectActivity extends AbstractAsynchronousActivity<BiomobyO
 										"<Simple articleName=\""+article+"\">" + d.toXML() +"</Simple>" ), 0, true, callback.getContext()));
 							}
 						}
-						callback.receiveResult(outputMap, new int[0]);						
+						callback.receiveResult(outputMap, new int[0]);
 					} catch (Exception ex) {
 						// details of other exceptions will appear only in a log
 						logger.error("Error creating biomoby object for biomoby", ex);
@@ -364,7 +364,7 @@ public class BiomobyObjectActivity extends AbstractAsynchronousActivity<BiomobyO
     private void generatePorts() {
     	removeInputs();
     	removeOutputs();
-    	
+
     	//inputs
 		addInput("namespace", 0, true,
 				new ArrayList<Class<? extends ExternalReferenceSPI>>(),
@@ -526,7 +526,7 @@ public class BiomobyObjectActivity extends AbstractAsynchronousActivity<BiomobyO
 		}
 		outputPorts.add(port);
 	}
-	
+
 	public Central getCentral() {
         if (worker != null)
             return worker;
@@ -537,7 +537,7 @@ public class BiomobyObjectActivity extends AbstractAsynchronousActivity<BiomobyO
                 return null;
             }
     }
-	
+
 	public MobyDataType getMobyObject() {
         return mobyObject;
     }

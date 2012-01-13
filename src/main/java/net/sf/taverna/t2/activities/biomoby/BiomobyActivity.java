@@ -46,11 +46,11 @@ import org.jdom.output.XMLOutputter;
  * An Activity based on the Biomoby compliant web services. This activity
  * implementation will contact Biomoby registry in order to find the list of
  * extant ports at creation time.
- * 
+ *
  * Copied from org.biomoby.client.taverna.plugin.BiomobyProcessor and
  * org.biomoby.client.taverna.plugin.BiomobyTask and converted to a Taverna 2
  * Activity.
- * 
+ *
  * @author Martin Senger
  * @author Edward Kawas
  * @author Jose Maria Fernandez, INB
@@ -59,7 +59,7 @@ import org.jdom.output.XMLOutputter;
 public class BiomobyActivity extends
 		AbstractAsynchronousActivity<BiomobyActivityConfigurationBean> {
 
-	public static final String URI = "http://ns.taverna.org.uk/2010/activity/biomoby";
+	public static final String URI = "http://ns.taverna.org.uk/2010/activity/biomoby/service";
 
 	private static Logger logger = Logger.getLogger(BiomobyActivity.class);
 
@@ -766,7 +766,7 @@ public class BiomobyActivity extends
 				throw new ActivityConfigurationException(
 						formatError("Service has malformed endpoint: '"
 								+ serviceEndpoint + "'."));
-			}		
+			}
 
 		} catch (Exception e) {
 			if (e instanceof ActivityConfigurationException) {
@@ -1067,7 +1067,7 @@ public class BiomobyActivity extends
 														invocations[i]);
 										innerList.add(collection);
 									} catch (MobyException e) {
-										
+
 									}
 								}
 

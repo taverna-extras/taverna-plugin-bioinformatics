@@ -33,20 +33,20 @@ import org.biomoby.shared.NoSuccessException;
 /**
  * An Activity that breaks up a Moby datatype into its component parts minus all
  * the moby wrappings.
- * 
+ *
  * Copied from org.biomoby.client.taverna.plugin.MobyParseDatatypeActivityProcessor and
  * org.biomoby.client.taverna.plugin.MobyParseDatatypeActivityTask and converted to a Taverna 2
  * Activity.
- * 
+ *
  * @author Edward Kawas
  * @author David Withers
  */
 public class MobyParseDatatypeActivity extends AbstractAsynchronousActivity<MobyParseDatatypeActivityConfigurationBean> {
 
-	public static final String URI = "http://ns.taverna.org.uk/2010/activity/mobyParseDatatype";
+	public static final String URI = "http://ns.taverna.org.uk/2010/activity/biomoby/parser";
 
 	private static Logger logger = Logger.getLogger(MobyParseDatatypeActivity.class);
-			
+
 	private MobyParseDatatypeActivityConfigurationBean configurationBean = new MobyParseDatatypeActivityConfigurationBean();
 
 	private Central central = null;
@@ -69,7 +69,7 @@ public class MobyParseDatatypeActivity extends AbstractAsynchronousActivity<Moby
 				ReferenceService referenceService = callback.getContext().getReferenceService();
 
 				Map<String, T2Reference> output = new HashMap<String, T2Reference>();
-				
+
 				try {
 
                     //cache ontology and namespace if not done so already. Immediately returns if already cached.
@@ -81,11 +81,11 @@ public class MobyParseDatatypeActivity extends AbstractAsynchronousActivity<Moby
 						callback.receiveResult(output, new int[0]);
 						return;
 					}
-					
+
 					T2Reference inputId = data.get(inputMapKey);
-					
+
 					Object input = referenceService.renderIdentifier(inputId, String.class, callback.getContext());
-					
+
 					if (input instanceof String) {
 						//logger.error(inputMapKey + " is a string!\n");
 						String inputXML = (String) input;
@@ -93,7 +93,7 @@ public class MobyParseDatatypeActivity extends AbstractAsynchronousActivity<Moby
 							String outputPortName = outPort.getName();
 							String[] invocations = XMLUtilities.getSingleInvokationsFromMultipleInvokations(inputXML);
 							ArrayList<String> names = new ArrayList<String>();
-							int type = 0;		
+							int type = 0;
 							// get the type, names list, etc
 							if (outputPortName.equalsIgnoreCase("namespace")) {
 								// extract the namespace from the top element
@@ -146,7 +146,7 @@ public class MobyParseDatatypeActivity extends AbstractAsynchronousActivity<Moby
 								String outputPortName = outPort.getName();
 								String[] invocations = XMLUtilities.getSingleInvokationsFromMultipleInvokations(inputXML);
 								ArrayList<String> names = new ArrayList<String>();
-								int type = 0;		
+								int type = 0;
 								// get the type, names list, etc
 								if (outputPortName.equalsIgnoreCase("namespace")) {
 									// extract the namespace from the top element
@@ -199,7 +199,7 @@ public class MobyParseDatatypeActivity extends AbstractAsynchronousActivity<Moby
 							output.put(key, referenceService.register(holder.get(key), 1, true, callback.getContext()));
 						}
 					}
-						
+
 					callback.receiveResult(output, new int[0]);
 				} catch (ReferenceServiceException e) {
 					callback.fail("Error accessing input/output data", e);
@@ -242,7 +242,7 @@ public class MobyParseDatatypeActivity extends AbstractAsynchronousActivity<Moby
 		}
 
 //		setDescription("Service to parse the datatype " + this.datatype.getName());
-		
+
 		ArrayList list = new ArrayList();
 		if (isPrimitive(this.datatype.getName())) {
 			list.add(configurationBean.getArticleNameUsedByService() + "_" + this.datatype.getName());
@@ -314,7 +314,7 @@ public class MobyParseDatatypeActivity extends AbstractAsynchronousActivity<Moby
 			}
 			break;
 			case CentralImpl.iHASA: {
-				// check for object or primitives ... 
+				// check for object or primitives ...
 				if (isPrimitive(relation.getDataTypeName()) || relation.getDataTypeName().equals("Object")) {
 					// object has no value ... only primitives do
 					if (!relation.getDataTypeName().equals("Object"))
@@ -368,7 +368,7 @@ public class MobyParseDatatypeActivity extends AbstractAsynchronousActivity<Moby
 			temp.add(s.next());
 		}
 		s.close();
-		
+
 		for (String str : temp) {
 			if (str.indexOf("'_") >= 0) {
 				String[] strings = str.split("'_");
@@ -379,7 +379,7 @@ public class MobyParseDatatypeActivity extends AbstractAsynchronousActivity<Moby
 				list.add(str.replaceAll("'", ""));
 			}
 		}
-		
+
 		if (list.size() == 1) {
 			if (endsWithPrimitive(list.get(0))) {
 				String name = list.remove(0);
@@ -393,14 +393,14 @@ public class MobyParseDatatypeActivity extends AbstractAsynchronousActivity<Moby
 		}
 		return list;
 	}
-	
+
 	private static boolean endsWithPrimitive(String name) {
 		if (name.endsWith("_Integer") || name.endsWith("_String") || name.endsWith("_Float")
 				|| name.endsWith("_DateTime") || name.endsWith("_Boolean"))
 			return true;
 		return false;
 	}
-	
+
 	protected void addOutput(String portName, int portDepth, String type) {
 		OutputPort port = edits.createActivityOutputPort(
 				portName, portDepth, portDepth);
