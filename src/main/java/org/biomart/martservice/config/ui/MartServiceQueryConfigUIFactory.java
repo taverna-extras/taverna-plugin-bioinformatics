@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003 The University of Manchester 
+ * Copyright (C) 2003 The University of Manchester
  *
  * Modifications to the initial code base are copyright of their
  * respective authors, or their employers as appropriate.  Authorship
@@ -10,12 +10,12 @@
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1 of
  * the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
@@ -82,6 +82,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.SwingConstants;
@@ -91,8 +92,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-
-import net.sf.taverna.t2.lang.ui.DialogTextArea;
 
 import org.apache.log4j.Logger;
 import org.biomart.martservice.DatasetLink;
@@ -126,14 +125,14 @@ import org.ensembl.mart.lib.config.PushAction;
 /**
  * Implementation of the <code>QueryConfigUIFactory</code> interface that
  * creates a UI which looks like the Biomart web interface.
- * 
+ *
  * @author David Withers
  */
 public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	private static Logger logger = Logger
 	.getLogger(MartServiceQueryConfigUIFactory.class);
-	
+
 	private String version;
 
 	private Color borderColor = new Color(202, 207, 213);
@@ -196,7 +195,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/**
 	 * Returns the martDataset.
-	 * 
+	 *
 	 * @return the martDataset.
 	 */
 	public MartDataset getMartDataset() {
@@ -205,7 +204,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/**
 	 * Returns the query configuration for the dataset.
-	 * 
+	 *
 	 * @return the query configuration for the dataset
 	 * @throws MartServiceException
 	 *             if the MartService returns an error or is unavailable
@@ -219,7 +218,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryConfigUIFactory#getDatasetConfigUI(org.ensembl.mart.lib.config.DatasetConfig)
 	 */
 	public Component getDatasetConfigUI() throws MartServiceException {
@@ -381,7 +380,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryConfigUIFactory#getAttributePagesUI(org.ensembl.mart.lib.config.AttributePage[])
 	 */
 	public Component getAttributePagesUI(AttributePage[] attributePages,
@@ -636,7 +635,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryConfigUIFactory#getAttributePageUI(org.ensembl.mart.lib.config.AttributePage)
 	 */
 	public Component getAttributePageUI(AttributePage attributePage, Object data)
@@ -653,7 +652,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryConfigUIFactory#getAttributeGroupsUI(org.ensembl.mart.lib.config.AttributeGroup[])
 	 */
 	public Component getAttributeGroupsUI(AttributeGroup[] attributeGroups,
@@ -672,7 +671,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryConfigUIFactory#getAttributeGroupUI(org.ensembl.mart.lib.config.AttributeGroup)
 	 */
 	public Component getAttributeGroupUI(AttributeGroup attributeGroup,
@@ -698,7 +697,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryConfigUIFactory#getAttributeCollectionsUI(org.ensembl.mart.lib.config.AttributeCollection[])
 	 */
 	public Component getAttributeCollectionsUI(
@@ -720,7 +719,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryConfigUIFactory#getAttributeCollectionUI(org.ensembl.mart.lib.config.AttributeCollection)
 	 */
 	public Component getAttributeCollectionUI(
@@ -779,7 +778,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryConfigUIFactory#getAttributeDescriptionsUI(org.ensembl.mart.lib.config.AttributeDescription[],
 	 *      int)
 	 */
@@ -847,7 +846,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryConfigUIFactory#getAttributeDescriptionUI(org.ensembl.mart.lib.config.AttributeDescription,
 	 *      int)
 	 */
@@ -983,7 +982,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryConfigUIFactory#getAttributeListsUI(org.ensembl.mart.lib.config.AttributeList[],
 	 *      int)
 	 */
@@ -1031,7 +1030,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryConfigUIFactory#getAttributeListUI(org.ensembl.mart.lib.config.AttributeList,
 	 *      int)
 	 */
@@ -1088,7 +1087,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 		 * ("transcript_flank".equals(name)) {
 		 * sequenceLabel.setIcon(MartServiceIcons
 		 * .getIcon("gene_schematic_transcript_flank")); } }
-		 * 
+		 *
 		 * }); }
 		 */
 		return component;
@@ -1097,7 +1096,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryConfigUIFactory#getFilterPagesUI(org.ensembl.mart.lib.config.FilterPage[])
 	 */
 	public Component getFilterPagesUI(FilterPage[] filterPages, Object data)
@@ -1119,7 +1118,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryConfigUIFactory#getFilterPageUI(org.ensembl.mart.lib.config.FilterPage)
 	 */
 	public Component getFilterPageUI(FilterPage filterPage, Object data)
@@ -1135,7 +1134,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryConfigUIFactory#getFilterGroupsUI(org.ensembl.mart.lib.config.FilterGroup[])
 	 */
 	public Component getFilterGroupsUI(FilterGroup[] filterGroups, Object data)
@@ -1154,7 +1153,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryConfigUIFactory#getFilterGroupUI(org.ensembl.mart.lib.config.FilterGroup)
 	 */
 	public Component getFilterGroupUI(FilterGroup filterGroup, Object data)
@@ -1179,7 +1178,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryConfigUIFactory#getFilterCollectionsUI(org.ensembl.mart.lib.config.FilterCollection[])
 	 */
 	public Component getFilterCollectionsUI(
@@ -1203,7 +1202,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryConfigUIFactory#getFilterCollectionUI(org.ensembl.mart.lib.config.FilterCollection)
 	 */
 	public Component getFilterCollectionUI(FilterCollection filterCollection,
@@ -1274,7 +1273,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryConfigUIFactory#getFilterDescriptionsUI(org.ensembl.mart.lib.config.FilterDescription[],
 	 *      int)
 	 */
@@ -1333,7 +1332,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryConfigUIFactory#getFilterDescriptionUI(org.ensembl.mart.lib.config.FilterDescription,
 	 *      int)
 	 */
@@ -1354,7 +1353,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 			}
 			displayedFilter = QueryConfigUtils.getReferencedFilterDescription(
 					martService, dataset, filterDescription, version);
-			if (displayedFilter == null){ 
+			if (displayedFilter == null){
 				return null;
 			}
 			filterDescription.setDisplayName(displayedFilter.getDisplayName());
@@ -1467,7 +1466,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param inputPanel
 	 * @param attributePanel
 	 * @param filterPanel
@@ -1514,7 +1513,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 				} catch (MartServiceException e) {
 					logger.error("Error while fetching dataset configuration", e);
-					DialogTextArea textArea = new DialogTextArea();
+					JTextArea textArea = new JTextArea();
 					textArea
 							.append("Error while fetching dataset configuration\n\n");
 					textArea.append(e.getMessage());
@@ -1522,7 +1521,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 					inputPanel.add(textArea);
 				} catch (Exception e) {
 					logger.error("Error while generating the Query Editor", e);
-					DialogTextArea textArea = new DialogTextArea();
+					JTextArea textArea = new JTextArea();
 					textArea
 							.append("Error while generating the Query Editor\n\n");
 					textArea.append(e.toString());
@@ -1759,7 +1758,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryComponent#getType()
 		 */
 		public int getType() {
@@ -1779,7 +1778,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 	class MultipleTextFilterComponent extends QueryComponent {
 		private static final long serialVersionUID = 1L;
 
-		private DialogTextArea textArea;
+		private JTextArea textArea;
 
 		public MultipleTextFilterComponent(FilterDescription filterDescription,
 				MartDataset dataset) {
@@ -1789,7 +1788,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 			setLayout(new MinimalLayout(MinimalLayout.HORIZONTAL));
 			setBackground(componentBackgroundColor);
 
-			textArea = new DialogTextArea();
+			textArea = new JTextArea();
 			textArea.getDocument().addDocumentListener(new DocumentListener() {
 				public void changedUpdate(DocumentEvent e) {
 				}
@@ -1859,7 +1858,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryComponent#getType()
 		 */
 		public int getType() {
@@ -2093,7 +2092,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryComponent#getType()
 		 */
 		public int getType() {
@@ -2108,7 +2107,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 		private JComboBox comboBox;
 
-		private DialogTextArea textArea;
+		private JTextArea textArea;
 
 		private Map<String, QueryComponent> componentMap = new HashMap<String, QueryComponent>();
 
@@ -2198,7 +2197,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 				}
 			});
 
-			textArea = new DialogTextArea();
+			textArea = new JTextArea();
 			textArea.getDocument().addDocumentListener(new DocumentListener() {
 				public void changedUpdate(DocumentEvent e) {
 				}
@@ -2692,7 +2691,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 												});
 
 							} catch (MartServiceException e2) {
-								DialogTextArea textArea = new DialogTextArea();
+								JTextArea textArea = new JTextArea();
 								textArea
 										.append("Error while fetching dataset configuration\n\n");
 								textArea.append(e2.getMessage());
@@ -2789,7 +2788,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 						}
 					} catch (MartServiceException e) {
-						DialogTextArea textArea = new DialogTextArea();
+						JTextArea textArea = new JTextArea();
 						textArea
 								.append("Error while fetching dataset links\n\n");
 						textArea.append(e.getMessage());
@@ -3494,7 +3493,7 @@ public class MartServiceQueryConfigUIFactory implements QueryConfigUIFactory {
 
 /**
  * A border drawn only on one side of a component.
- * 
+ *
  * @author David Withers
  */
 class SideBorder06 extends AbstractBorder {
