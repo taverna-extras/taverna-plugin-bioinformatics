@@ -22,7 +22,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Export-Package>org.biomart.martservice.*,org.ensembl.mart.lib,org.ensembl.mart.lib.config,org.ensembl.mart.util</Export-Package>
+						<Private-Package>org.ensembl.mart.lib,org.ensembl.mart.lib.config,org.ensembl.mart.util</Private-Package>
 						<Import-Package>!org.ensembl.util,!org.ensembl.mart.editor,!oracle.sql,!gnu.getopt,!org.ewin.*,*</Import-Package>
 					</instructions>
 				</configuration>
