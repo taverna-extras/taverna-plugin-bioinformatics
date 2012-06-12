@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.sf.taverna.t2.activities.biomart.servicedescriptions;
 
@@ -10,8 +10,10 @@ import java.util.List;
 
 import javax.swing.Icon;
 
+import net.sf.taverna.t2.activities.biomart.BiomartActivityConfigurationBean;
 import net.sf.taverna.t2.servicedescriptions.AbstractConfigurableServiceProvider;
 import net.sf.taverna.t2.servicedescriptions.ServiceDescription;
+import net.sf.taverna.t2.servicedescriptions.ServiceDescriptionRegistry;
 import net.sf.taverna.t2.servicedescriptions.impl.ServiceDescriptionRegistryImpl;
 
 import org.biomart.martservice.MartDataset;
@@ -31,17 +33,19 @@ public class BiomartServiceProvider extends AbstractConfigurableServiceProvider<
 
 	private static final String TAVERNA = "taverna";
 	private static final String BIOMART_SERVICE = "Biomart service";
-	
+
 	private static final URI providerId = URI
 	.create("http://taverna.sf.net/2010/service-provider/biomart");
-	
+
+	private ServiceDescriptionRegistry serviceDescriptionRegistry;
+
 	public BiomartServiceProvider() {
 		super(new BiomartServiceProviderConfig("http://somehost/biomart"));
 	}
 
 	public void findServiceDescriptionsAsync(
 			FindServiceDescriptionsCallBack callBack) {
-		List<ServiceDescription<Element>> descriptions = new ArrayList<ServiceDescription<Element>>();
+		List<ServiceDescription<BiomartActivityConfigurationBean>> descriptions = new ArrayList<ServiceDescription<BiomartActivityConfigurationBean>>();
 		String url = serviceProviderConfig.getUrl();
 		callBack.status("About to parse biomart:" + url);
 		try {
@@ -92,7 +96,7 @@ public class BiomartServiceProvider extends AbstractConfigurableServiceProvider<
 
 	/**
 	 * Attempts to construct a valid MartService URL from the location given.
-	 * 
+	 *
 	 * @param biomartLocation
 	 * @return a (hopefully) valid MartService URL
 	 */
@@ -113,18 +117,17 @@ public class BiomartServiceProvider extends AbstractConfigurableServiceProvider<
 		}
 		return sb.toString();
 	}
-	
+
 	public List<BiomartServiceProviderConfig> getDefaultConfigurations() {
-		
+
 		List<BiomartServiceProviderConfig> defaults = new ArrayList<BiomartServiceProviderConfig>();
 
-		ServiceDescriptionRegistryImpl serviceRegistry = ServiceDescriptionRegistryImpl.getInstance();
 		// If defaults have failed to load from a configuration file then load them here.
-		if (!serviceRegistry.isDefaultSystemConfigurableProvidersLoaded()){
+		if (!serviceDescriptionRegistry.isDefaultSystemConfigurableProvidersLoaded()){
 			defaults.add(new BiomartServiceProviderConfig(
 					"http://www.biomart.org/biomart/martservice"));
 		} // else return an empty list
-		
+
 		return defaults;
 
 	}
@@ -140,6 +143,8 @@ public class BiomartServiceProvider extends AbstractConfigurableServiceProvider<
 		return providerId.toString();
 	}
 
-
+	public void setServiceDescriptionRegistry(ServiceDescriptionRegistry serviceDescriptionRegistry) {
+		this.serviceDescriptionRegistry = serviceDescriptionRegistry;
+	}
 
 }

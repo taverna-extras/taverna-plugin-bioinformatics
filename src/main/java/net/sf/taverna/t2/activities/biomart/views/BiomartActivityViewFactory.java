@@ -23,7 +23,11 @@ package net.sf.taverna.t2.activities.biomart.views;
 import java.util.Arrays;
 import java.util.List;
 
+import uk.org.taverna.configuration.app.ApplicationConfiguration;
+
 import net.sf.taverna.t2.activities.biomart.BiomartActivity;
+import net.sf.taverna.t2.workbench.activityicons.ActivityIconManager;
+import net.sf.taverna.t2.workbench.configuration.colour.ColourManager;
 import net.sf.taverna.t2.workbench.edits.EditManager;
 import net.sf.taverna.t2.workbench.file.FileManager;
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.ContextualView;
@@ -31,17 +35,19 @@ import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ContextualV
 
 public class BiomartActivityViewFactory implements ContextualViewFactory<BiomartActivity> {
 
-
 	private EditManager editManager;
 	private FileManager fileManager;
+	private ActivityIconManager activityIconManager;
+	private ColourManager colourManager;
+	private ApplicationConfiguration applicationConfiguration;
 
 	public boolean canHandle(Object object) {
 		return object instanceof BiomartActivity;
 	}
 
-
 	public List<ContextualView> getViews(BiomartActivity activity) {
-		return Arrays.asList(new ContextualView[] {new BiomartActivityContextualView(activity, editManager, fileManager)});
+		return Arrays.asList(new ContextualView[] { new BiomartActivityContextualView(activity,
+				editManager, fileManager, activityIconManager, colourManager, applicationConfiguration) });
 	}
 
 	public void setEditManager(EditManager editManager) {
@@ -50,6 +56,18 @@ public class BiomartActivityViewFactory implements ContextualViewFactory<Biomart
 
 	public void setFileManager(FileManager fileManager) {
 		this.fileManager = fileManager;
+	}
+
+	public void setActivityIconManager(ActivityIconManager activityIconManager) {
+		this.activityIconManager = activityIconManager;
+	}
+
+	public void setColourManager(ColourManager colourManager) {
+		this.colourManager = colourManager;
+	}
+
+	public void setApplicationConfiguration(ApplicationConfiguration applicationConfiguration) {
+		this.applicationConfiguration = applicationConfiguration;
 	}
 
 }

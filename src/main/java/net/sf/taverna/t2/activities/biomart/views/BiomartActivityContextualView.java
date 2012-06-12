@@ -26,6 +26,8 @@ import javax.swing.Action;
 
 import net.sf.taverna.t2.activities.biomart.BiomartActivity;
 import net.sf.taverna.t2.activities.biomart.actions.BiomartActivityConfigurationAction;
+import net.sf.taverna.t2.workbench.activityicons.ActivityIconManager;
+import net.sf.taverna.t2.workbench.configuration.colour.ColourManager;
 import net.sf.taverna.t2.workbench.edits.EditManager;
 import net.sf.taverna.t2.workbench.file.FileManager;
 import net.sf.taverna.t2.workbench.ui.actions.activity.HTMLBasedActivityContextualView;
@@ -37,36 +39,45 @@ import org.biomart.martservice.query.Attribute;
 import org.biomart.martservice.query.Filter;
 import org.jdom.Element;
 
+import uk.org.taverna.configuration.app.ApplicationConfiguration;
+
 public class BiomartActivityContextualView extends HTMLBasedActivityContextualView<Element> {
 
 	private static final long serialVersionUID = -33919649695058443L;
 	private final EditManager editManager;
 	private final FileManager fileManager;
+	private final ActivityIconManager activityIconManager;
+	private final ApplicationConfiguration applicationConfiguration;
 
-	public BiomartActivityContextualView(Activity<?> activity, EditManager editManager, FileManager fileManager) {
-		super(activity);
+	public BiomartActivityContextualView(Activity<?> activity, EditManager editManager,
+			FileManager fileManager, ActivityIconManager activityIconManager,
+			ColourManager colourManager, ApplicationConfiguration applicationConfiguration) {
+		super(activity, colourManager);
 		this.editManager = editManager;
 		this.fileManager = fileManager;
+		this.activityIconManager = activityIconManager;
+		this.applicationConfiguration = applicationConfiguration;
 	}
 
 	@Override
 	protected String getRawTableRowsHtml() {
 		MartQuery q = MartServiceXMLHandler.elementToMartQuery(getConfigBean(), null);
-		String html="<tr><td>URL</td><td>"+q.getMartService().getLocation()+"</td></tr>";
-		html+="<tr><td>Location</td><td>"+q.getMartDataset().getMartURLLocation().getDisplayName() + "</td></tr>";
-		boolean firstFilter=true;
+		String html = "<tr><td>URL</td><td>" + q.getMartService().getLocation() + "</td></tr>";
+		html += "<tr><td>Location</td><td>"
+				+ q.getMartDataset().getMartURLLocation().getDisplayName() + "</td></tr>";
+		boolean firstFilter = true;
 		for (Filter filter : q.getQuery().getFilters()) {
-			html+=firstFilter ? "<tr><td>Filter</td><td>" : "<tr><td></td></td>";
-			firstFilter=false;
-			html+=filter.getName()+"</td></tr>";
+			html += firstFilter ? "<tr><td>Filter</td><td>" : "<tr><td></td></td>";
+			firstFilter = false;
+			html += filter.getName() + "</td></tr>";
 		}
-		boolean firstAttribute=true;
+		boolean firstAttribute = true;
 		for (Attribute attribute : q.getQuery().getAttributes()) {
-			html+=firstAttribute ? "<tr><td>Attribute</td><td>" : "<tr><td></td><td>";
-			firstAttribute=false;
-			html+=attribute.getName()+"</td></tr>";
+			html += firstAttribute ? "<tr><td>Attribute</td><td>" : "<tr><td></td><td>";
+			firstAttribute = false;
+			html += attribute.getName() + "</td></tr>";
 		}
-		html+="<tr><td>Dataset</td><td>"+q.getMartDataset().getDisplayName()+"</td></tr>";
+		html += "<tr><td>Dataset</td><td>" + q.getMartDataset().getDisplayName() + "</td></tr>";
 		return html;
 	}
 
@@ -77,15 +88,13 @@ public class BiomartActivityContextualView extends HTMLBasedActivityContextualVi
 
 	@Override
 	public Action getConfigureAction(Frame owner) {
-		return new BiomartActivityConfigurationAction((BiomartActivity)getActivity(),owner, editManager, fileManager);
+		return new BiomartActivityConfigurationAction((BiomartActivity) getActivity(), owner,
+				editManager, fileManager, activityIconManager, applicationConfiguration);
 	}
 
 	@Override
 	public int getPreferredPosition() {
 		return 100;
 	}
-
-
-
 
 }

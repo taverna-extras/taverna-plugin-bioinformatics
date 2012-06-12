@@ -1,18 +1,18 @@
- /* Copyright (C) 2007 The University of Manchester   
- * 
+ /* Copyright (C) 2007 The University of Manchester
+ *
  *  Modifications to the initial code base are copyright of their
  *  respective authors, or their employers as appropriate.
- * 
+ *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public License
  *  as published by the Free Software Foundation; either version 2.1 of
  *  the License, or (at your option) any later version.
- *    
+ *
  *  This program is distributed in the hope that it will be useful, but
  *  WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- *    
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
@@ -25,6 +25,7 @@ import java.util.List;
 import javax.swing.Icon;
 
 import net.sf.taverna.t2.activities.biomart.BiomartActivity;
+import net.sf.taverna.t2.activities.biomart.BiomartActivityConfigurationBean;
 import net.sf.taverna.t2.servicedescriptions.ServiceDescription;
 
 import org.jdom.Element;
@@ -33,15 +34,15 @@ import org.jdom.Element;
  * @author alanrw
  *
  */
-public class BiomartServiceDescription extends ServiceDescription<Element>{
+public class BiomartServiceDescription extends ServiceDescription<BiomartActivityConfigurationBean>{
 
 	private String url;
 	private String dataset;
 	private String location;
-	
+
 	private static final String BIOMART = "Biomart @ ";
 	private Element martQuery;
-	
+
 	public Element getMartQuery() {
 		return martQuery;
 	}
@@ -96,10 +97,12 @@ public class BiomartServiceDescription extends ServiceDescription<Element>{
 	public void setMartQuery(Element martQuery) {
 		this.martQuery = martQuery;
 	}
-	
+
 	@Override
-	public Element getActivityConfiguration() {
-		return getMartQuery();
+	public BiomartActivityConfigurationBean getActivityConfiguration() {
+		BiomartActivityConfigurationBean configuration = new BiomartActivityConfigurationBean();
+		configuration.setMartQuery(getMartQuery());
+		return configuration;
 	}
 
 	@Override
@@ -124,7 +127,7 @@ public class BiomartServiceDescription extends ServiceDescription<Element>{
 	protected List<Object> getIdentifyingData() {
 		return Arrays.<Object>asList(getUrl(), getLocation(), getDataset());
 	}
-	
+
 	@Override
 	public boolean isTemplateService() {
 		return true;

@@ -5,16 +5,23 @@
 
 	<bean id="BiomartActivityIcon" class="net.sf.taverna.t2.activities.biomart.servicedescriptions.BiomartActivityIcon" />
 
-	<bean id="BiomartServiceProvider" class="net.sf.taverna.t2.activities.biomart.servicedescriptions.BiomartServiceProvider" />
+	<bean id="BiomartServiceProvider" class="net.sf.taverna.t2.activities.biomart.servicedescriptions.BiomartServiceProvider">
+			<property name="serviceDescriptionRegistry" ref="serviceDescriptionRegistry" />
+	</bean>
 
 	<bean id="BiomartConfigurationMenuAction" class="net.sf.taverna.t2.activities.biomart.menu.BiomartConfigurationMenuAction">
 			<property name="editManager" ref="editManager" />
 			<property name="fileManager" ref="fileManager" />
+			<property name="activityIconManager" ref="activityIconManager" />
+			<property name="applicationConfiguration" ref="applicationConfiguration" />
 	</bean>
 
 	<bean id="BiomartActivityViewFactory" class="net.sf.taverna.t2.activities.biomart.views.BiomartActivityViewFactory">
 			<property name="editManager" ref="editManager" />
 			<property name="fileManager" ref="fileManager" />
+			<property name="activityIconManager" ref="activityIconManager" />
+			<property name="colourManager" ref="colourManager" />
+			<property name="applicationConfiguration" ref="applicationConfiguration" />
 	</bean>
 
 </beans>
