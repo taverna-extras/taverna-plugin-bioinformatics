@@ -4,6 +4,7 @@ import javax.swing.Action;
 
 import net.sf.taverna.t2.activities.biomoby.BiomobyActivity;
 import net.sf.taverna.t2.activities.biomoby.actions.BiomobyActivityConfigurationAction;
+import net.sf.taverna.t2.workbench.activityicons.ActivityIconManager;
 import net.sf.taverna.t2.workbench.activitytools.AbstractConfigureActivityMenuAction;
 import net.sf.taverna.t2.workbench.edits.EditManager;
 import net.sf.taverna.t2.workbench.file.FileManager;
@@ -13,6 +14,7 @@ public class ConfigureBiomobyMenuAction extends
 
 	private EditManager editManager;
 	private FileManager fileManager;
+	private ActivityIconManager activityIconManager;
 
 	public ConfigureBiomobyMenuAction() {
 		super(BiomobyActivity.class);
@@ -22,8 +24,8 @@ public class ConfigureBiomobyMenuAction extends
 	protected Action createAction() {
 		BiomobyActivity a = findActivity();
 		Action result = null;
-		result = new BiomobyActivityConfigurationAction(a, getParentFrame(),
-				editManager, fileManager);
+		result = new BiomobyActivityConfigurationAction(a, getParentFrame(), editManager,
+				fileManager, activityIconManager);
 		result.putValue(Action.NAME, "Configure");
 		addMenuDots(result);
 		return result;
@@ -42,4 +44,9 @@ public class ConfigureBiomobyMenuAction extends
 	public void setFileManager(FileManager fileManager) {
 		this.fileManager = fileManager;
 	}
+
+	public void setActivityIconManager(ActivityIconManager activityIconManager) {
+		this.activityIconManager = activityIconManager;
+	}
+
 }

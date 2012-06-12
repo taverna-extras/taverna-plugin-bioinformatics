@@ -25,7 +25,6 @@ package net.sf.taverna.t2.activities.biomoby.edits;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sf.taverna.raven.log.Log;
 import net.sf.taverna.t2.activities.biomoby.BiomobyObjectActivity;
 import net.sf.taverna.t2.activities.biomoby.BiomobyObjectActivityConfigurationBean;
 import net.sf.taverna.t2.workflowmodel.CompoundEdit;
@@ -45,13 +44,15 @@ import net.sf.taverna.t2.workflowmodel.impl.DataflowImpl;
 import net.sf.taverna.t2.workflowmodel.processor.activity.Activity;
 import net.sf.taverna.t2.workflowmodel.utils.Tools;
 
+import org.apache.log4j.Logger;
+
 /**
  * @author Stuart Owen
  *
  */
 public class AddUpstreamObjectEdit extends AbstractDataflowEdit {
 
-	private static Log logger = Log.getLogger(AddUpstreamObjectEdit.class);
+	private static Logger logger = Logger.getLogger(AddUpstreamObjectEdit.class);
 
 	private final Processor sinkProcessor;
 	private final BiomobyObjectActivity activity;
