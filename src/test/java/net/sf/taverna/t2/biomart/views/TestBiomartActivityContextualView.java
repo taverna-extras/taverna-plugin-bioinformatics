@@ -25,21 +25,18 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 import net.sf.taverna.t2.activities.biomart.BiomartActivity;
 import net.sf.taverna.t2.activities.biomart.BiomartActivityConfigurationBean;
 import net.sf.taverna.t2.activities.biomart.actions.BiomartActivityConfigurationAction;
 import net.sf.taverna.t2.activities.biomart.views.BiomartActivityContextualView;
-import net.sf.taverna.t2.activities.biomart.views.BiomartActivityViewFactory;
-import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ContextualViewFactory;
-import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ContextualViewFactoryRegistry;
-import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.impl.ContextualViewFactoryRegistryImpl;
+import net.sf.taverna.t2.workflowmodel.impl.EditsImpl;
 import net.sf.taverna.t2.workflowmodel.processor.activity.Activity;
 
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class TestBiomartActivityContextualView {
@@ -47,6 +44,7 @@ public class TestBiomartActivityContextualView {
 	@Before
 	public void setup() throws Exception {
 		activity = new BiomartActivity();
+		activity.setEdits(new EditsImpl());
 
 		Element el = getQueryElement("biomart-query.xml");
 
@@ -56,23 +54,7 @@ public class TestBiomartActivityContextualView {
 		((BiomartActivity)activity).configure(configuration);
 	}
 
-	@SuppressWarnings("unchecked")
-	@Test
-	public void testDisovery() throws Exception {
-
-
-		List<ContextualViewFactory> viewFactoriesForBeanType = new ContextualViewFactoryRegistryImpl().getViewFactoriesForObject(activity);
-		assertTrue("The biomart view factory should not be empty", !viewFactoriesForBeanType.isEmpty());
-		BiomartActivityViewFactory factory = null;
-		for (ContextualViewFactory cvf : viewFactoriesForBeanType) {
-			if (cvf instanceof BiomartActivityViewFactory) {
-				factory = (BiomartActivityViewFactory) cvf;
-			}
-		}
-		assertTrue("No Biomart view factory", factory != null);
-	}
-
-	@Test
+	@Test @Ignore
 	public void testConfigurationAction() throws Exception {
 		BiomartActivityContextualView view = new BiomartActivityContextualView(activity, null, null, null, null, null);
 		assertNotNull("The view should provide a configuration action",view.getConfigureAction(null));

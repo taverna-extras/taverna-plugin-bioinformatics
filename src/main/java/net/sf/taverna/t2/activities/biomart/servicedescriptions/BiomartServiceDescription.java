@@ -19,6 +19,7 @@
  ******************************************************************************/
  package net.sf.taverna.t2.activities.biomart.servicedescriptions;
 
+import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 
@@ -87,6 +88,11 @@ public class BiomartServiceDescription extends ServiceDescription<BiomartActivit
 	 */
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	@Override
+	public URI getActivityURI() {
+		return URI.create(BiomartActivity.URI);
 	}
 
 	@Override

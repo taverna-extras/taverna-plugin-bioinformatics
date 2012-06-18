@@ -10,7 +10,7 @@
 
 	<service ref="BiomartServiceProvider" interface="net.sf.taverna.t2.servicedescriptions.ServiceDescriptionProvider" />
 
-	<service ref="BiomartConfigurationMenuAction" interface="net.sf.taverna.t2.ui.menu.MenuComponent" />
+	<service ref="BiomartConfigurationMenuAction" auto-export="interfaces" />
 
 	<service ref="BiomartActivityViewFactory" interface="net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ContextualViewFactory" />
 

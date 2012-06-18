@@ -14,7 +14,6 @@ import net.sf.taverna.t2.activities.biomart.BiomartActivityConfigurationBean;
 import net.sf.taverna.t2.servicedescriptions.AbstractConfigurableServiceProvider;
 import net.sf.taverna.t2.servicedescriptions.ServiceDescription;
 import net.sf.taverna.t2.servicedescriptions.ServiceDescriptionRegistry;
-import net.sf.taverna.t2.servicedescriptions.impl.ServiceDescriptionRegistryImpl;
 
 import org.biomart.martservice.MartDataset;
 import org.biomart.martservice.MartQuery;
@@ -23,7 +22,6 @@ import org.biomart.martservice.MartService;
 import org.biomart.martservice.MartServiceException;
 import org.biomart.martservice.MartServiceXMLHandler;
 import org.biomart.martservice.MartURLLocation;
-import org.jdom.Element;
 
 /**
  * @author alanrw
