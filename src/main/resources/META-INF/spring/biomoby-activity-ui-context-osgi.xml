@@ -11,9 +11,9 @@
 
 	<service ref="BiomobyServiceProvider" interface="net.sf.taverna.t2.servicedescriptions.ServiceDescriptionProvider" />
 
-	<service ref="BiomobyActivityDetailsMenuAction" interface="net.sf.taverna.t2.ui.menu.MenuComponent" />
-	<service ref="BiomobyActivityParserMenuAction" interface="net.sf.taverna.t2.ui.menu.MenuComponent" />
-	<service ref="ConfigureBiomobyMenuAction" interface="net.sf.taverna.t2.ui.menu.MenuComponent" />
+	<service ref="BiomobyActivityDetailsMenuAction" auto-export="interfaces" />
+	<service ref="BiomobyActivityParserMenuAction" auto-export="interfaces" />
+	<service ref="ConfigureBiomobyMenuAction" auto-export="interfaces" />
 
 	<service ref="BiomobyActivityContextualViewFactory" interface="net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ContextualViewFactory" />
 	<service ref="BiomobyObjectActivityContextualViewFactory" interface="net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ContextualViewFactory" />
