@@ -22,13 +22,13 @@ package net.sf.taverna.t2.activities.biomart.actions;
 
 import java.awt.Dimension;
 import java.io.File;
+import java.net.URI;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 
-import net.sf.taverna.t2.activities.biomart.BiomartActivity;
-import net.sf.taverna.t2.activities.biomart.BiomartActivityConfigurationBean;
+import net.sf.taverna.t2.servicedescriptions.ServiceDescription;
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ActivityConfigurationPanel;
 
 import org.apache.log4j.Logger;
@@ -39,40 +39,72 @@ import org.biomart.martservice.MartServiceXMLHandler;
 import org.biomart.martservice.config.QueryConfigController;
 import org.biomart.martservice.config.ui.MartServiceQueryConfigUIFactory;
 import org.biomart.martservice.config.ui.QueryConfigUIFactory;
+import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.DOMBuilder;
+import org.jdom.output.DOMOutputter;
 import org.jdom.output.XMLOutputter;
 
 import uk.org.taverna.configuration.app.ApplicationConfiguration;
+import uk.org.taverna.scufl2.api.activity.Activity;
+import uk.org.taverna.scufl2.api.common.Scufl2Tools;
+import uk.org.taverna.scufl2.api.configurations.Configuration;
+import uk.org.taverna.scufl2.api.property.MultiplePropertiesException;
+import uk.org.taverna.scufl2.api.property.PropertyLiteral;
+import uk.org.taverna.scufl2.api.property.PropertyNotFoundException;
+import uk.org.taverna.scufl2.api.property.UnexpectedPropertyException;
 
-public class BiomartConfigurationPanel extends ActivityConfigurationPanel<BiomartActivity, BiomartActivityConfigurationBean> {
-	private static Logger logger = Logger
-			.getLogger(BiomartConfigurationPanel.class);
+public class BiomartConfigurationPanel extends ActivityConfigurationPanel {
+	private static Logger logger = Logger.getLogger(BiomartConfigurationPanel.class);
 
 	private static final long serialVersionUID = 1884045346293327621L;
 
-	private BiomartActivityConfigurationBean configuration;
+	public static final URI ACTIVITY_TYPE = URI.create("http://ns.taverna.org.uk/2010/activity/biomart");
+
+	private Configuration configuration;
 	private String configurationString;
 
 	private MartQuery biomartQuery;
 
-	private BiomartActivity activity;
+	private Activity activity;
 
 	private static XMLOutputter outputter = new XMLOutputter();
 
 	private final ApplicationConfiguration applicationConfiguration;
 
-	public BiomartConfigurationPanel(BiomartActivity activity, ApplicationConfiguration applicationConfiguration) {
+	private final ServiceDescription serviceDescription;
+
+	private Scufl2Tools scufl2Tools = new Scufl2Tools();
+
+	public BiomartConfigurationPanel(Activity activity, ApplicationConfiguration applicationConfiguration,
+			ServiceDescription serviceDescription) {
 		this.activity = activity;
 		this.applicationConfiguration = applicationConfiguration;
+		this.serviceDescription = serviceDescription;
 		initialise();
 	}
 
 	private void initialise() {
-		this.configuration = activity.getConfiguration();
-		this.configurationString = outputter.outputString(this.configuration.getMartQuery());
+		this.configuration = scufl2Tools.configurationFor(activity, activity.getParent());
+		PropertyLiteral propertyLiteral = null;
+		try {
+			propertyLiteral = configuration.getPropertyResource().getPropertyAsLiteral(ACTIVITY_TYPE.resolve("#martQuery"));
+		} catch (UnexpectedPropertyException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (PropertyNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (MultiplePropertiesException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Element martQuery = new DOMBuilder().build(propertyLiteral.getLiteralValueAsElement());
+		this.configurationString = outputter.outputString(martQuery);
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 
-		biomartQuery = MartServiceXMLHandler.elementToMartQuery(configuration.getMartQuery(), null);
+		biomartQuery = MartServiceXMLHandler.elementToMartQuery(martQuery, null);
 		MartService service = biomartQuery.getMartService();
 
 		File homeRoot=applicationConfiguration.getApplicationHomeDir();
@@ -104,7 +136,7 @@ public class BiomartConfigurationPanel extends ActivityConfigurationPanel<Biomar
 	}
 
 	@Override
-	public BiomartActivityConfigurationBean getConfiguration() {
+	public Configuration getConfiguration() {
 		return configuration;
 	}
 
@@ -116,8 +148,17 @@ public class BiomartConfigurationPanel extends ActivityConfigurationPanel<Biomar
 
 	@Override
 	public void noteConfiguration() {
-		configuration.setMartQuery((Element) getQuery().clone());
-		configurationString = outputter.outputString(configuration.getMartQuery());
+		Element martQuery = (Element) getQuery().clone();
+		Configuration newConfiguration = serviceDescription.getActivityConfiguration();
+		configuration.getPropertyResource().clearProperties(ACTIVITY_TYPE.resolve("#martQuery"));
+		try {
+			org.w3c.dom.Element element = new DOMOutputter().output(new Document(martQuery)).getDocumentElement();
+			configuration.getPropertyResource().addProperty(ACTIVITY_TYPE.resolve("#martQuery"), new PropertyLiteral(element));
+		} catch (JDOMException e) {
+			logger.warn("Can't convert MartQuery to org.w3c.dom.Element", e);
+		}
+		configuration = newConfiguration;
+		configurationString = outputter.outputString(martQuery);
 	}
 
 	@Override

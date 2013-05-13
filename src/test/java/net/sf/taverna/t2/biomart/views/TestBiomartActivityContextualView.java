@@ -25,38 +25,45 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 
-import net.sf.taverna.t2.activities.biomart.BiomartActivity;
-import net.sf.taverna.t2.activities.biomart.BiomartActivityConfigurationBean;
 import net.sf.taverna.t2.activities.biomart.actions.BiomartActivityConfigurationAction;
 import net.sf.taverna.t2.activities.biomart.views.BiomartActivityContextualView;
-import net.sf.taverna.t2.workflowmodel.impl.EditsImpl;
-import net.sf.taverna.t2.workflowmodel.processor.activity.Activity;
 
+import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
+import org.jdom.output.DOMOutputter;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import uk.org.taverna.scufl2.api.activity.Activity;
+import uk.org.taverna.scufl2.api.configurations.Configuration;
+import uk.org.taverna.scufl2.api.profiles.Profile;
+import uk.org.taverna.scufl2.api.property.PropertyLiteral;
+
 public class TestBiomartActivityContextualView {
-	Activity<?> activity;
+	Activity activity;
+
 	@Before
 	public void setup() throws Exception {
-		activity = new BiomartActivity();
-		activity.setEdits(new EditsImpl());
+		activity = new Activity();
+		activity.setParent(new Profile());
 
 		Element el = getQueryElement("biomart-query.xml");
 
-		BiomartActivityConfigurationBean configuration = new BiomartActivityConfigurationBean();
-		configuration.setMartQuery(el);
+		Configuration configuration = new Configuration();
+		configuration.setType(URI.create("http://ns.taverna.org.uk/2010/activity/biomart").resolve("#Config"));
+		org.w3c.dom.Element element = new DOMOutputter().output(new Document(el)).getDocumentElement();
+		configuration.getPropertyResource().addProperty(URI.create("http://ns.taverna.org.uk/2010/activity/biomart").resolve("#martQuery"), new PropertyLiteral(element));
 
-		((BiomartActivity)activity).configure(configuration);
+		configuration.setConfigures(activity);
 	}
 
 	@Test @Ignore
 	public void testConfigurationAction() throws Exception {
-		BiomartActivityContextualView view = new BiomartActivityContextualView(activity, null, null, null, null, null);
+		BiomartActivityContextualView view = new BiomartActivityContextualView(activity, null, null, null, null, null, null);
 		assertNotNull("The view should provide a configuration action",view.getConfigureAction(null));
 		assertTrue("The configuration action should be an instance of BiomartActivityConfigurationAction",view.getConfigureAction(null) instanceof BiomartActivityConfigurationAction);
 	}
@@ -75,9 +82,10 @@ public class TestBiomartActivityContextualView {
 
 	private void run() throws Exception {
 		setup();
-		BiomartActivityContextualView view = new BiomartActivityContextualView(activity, null, null, null, null, null);
+		BiomartActivityContextualView view = new BiomartActivityContextualView(activity, null, null, null, null, null, null);
 		view.setVisible(true);
 	}
+
 	public static void main(String[] args) throws Exception {
 		new TestBiomartActivityContextualView().run();
 	}

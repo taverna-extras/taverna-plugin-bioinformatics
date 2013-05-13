@@ -25,8 +25,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.Action;
 
-import net.sf.taverna.t2.activities.biomart.BiomartActivity;
-import net.sf.taverna.t2.activities.biomart.BiomartActivityConfigurationBean;
+import net.sf.taverna.t2.servicedescriptions.ServiceDescriptionRegistry;
 import net.sf.taverna.t2.workbench.activityicons.ActivityIconManager;
 import net.sf.taverna.t2.workbench.configuration.colour.ColourManager;
 import net.sf.taverna.t2.workbench.edits.EditManager;
@@ -37,9 +36,9 @@ import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ActivityCon
 import org.jdom.Element;
 
 import uk.org.taverna.configuration.app.ApplicationConfiguration;
+import uk.org.taverna.scufl2.api.activity.Activity;
 
-public class BiomartActivityConfigurationAction extends
-		ActivityConfigurationAction<BiomartActivity, BiomartActivityConfigurationBean> {
+public class BiomartActivityConfigurationAction extends ActivityConfigurationAction {
 
 	private static final long serialVersionUID = 3782223454010961660L;
 	private final Frame owner;
@@ -48,10 +47,10 @@ public class BiomartActivityConfigurationAction extends
 	private final FileManager fileManager;
 	private final ApplicationConfiguration applicationConfiguration;
 
-	public BiomartActivityConfigurationAction(BiomartActivity activity, Frame owner,
+	public BiomartActivityConfigurationAction(Activity activity, Frame owner,
 			EditManager editManager, FileManager fileManager, ActivityIconManager activityIconManager,
-			ApplicationConfiguration applicationConfiguration) {
-		super(activity, activityIconManager);
+			ApplicationConfiguration applicationConfiguration, ServiceDescriptionRegistry serviceDescriptionRegistry) {
+		super(activity, activityIconManager, serviceDescriptionRegistry);
 		this.editManager = editManager;
 		this.fileManager = fileManager;
 		this.applicationConfiguration = applicationConfiguration;
@@ -61,16 +60,15 @@ public class BiomartActivityConfigurationAction extends
 
 	@SuppressWarnings("serial")
 	public void actionPerformed(ActionEvent action) {
-		ActivityConfigurationDialog currentDialog = ActivityConfigurationAction
-				.getDialog(getActivity());
+		ActivityConfigurationDialog currentDialog = ActivityConfigurationAction.getDialog(getActivity());
 		if (currentDialog != null) {
 			currentDialog.toFront();
 			return;
 		}
 
 		final BiomartConfigurationPanel configurationPanel = new BiomartConfigurationPanel(
-				getActivity(), applicationConfiguration);
-		final ActivityConfigurationDialog<BiomartActivity, BiomartActivityConfigurationBean> dialog = new ActivityConfigurationDialog<BiomartActivity, BiomartActivityConfigurationBean>(
+				getActivity(), applicationConfiguration, getServiceDescription());
+		final ActivityConfigurationDialog dialog = new ActivityConfigurationDialog(
 				getActivity(), configurationPanel, editManager, fileManager);
 
 		ActivityConfigurationAction.setDialog(getActivity(), dialog, fileManager);

@@ -43,7 +43,7 @@ public class BiomartServiceProvider extends AbstractConfigurableServiceProvider<
 
 	public void findServiceDescriptionsAsync(
 			FindServiceDescriptionsCallBack callBack) {
-		List<ServiceDescription<BiomartActivityConfigurationBean>> descriptions = new ArrayList<ServiceDescription<BiomartActivityConfigurationBean>>();
+		List<ServiceDescription> descriptions = new ArrayList<ServiceDescription>();
 		String url = serviceProviderConfig.getUrl();
 		callBack.status("About to parse biomart:" + url);
 		try {

@@ -25,17 +25,26 @@ import java.util.List;
 
 import javax.swing.Icon;
 
-import net.sf.taverna.t2.activities.biomart.BiomartActivity;
-import net.sf.taverna.t2.activities.biomart.BiomartActivityConfigurationBean;
 import net.sf.taverna.t2.servicedescriptions.ServiceDescription;
 
+import org.apache.log4j.Logger;
+import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.output.DOMOutputter;
+
+import uk.org.taverna.scufl2.api.configurations.Configuration;
+import uk.org.taverna.scufl2.api.property.PropertyLiteral;
 
 /**
  * @author alanrw
  *
  */
-public class BiomartServiceDescription extends ServiceDescription<BiomartActivityConfigurationBean>{
+public class BiomartServiceDescription extends ServiceDescription {
+
+	public static final URI ACTIVITY_TYPE = URI.create("http://ns.taverna.org.uk/2010/activity/biomart");
+
+	private static Logger logger = Logger.getLogger(BiomartServiceDescription.class);
 
 	private String url;
 	private String dataset;
@@ -90,24 +99,25 @@ public class BiomartServiceDescription extends ServiceDescription<BiomartActivit
 		this.location = location;
 	}
 
-	@Override
-	public URI getActivityURI() {
-		return URI.create(BiomartActivity.URI);
-	}
-
-	@Override
-	public Class<BiomartActivity> getActivityClass() {
-		return BiomartActivity.class;
-	}
-
 	public void setMartQuery(Element martQuery) {
 		this.martQuery = martQuery;
 	}
 
 	@Override
-	public BiomartActivityConfigurationBean getActivityConfiguration() {
-		BiomartActivityConfigurationBean configuration = new BiomartActivityConfigurationBean();
-		configuration.setMartQuery(getMartQuery());
+	public URI getActivityType() {
+		return ACTIVITY_TYPE;
+	}
+
+	@Override
+	public Configuration getActivityConfiguration() {
+		Configuration configuration = new Configuration();
+		configuration.setType(ACTIVITY_TYPE.resolve("#Config"));
+		try {
+			org.w3c.dom.Element element = new DOMOutputter().output(new Document(martQuery)).getDocumentElement();
+			configuration.getPropertyResource().addProperty(ACTIVITY_TYPE.resolve("#martQuery"), new PropertyLiteral(element));
+		} catch (JDOMException e) {
+			logger.warn("Can't convert MartQuery to org.w3c.dom.Element", e);
+		}
 		return configuration;
 	}
 

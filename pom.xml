@@ -61,9 +61,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.taverna.t2.core</groupId>
-			<artifactId>workflowmodel-impl</artifactId>
-			<version>${t2.core.version}</version>
+			<groupId>net.sf.taverna.t2.ui-impl</groupId>
+			<artifactId>configuration-impl</artifactId>
+			<version>${t2.ui.impl.version}</version>
 			<scope>test</scope>
 		</dependency>
 
