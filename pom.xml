@@ -11,25 +11,20 @@
 	<artifactId>biomoby-activity</artifactId>
 	<packaging>bundle</packaging>
 	<name>Taverna 2 Biomoby Activity</name>
-	<!-- <build>
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
-				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Private-Package>
-							org.biomoby.client,org.biomoby.registry.meta,
-							org.biomoby.service.*,
-							org.biomoby.shared.*,
-							org.biomoby.w3c.addressing
-						</Private-Package>
+						<Embed-Transitive>true</Embed-Transitive>
+						<Embed-Dependency>jmoby;jmoby-dashboard</Embed-Dependency>
 					</instructions>
 				</configuration>
 			</plugin>
 		</plugins>
-	</build> -->
+	</build>
 	<dependencies>
 		<dependency>
 			<groupId>net.sf.taverna.t2.core</groupId>
@@ -45,7 +40,6 @@
 			<groupId>org.biomoby</groupId>
 			<artifactId>jmoby</artifactId>
 			<version>${jmoby.version}</version>
-			<scope>provided</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>org.biomoby</groupId>
@@ -81,7 +75,6 @@
 			<groupId>org.biomoby</groupId>
 			<artifactId>jmoby-dashboard</artifactId>
 			<version>${jmoby.version}</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jdom</groupId>
