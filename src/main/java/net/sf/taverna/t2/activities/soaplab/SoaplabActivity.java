@@ -1,19 +1,19 @@
 /*******************************************************************************
- * Copyright (C) 2007 The University of Manchester   
- * 
+ * Copyright (C) 2007 The University of Manchester
+ *
  *  Modifications to the initial code base are copyright of their
  *  respective authors, or their employers as appropriate.
- * 
+ *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public License
  *  as published by the Free Software Foundation; either version 2.1 of
  *  the License, or (at your option) any later version.
- *    
+ *
  *  This program is distributed in the hope that it will be useful, but
  *  WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- *    
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
@@ -21,7 +21,6 @@
 package net.sf.taverna.t2.activities.soaplab;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -31,30 +30,27 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 import javax.xml.rpc.ServiceException;
 
-import net.sf.taverna.t2.annotation.annotationbeans.MimeType;
-import net.sf.taverna.t2.reference.ExternalReferenceSPI;
 import net.sf.taverna.t2.reference.ReferenceService;
 import net.sf.taverna.t2.reference.ReferenceServiceException;
 import net.sf.taverna.t2.reference.T2Reference;
-import net.sf.taverna.t2.workflowmodel.EditException;
 import net.sf.taverna.t2.workflowmodel.OutputPort;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AbstractAsynchronousActivity;
 import net.sf.taverna.t2.workflowmodel.processor.activity.ActivityConfigurationException;
+import net.sf.taverna.t2.workflowmodel.processor.activity.ActivityInputPort;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivityCallback;
 
 import org.apache.axis.client.Call;
 import org.apache.axis.client.Service;
 import org.apache.log4j.Logger;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 /**
- * <p>
  * An Activity providing Soaplab functionality.
- * </p>
- * 
+ *
  * @author David Withers
  */
-public class SoaplabActivity extends
-		AbstractAsynchronousActivity<SoaplabActivityConfigurationBean> {
+public class SoaplabActivity extends AbstractAsynchronousActivity<JsonNode> {
 
 	public static final String URI = "http://ns.taverna.org.uk/2010/activity/soaplab";
 
@@ -63,23 +59,22 @@ public class SoaplabActivity extends
 
 	private static final int INVOCATION_TIMEOUT = 0;
 
-	private SoaplabActivityConfigurationBean configurationBean;
+	private JsonNode json;
 
-	private Map<String, Class<?>> inputTypeMap = new HashMap<String, Class<?>>();
+//	private Map<String, Class<?>> inputTypeMap = new HashMap<String, Class<?>>();
 
 	public SoaplabActivity() {
 	}
 
 	@Override
-	public void configure(SoaplabActivityConfigurationBean configurationBean)
-			throws ActivityConfigurationException {
-		this.configurationBean = configurationBean;
-		generatePorts();
+	public void configure(JsonNode configurationBean) throws ActivityConfigurationException {
+		this.json = configurationBean;
+//		generatePorts();
 	}
 
 	@Override
-	public SoaplabActivityConfigurationBean getConfiguration() {
-		return configurationBean;
+	public JsonNode getConfiguration() {
+		return json;
 	}
 
 	@Override
@@ -100,11 +95,11 @@ public class SoaplabActivity extends
 					Map<String, Object> soaplabInputMap = new HashMap<String, Object>();
 					for (Map.Entry<String, T2Reference> entry : data
 							.entrySet()) {
+						Class<?> inputType = getInputType(entry.getKey());
 						logger.info("Resolving " + entry.getKey() + " to "
-								+ inputTypeMap.get(entry.getKey()));
+								+ inputType);
 						soaplabInputMap.put(entry.getKey(), referenceService.renderIdentifier(
-								entry.getValue(), inputTypeMap.get(entry
-										.getKey()), callback.getContext()));
+								entry.getValue(), inputType, callback.getContext()));
 						logger.info("  Value = "
 								+ soaplabInputMap.get(entry.getKey()));
 					}
@@ -116,8 +111,7 @@ public class SoaplabActivity extends
 					// String or a URL?
 					// URL soaplabWSDLURL = new
 					// URL(configurationBean.getEndpoint());
-					call.setTargetEndpointAddress(configurationBean
-							.getEndpoint());
+					call.setTargetEndpointAddress(json.get("endpoint").textValue());
 
 					// Invoke the job and wait for it to complete
 					call.setOperationName(new QName("createAndRun"));
@@ -146,8 +140,7 @@ public class SoaplabActivity extends
 						boolean polling = true;
 						// Number of milliseconds to wait before the first
 						// status request.
-						int pollingInterval = configurationBean
-								.getPollingInterval();
+						int pollingInterval = json.get("pollingInterval").intValue();
 						while (polling) {
 							try {
 								Thread.sleep(pollingInterval);
@@ -160,12 +153,10 @@ public class SoaplabActivity extends
 							logger.info("Polling, status is : " + statusString);
 							if (statusString.equals("RUNNING")
 									|| statusString.equals("CREATED")) {
-								pollingInterval = (int) ((double) pollingInterval * configurationBean
-										.getPollingBackoff());
-								if (pollingInterval > configurationBean
-										.getPollingIntervalMax()) {
-									pollingInterval = configurationBean
-											.getPollingIntervalMax();
+								pollingInterval = (int) ((double) pollingInterval * json
+										.get("pollingBackoff").doubleValue());
+								if (pollingInterval > json.get("pollingIntervalMax").intValue()) {
+									pollingInterval = json.get("pollingIntervalMax").intValue();
 								}
 							} else {
 								// Either completed with an error or success
@@ -257,10 +248,10 @@ public class SoaplabActivity extends
 	}
 
 	public boolean isPollingDefined() {
-		return configurationBean != null
-				&& (configurationBean.getPollingInterval() != 0
-						|| configurationBean.getPollingBackoff() != 1.0 || configurationBean
-						.getPollingIntervalMax() != 0);
+		return json != null
+				&& (json.get("pollingInterval").intValue() != 0
+						|| json.get("pollingBackoff").doubleValue() != 1.0 || json
+						.get("pollingIntervalMax").intValue() != 0);
 	}
 
 	private List<?> convertList(List<?> theList) {
@@ -290,124 +281,133 @@ public class SoaplabActivity extends
 		return listOfBytes;
 	}
 
-	@SuppressWarnings("unchecked")
-	private void generatePorts() throws ActivityConfigurationException {
-		// Wipe the existing port declarations
-		// ports = new ArrayList();
-		try {
-			// Do web service type stuff[tm]
-			Map<String, String>[] inputs = (Map<String, String>[]) Soap
-					.callWebService(configurationBean.getEndpoint(),
-							"getInputSpec");
-			// Iterate over the inputs
-			for (int i = 0; i < inputs.length; i++) {
-				Map<String, String> input_spec = inputs[i];
-				String input_name = input_spec.get("name");
-				String input_type = input_spec.get("type").toLowerCase();
-				// Could get other properties such as defaults here
-				// but at the moment we've got nowhere to put them
-				// so we don't bother.
-				if (input_type.equals("string")) {
-					addInput(input_name, 0, true,
-							new ArrayList<Class<? extends ExternalReferenceSPI>>(), String.class);
-					inputTypeMap.put(input_name, String.class);
-				} else if (input_type.equals("string[]")) {
-					addInput(input_name, 1, true,
-							new ArrayList<Class<? extends ExternalReferenceSPI>>(), String.class);
-					inputTypeMap.put(input_name, String.class);
-				} else if (input_type.equals("byte[]")) {
-					addInput(input_name, 0, true,
-							new ArrayList<Class<? extends ExternalReferenceSPI>>(), byte[].class);
-					inputTypeMap.put(input_name, byte[].class);
-				} else if (input_type.equals("byte[][]")) {
-					addInput(input_name, 1, true,
-							new ArrayList<Class<? extends ExternalReferenceSPI>>(), byte[].class);
-					inputTypeMap.put(input_name, byte[].class);
-				} else {
-					// Count number of [] to get the arrays right
-					int depth = (input_type.split("\\[\\]", -1).length) -1 ;
-					logger.info("Soaplab input type '" + input_type
-							+ "' unknown for input '" + input_name + "' in "
-							+ configurationBean.getEndpoint()
-							+ ", will attempt to add as String depth " + depth);
-					addInput(input_name, depth, true,
-							new ArrayList<Class<? extends ExternalReferenceSPI>>(), String.class);
-					inputTypeMap.put(input_name, String.class);
-				}
+	private Class<?> getInputType(String portName) {
+		Class<?> inputType = String.class;
+		for (ActivityInputPort inputPort : getInputPorts()) {
+			if (inputPort.getName().equals(portName)) {
+				return inputPort.getTranslatedElementClass();
 			}
-
-			// Get outputs
-			Map<String, String>[] results = (Map<String, String>[]) Soap
-					.callWebService(configurationBean.getEndpoint(),
-							"getResultSpec");
-			// Iterate over the outputs
-			for (int i = 0; i < results.length; i++) {
-				Map<String, String> output_spec = results[i];
-				String output_name = output_spec.get("name");
-				String output_type = output_spec.get("type").toLowerCase();
-				// Check to see whether the output is either report or
-				// detailed_status, in
-				// which cases we ignore it, this is soaplab metadata rather
-				// than application data.
-				if ((!output_name.equalsIgnoreCase("detailed_status"))) {
-
-					// && (!output_name.equalsIgnoreCase("report"))) {
-					if (output_type.equals("string")) {
-						addOutput(output_name, 0, "text/plain");
-					} else if (output_type.equals("string[]")) {
-						addOutput(output_name, 1, "text/plain");
-					} else if (output_type.equals("byte[]")) {
-						addOutput(output_name, 0, "application/octet-stream");
-					} else if (output_type.equals("byte[][]")) {
-						addOutput(output_name, 1, "application/octet-stream");
-					} else {
-						// Count number of [] to get the arrays right
-						int depth = (output_type.split("\\[\\]", -1).length) -1 ;
-						logger.info("Soaplab output type '" + output_type
-								+ "' unknown for output '" + output_name + "' in "
-								+ configurationBean.getEndpoint()
-								+ ", will add as depth " + depth);
-						addOutput(output_name, depth, null);
-					}
-				}
-			}
-
-		} catch (ServiceException se) {
-			throw new ActivityConfigurationException(
-					configurationBean.getEndpoint()
-							+ ": Unable to create a new call to connect\n   to soaplab, error was : "
-							+ se.getMessage());
-		} catch (RemoteException re) {
-			throw new ActivityConfigurationException(
-					": Unable to call the get spec method for\n   endpoint : "
-							+ configurationBean.getEndpoint()
-							+ "\n   Remote exception message "
-							+ re.getMessage());
-		} catch (NullPointerException npe) {
-			// If we had a null pointer exception, go around again - this is a
-			// bug somewhere between axis and soaplab
-			// that occasionally causes NPEs to happen in the first call or two
-			// to a given soaplab installation. It also
-			// manifests in the Talisman soaplab clients.
-			generatePorts();
 		}
-	}
-	
-	protected void addOutput(String portName, int portDepth, String type) {
-		OutputPort port = edits.createActivityOutputPort(
-				portName, portDepth, portDepth);
-		MimeType mimeType = null;
-		if (type != null) {
-			mimeType = new MimeType();
-			mimeType.setText(type);			
-		}
-		try {
-			edits.getAddAnnotationChainEdit(port, mimeType).doEdit();
-		} catch (EditException e) {
-			logger.debug("Error adding MimeType annotation to port", e);
-		}
-		outputPorts.add(port);
+		return inputType;
 	}
 
+//	@SuppressWarnings("unchecked")
+//	private void generatePorts() throws ActivityConfigurationException {
+//		// Wipe the existing port declarations
+//		// ports = new ArrayList();
+//		try {
+//			// Do web service type stuff[tm]
+//			Map<String, String>[] inputs = (Map<String, String>[]) Soap
+//					.callWebService(json.get("endpoint").textValue(),
+//							"getInputSpec");
+//			// Iterate over the inputs
+//			for (int i = 0; i < inputs.length; i++) {
+//				Map<String, String> input_spec = inputs[i];
+//				String input_name = input_spec.get("name");
+//				String input_type = input_spec.get("type").toLowerCase();
+//				// Could get other properties such as defaults here
+//				// but at the moment we've got nowhere to put them
+//				// so we don't bother.
+//				if (input_type.equals("string")) {
+//					addInput(input_name, 0, true,
+//							new ArrayList<Class<? extends ExternalReferenceSPI>>(), String.class);
+//					inputTypeMap.put(input_name, String.class);
+//				} else if (input_type.equals("string[]")) {
+//					addInput(input_name, 1, true,
+//							new ArrayList<Class<? extends ExternalReferenceSPI>>(), String.class);
+//					inputTypeMap.put(input_name, String.class);
+//				} else if (input_type.equals("byte[]")) {
+//					addInput(input_name, 0, true,
+//							new ArrayList<Class<? extends ExternalReferenceSPI>>(), byte[].class);
+//					inputTypeMap.put(input_name, byte[].class);
+//				} else if (input_type.equals("byte[][]")) {
+//					addInput(input_name, 1, true,
+//							new ArrayList<Class<? extends ExternalReferenceSPI>>(), byte[].class);
+//					inputTypeMap.put(input_name, byte[].class);
+//				} else {
+//					// Count number of [] to get the arrays right
+//					int depth = (input_type.split("\\[\\]", -1).length) -1 ;
+//					logger.info("Soaplab input type '" + input_type
+//							+ "' unknown for input '" + input_name + "' in "
+//							+ json.get("endpoint").textValue()
+//							+ ", will attempt to add as String depth " + depth);
+//					addInput(input_name, depth, true,
+//							new ArrayList<Class<? extends ExternalReferenceSPI>>(), String.class);
+//					inputTypeMap.put(input_name, String.class);
+//				}
+//			}
+//
+//			// Get outputs
+//			Map<String, String>[] results = (Map<String, String>[]) Soap
+//					.callWebService(json.get("endpoint").textValue(),
+//							"getResultSpec");
+//			// Iterate over the outputs
+//			for (int i = 0; i < results.length; i++) {
+//				Map<String, String> output_spec = results[i];
+//				String output_name = output_spec.get("name");
+//				String output_type = output_spec.get("type").toLowerCase();
+//				// Check to see whether the output is either report or
+//				// detailed_status, in
+//				// which cases we ignore it, this is soaplab metadata rather
+//				// than application data.
+//				if ((!output_name.equalsIgnoreCase("detailed_status"))) {
+//
+//					// && (!output_name.equalsIgnoreCase("report"))) {
+//					if (output_type.equals("string")) {
+//						addOutput(output_name, 0, "text/plain");
+//					} else if (output_type.equals("string[]")) {
+//						addOutput(output_name, 1, "text/plain");
+//					} else if (output_type.equals("byte[]")) {
+//						addOutput(output_name, 0, "application/octet-stream");
+//					} else if (output_type.equals("byte[][]")) {
+//						addOutput(output_name, 1, "application/octet-stream");
+//					} else {
+//						// Count number of [] to get the arrays right
+//						int depth = (output_type.split("\\[\\]", -1).length) -1 ;
+//						logger.info("Soaplab output type '" + output_type
+//								+ "' unknown for output '" + output_name + "' in "
+//								+ json.get("endpoint").textValue()
+//								+ ", will add as depth " + depth);
+//						addOutput(output_name, depth, null);
+//					}
+//				}
+//			}
+//
+//		} catch (ServiceException se) {
+//			throw new ActivityConfigurationException(
+//					json.get("endpoint").textValue()
+//							+ ": Unable to create a new call to connect\n   to soaplab, error was : "
+//							+ se.getMessage());
+//		} catch (RemoteException re) {
+//			throw new ActivityConfigurationException(
+//					": Unable to call the get spec method for\n   endpoint : "
+//							+ json.get("endpoint").textValue()
+//							+ "\n   Remote exception message "
+//							+ re.getMessage());
+//		} catch (NullPointerException npe) {
+//			// If we had a null pointer exception, go around again - this is a
+//			// bug somewhere between axis and soaplab
+//			// that occasionally causes NPEs to happen in the first call or two
+//			// to a given soaplab installation. It also
+//			// manifests in the Talisman soaplab clients.
+//			generatePorts();
+//		}
+//	}
+
+//	protected void addOutput(String portName, int portDepth, String type) {
+//		ActivityOutputPort port = edits.createActivityOutputPort(
+//				portName, portDepth, portDepth);
+//		MimeType mimeType = null;
+//		if (type != null) {
+//			mimeType = new MimeType();
+//			mimeType.setText(type);
+//		}
+//		try {
+//			edits.getAddAnnotationChainEdit(port, mimeType).doEdit();
+//		} catch (EditException e) {
+//			logger.debug("Error adding MimeType annotation to port", e);
+//		}
+//		outputPorts.add(port);
+//	}
 
 }
