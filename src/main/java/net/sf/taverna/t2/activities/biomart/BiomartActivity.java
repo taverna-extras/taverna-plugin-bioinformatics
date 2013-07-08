@@ -20,24 +20,19 @@
  ******************************************************************************/
 package net.sf.taverna.t2.activities.biomart;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.taverna.t2.annotation.Annotated;
-import net.sf.taverna.t2.annotation.annotationbeans.MimeType;
-import net.sf.taverna.t2.reference.ExternalReferenceSPI;
 import net.sf.taverna.t2.reference.ReferenceService;
 import net.sf.taverna.t2.reference.ReferenceServiceException;
 import net.sf.taverna.t2.reference.T2Reference;
-import net.sf.taverna.t2.workflowmodel.CompoundEdit;
-import net.sf.taverna.t2.workflowmodel.Edit;
-import net.sf.taverna.t2.workflowmodel.EditException;
-import net.sf.taverna.t2.workflowmodel.OutputPort;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AbstractAsynchronousActivity;
 import net.sf.taverna.t2.workflowmodel.processor.activity.ActivityConfigurationException;
-import net.sf.taverna.t2.workflowmodel.processor.activity.ActivityInputPort;
+import net.sf.taverna.t2.workflowmodel.processor.activity.ActivityOutputPort;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivityCallback;
 
 import org.biomart.martservice.MartQuery;
@@ -50,53 +45,44 @@ import org.biomart.martservice.query.Attribute;
 import org.biomart.martservice.query.Dataset;
 import org.biomart.martservice.query.Filter;
 import org.biomart.martservice.query.Query;
-import org.jdom.Element;
+import org.jdom.Document;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 /**
- * <p>
  * An Activity providing Biomart functionality.
- * </p>
  *
  * @author David Withers
  */
-public class BiomartActivity extends
-		AbstractAsynchronousActivity<BiomartActivityConfigurationBean> {
+public class BiomartActivity extends AbstractAsynchronousActivity<JsonNode> {
 
 	public static final String URI = "http://ns.taverna.org.uk/2010/activity/biomart";
 
-	private static boolean STREAM_RESULTS = true;
+	static boolean STREAM_RESULTS = true;
 
-	private BiomartActivityConfigurationBean configurationBean;
-
-	private Map<String, OutputPort> outputMap = new HashMap<String, OutputPort>();
-
-	private Map<String, ActivityInputPort> inputMap = new HashMap<String, ActivityInputPort>();
+	private JsonNode json;
 
 	private MartQuery biomartQuery;
 
-	public BiomartActivity() {
-
-	}
-
 	@Override
-	public void configure(BiomartActivityConfigurationBean configurationBean)
+	public void configure(JsonNode json)
 			throws ActivityConfigurationException {
-		this.configurationBean = configurationBean;
-		biomartQuery = MartServiceXMLHandler.elementToMartQuery(configurationBean.getMartQuery(), null);
-		String location = biomartQuery.getMartService().getLocation();
-		List<Edit<?>> editList = new ArrayList<Edit<?>>();
-		buildInputPorts(editList);
-		buildOutputPorts(editList);
+		this.json = json;
+		String martQueryText = json.get("martQuery").asText();
+		SAXBuilder builder = new SAXBuilder();
 		try {
-			new CompoundEdit(editList).doEdit();
-		} catch (EditException e) {
+			Document document = builder.build(new StringReader(martQueryText));
+			biomartQuery = MartServiceXMLHandler.elementToMartQuery(document.getRootElement(), null);
+		} catch (JDOMException | IOException e) {
 			throw new ActivityConfigurationException(e);
 		}
 	}
 
 	@Override
-	public BiomartActivityConfigurationBean getConfiguration() {
-		return configurationBean;
+	public JsonNode getConfiguration() {
+		return json;
 	}
 
 	@Override
@@ -154,9 +140,7 @@ public class BiomartActivity extends
 														.get(i);
 												String outputName = attribute
 														.getQualifiedName();
-												int outputDepth = outputMap
-														.get(outputName)
-														.getDepth();
+												int outputDepth = getOutputPortDepth(outputName);
 												try {
 													T2Reference data = referenceService
 															.register(resultLine[i], outputDepth - 1, true, callback.getContext());
@@ -180,9 +164,7 @@ public class BiomartActivity extends
 											for (Attribute attribute : attributes) {
 												String outputName = attribute
 														.getQualifiedName();
-												int outputDepth = outputMap
-														.get(outputName)
-														.getDepth();
+												int outputDepth =  getOutputPortDepth(outputName);
 												try {
 													T2Reference error = referenceService.getErrorDocumentService()
 															.registerError(message, outputDepth - 1, callback.getContext()).getId();
@@ -205,8 +187,7 @@ public class BiomartActivity extends
 							for (Attribute attribute : attributes) {
 								String outputName = attribute
 										.getQualifiedName();
-								int outputDepth = outputMap.get(outputName)
-										.getDepth();
+								int outputDepth = getOutputPortDepth(outputName);
 								outputData.put(outputName, referenceService.register(
 										outputLists.get(outputName),
 										outputDepth, true, callback.getContext()));
@@ -224,8 +205,7 @@ public class BiomartActivity extends
 								Attribute attribute = attributes.get(i);
 								String outputName = attribute
 										.getQualifiedName();
-								int outputDepth = outputMap.get(outputName)
-										.getDepth();
+								int outputDepth = getOutputPortDepth(outputName);
 								outputData.put(outputName, referenceService.register(
 										resultList[i], outputDepth, true, callback.getContext()));
 							}
@@ -237,7 +217,7 @@ public class BiomartActivity extends
 						Dataset dataset = biomartQuery.getQuery().getDatasets()
 								.get(0);
 						String outputName = dataset.getName();
-						int outputDepth = outputMap.get(outputName).getDepth();
+						int outputDepth = getOutputPortDepth(outputName);
 						outputData.put(outputName, referenceService.register(
 								resultList[0], outputDepth, true, callback.getContext()));
 					}
@@ -256,84 +236,93 @@ public class BiomartActivity extends
 
 	}
 
-	private void buildInputPorts(List<Edit<?>> editList) {
-		Map<String, ActivityInputPort> newInputMap = new HashMap<String, ActivityInputPort>();
-		List<Filter> filters = biomartQuery.getQuery().getFilters();
-		// Create new input ports corresponding to filters
-		for (Filter filter : filters) {
-			String name = filter.getQualifiedName() + "_filter";
-			if (inputMap.containsKey(name)) {
-				newInputMap.put(name, inputMap.remove(name));
-			} else {
-				ActivityInputPort inputPort = null;
-				if (filter.isList()) {
-					inputPort = edits.createActivityInputPort(name, 1, true,
-							new ArrayList<Class<? extends ExternalReferenceSPI>>(),
-							String.class);
-				} else {
-					inputPort = edits.createActivityInputPort(name, 0, true,
-							new ArrayList<Class<? extends ExternalReferenceSPI>>(),
-							String.class);
-				}
-				newInputMap.put(name, inputPort);
-				editList.add(edits.getAddActivityInputPortEdit(this, inputPort));
-				editList.add(createAddMimeTypeAnnotationEdit(inputPort, "text/plain"));
+	private int getOutputPortDepth(String portName) {
+		for (ActivityOutputPort port : getOutputPorts()) {
+			if (port.getName().equals(portName)) {
+				return port.getDepth();
 			}
 		}
-		//remove any ports still left in the map
-		for (ActivityInputPort inputPort : inputMap.values()) {
-			editList.add(edits.getRemoveActivityInputPortEdit(this, inputPort));
-		}
-		inputMap = newInputMap;
+		return 0;
 	}
 
-	private void buildOutputPorts(List<Edit<?>> editList) {
-		Map<String, OutputPort> newOutputMap = new HashMap<String, OutputPort>();
-		Query query = biomartQuery.getQuery();
-		List<Attribute> attributes = query.getAttributes();
-		String formatter = query.getFormatter();
-		if (formatter == null) {
-			// Create new output ports corresponding to attributes
-			for (Attribute attribute : attributes) {
-				String name = attribute.getQualifiedName();
-				if (outputMap.containsKey(name)) {
-					newOutputMap.put(name, outputMap.remove(name));
-				} else {
-					OutputPort outputPort = null;
-					if (attribute.getAttributes() != null) {
-						outputPort = edits.createActivityOutputPort(name, 2, STREAM_RESULTS?1:2);
-					} else {
-						outputPort = edits.createActivityOutputPort(name, 1, STREAM_RESULTS?0:1);
-					}
-					newOutputMap.put(name, outputPort);
-					editList.add(edits.getAddActivityOutputPortEdit(this, outputPort));
-					editList.add(createAddMimeTypeAnnotationEdit(outputPort, "text/plain"));
-				}
-			}
-		} else if (attributes.size() > 0) {
-			// create one port using the dataset name
-			Attribute attribute = attributes.get(0);
-			String name = attribute.getContainingDataset().getName();
-			if (outputMap.containsKey(name)) {
-				newOutputMap.put(name, outputMap.remove(name));
-			} else {
-				OutputPort outputPort = edits.createActivityOutputPort(name, 0, 0);
-				newOutputMap.put(name, outputPort);
-				editList.add(edits.getAddActivityOutputPortEdit(this, outputPort));
-				editList.add(createAddMimeTypeAnnotationEdit(outputPort, "text/plain"));
-			}
-		}
-		//remove any ports still left in the map
-		for (OutputPort outputPort : outputMap.values()) {
-			editList.add(edits.getRemoveActivityOutputPortEdit(this, outputPort));
-		}
-		outputMap = newOutputMap;
-	}
+//	private void buildInputPorts(List<Edit<?>> editList) {
+//		Map<String, ActivityInputPort> newInputMap = new HashMap<String, ActivityInputPort>();
+//		List<Filter> filters = biomartQuery.getQuery().getFilters();
+//		// Create new input ports corresponding to filters
+//		for (Filter filter : filters) {
+//			String name = filter.getQualifiedName() + "_filter";
+//			if (inputMap.containsKey(name)) {
+//				newInputMap.put(name, inputMap.remove(name));
+//			} else {
+//				ActivityInputPort inputPort = null;
+//				if (filter.isList()) {
+//					inputPort = edits.createActivityInputPort(name, 1, true,
+//							new ArrayList<Class<? extends ExternalReferenceSPI>>(),
+//							String.class);
+//				} else {
+//					inputPort = edits.createActivityInputPort(name, 0, true,
+//							new ArrayList<Class<? extends ExternalReferenceSPI>>(),
+//							String.class);
+//				}
+//				newInputMap.put(name, inputPort);
+//				editList.add(edits.getAddActivityInputPortEdit(this, inputPort));
+//				editList.add(createAddMimeTypeAnnotationEdit(inputPort, "text/plain"));
+//			}
+//		}
+//		//remove any ports still left in the map
+//		for (ActivityInputPort inputPort : inputMap.values()) {
+//			editList.add(edits.getRemoveActivityInputPortEdit(this, inputPort));
+//		}
+//		inputMap = newInputMap;
+//	}
 
-	private Edit<?> createAddMimeTypeAnnotationEdit(Annotated<?> annotated, String type) {
-		MimeType mimeType = new MimeType();
-		mimeType.setText(type);
-		return edits.getAddAnnotationChainEdit(annotated, mimeType);
-	}
+//	private void buildOutputPorts(List<Edit<?>> editList) {
+//		Map<String, ActivityOutputPort> newOutputMap = new HashMap<String, ActivityOutputPort>();
+//		Query query = biomartQuery.getQuery();
+//		List<Attribute> attributes = query.getAttributes();
+//		String formatter = query.getFormatter();
+//		if (formatter == null) {
+//			// Create new output ports corresponding to attributes
+//			for (Attribute attribute : attributes) {
+//				String name = attribute.getQualifiedName();
+//				if (outputMap.containsKey(name)) {
+//					newOutputMap.put(name, outputMap.remove(name));
+//				} else {
+//					ActivityOutputPort outputPort = null;
+//					if (attribute.getAttributes() != null) {
+//						outputPort = edits.createActivityOutputPort(name, 2, STREAM_RESULTS?1:2);
+//					} else {
+//						outputPort = edits.createActivityOutputPort(name, 1, STREAM_RESULTS?0:1);
+//					}
+//					newOutputMap.put(name, outputPort);
+//					editList.add(edits.getAddActivityOutputPortEdit(this, outputPort));
+//					editList.add(createAddMimeTypeAnnotationEdit(outputPort, "text/plain"));
+//				}
+//			}
+//		} else if (attributes.size() > 0) {
+//			// create one port using the dataset name
+//			Attribute attribute = attributes.get(0);
+//			String name = attribute.getContainingDataset().getName();
+//			if (outputMap.containsKey(name)) {
+//				newOutputMap.put(name, outputMap.remove(name));
+//			} else {
+//				ActivityOutputPort outputPort = edits.createActivityOutputPort(name, 0, 0);
+//				newOutputMap.put(name, outputPort);
+//				editList.add(edits.getAddActivityOutputPortEdit(this, outputPort));
+//				editList.add(createAddMimeTypeAnnotationEdit(outputPort, "text/plain"));
+//			}
+//		}
+//		//remove any ports still left in the map
+//		for (ActivityOutputPort outputPort : outputMap.values()) {
+//			editList.add(edits.getRemoveActivityOutputPortEdit(this, outputPort));
+//		}
+//		outputMap = newOutputMap;
+//	}
+
+//	private Edit<?> createAddMimeTypeAnnotationEdit(Annotated<?> annotated, String type) {
+//		MimeType mimeType = new MimeType();
+//		mimeType.setText(type);
+//		return edits.getAddAnnotationChainEdit(annotated, mimeType);
+//	}
 
 }

@@ -55,19 +55,11 @@ public class BiomartActivityFactoryTest {
 	}
 
 	/**
-	 * Test method for {@link net.sf.taverna.t2.activities.biomart.BiomartActivityFactory#getActivityURI()}.
+	 * Test method for {@link net.sf.taverna.t2.activities.biomart.BiomartActivityFactory#getActivityType()}.
 	 */
 	@Test
 	public void testGetActivityURI() {
-		assertEquals(URI.create(BiomartActivity.URI), factory.getActivityURI());
-	}
-
-	/**
-	 * Test method for {@link net.sf.taverna.t2.activities.biomart.BiomartActivityFactory#createActivityConfiguration()}.
-	 */
-	@Test
-	public void testCreateActivityConfiguration() {
-		assertTrue(factory.createActivityConfiguration() instanceof BiomartActivityConfigurationBean);
+		assertEquals(URI.create(BiomartActivity.URI), factory.getActivityType());
 	}
 
 }

@@ -20,6 +20,8 @@
  ******************************************************************************/
 package net.sf.taverna.t2.activities.biomart;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.List;
 
 import net.sf.taverna.t2.visit.VisitReport;
@@ -31,7 +33,10 @@ import net.sf.taverna.t2.workflowmodel.processor.activity.DisabledActivity;
 
 import org.biomart.martservice.MartQuery;
 import org.biomart.martservice.MartServiceXMLHandler;
+import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
 
 public class BiomartActivityHealthChecker extends RemoteHealthChecker {
 
@@ -52,7 +57,14 @@ public class BiomartActivityHealthChecker extends RemoteHealthChecker {
 		Element biomartQueryElement = null;
 		Activity activity = (Activity) o;
 		if (activity instanceof BiomartActivity) {
-			biomartQueryElement = ((BiomartActivity)activity).getConfiguration().getMartQuery();
+			String martQueryText = ((BiomartActivity)activity).getConfiguration().get("martQuery").asText();
+			SAXBuilder builder = new SAXBuilder();
+			try {
+				Document document = builder.build(new StringReader(martQueryText));
+				biomartQueryElement = document.getRootElement();
+			} catch (JDOMException | IOException e) {
+				e.printStackTrace();
+			}
 		} else if (activity instanceof DisabledActivity) {
 			biomartQueryElement = (Element) ((DisabledActivity) activity).getActivityConfiguration();
 		}
