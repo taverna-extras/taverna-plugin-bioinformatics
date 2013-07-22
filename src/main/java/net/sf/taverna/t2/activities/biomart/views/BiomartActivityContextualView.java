@@ -21,7 +21,8 @@
 package net.sf.taverna.t2.activities.biomart.views;
 
 import java.awt.Frame;
-import java.net.URI;
+import java.io.IOException;
+import java.io.StringReader;
 
 import javax.swing.Action;
 
@@ -38,53 +39,44 @@ import org.biomart.martservice.MartServiceXMLHandler;
 import org.biomart.martservice.query.Attribute;
 import org.biomart.martservice.query.Filter;
 import org.jdom.Element;
-import org.jdom.input.DOMBuilder;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
 
+import uk.org.taverna.commons.services.ServiceRegistry;
 import uk.org.taverna.configuration.app.ApplicationConfiguration;
 import uk.org.taverna.scufl2.api.activity.Activity;
-import uk.org.taverna.scufl2.api.property.MultiplePropertiesException;
-import uk.org.taverna.scufl2.api.property.PropertyLiteral;
-import uk.org.taverna.scufl2.api.property.PropertyNotFoundException;
-import uk.org.taverna.scufl2.api.property.UnexpectedPropertyException;
 
+@SuppressWarnings("serial")
 public class BiomartActivityContextualView extends HTMLBasedActivityContextualView {
 
-	private static final URI ACTIVITY_TYPE = URI.create("http://ns.taverna.org.uk/2010/activity/biomart");
-	private static final long serialVersionUID = -33919649695058443L;
 	private final EditManager editManager;
 	private final FileManager fileManager;
 	private final ActivityIconManager activityIconManager;
 	private final ApplicationConfiguration applicationConfiguration;
 	private final ServiceDescriptionRegistry serviceDescriptionRegistry;
+	private final ServiceRegistry serviceRegistry;
 
 	public BiomartActivityContextualView(Activity activity, EditManager editManager,
 			FileManager fileManager, ActivityIconManager activityIconManager,
 			ColourManager colourManager, ApplicationConfiguration applicationConfiguration,
-			ServiceDescriptionRegistry serviceDescriptionRegistry) {
+			ServiceDescriptionRegistry serviceDescriptionRegistry, ServiceRegistry serviceRegistry) {
 		super(activity, colourManager);
 		this.editManager = editManager;
 		this.fileManager = fileManager;
 		this.activityIconManager = activityIconManager;
 		this.applicationConfiguration = applicationConfiguration;
 		this.serviceDescriptionRegistry = serviceDescriptionRegistry;
+		this.serviceRegistry = serviceRegistry;
 	}
 
 	@Override
 	protected String getRawTableRowsHtml() {
-		PropertyLiteral propertyLiteral = null;
+		String queryText = getConfigBean().getJson().get("martQuery").textValue();
+		Element martQuery = null;
 		try {
-			propertyLiteral = getConfigBean().getPropertyResource().getPropertyAsLiteral(ACTIVITY_TYPE.resolve("#martQuery"));
-		} catch (UnexpectedPropertyException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (PropertyNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (MultiplePropertiesException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			martQuery = new SAXBuilder().build(new StringReader(queryText)).getRootElement();
+		} catch (JDOMException | IOException e) {
 		}
-		Element martQuery = new DOMBuilder().build(propertyLiteral.getLiteralValueAsElement());
 		MartQuery q = MartServiceXMLHandler.elementToMartQuery(martQuery, null);
 		String html = "<tr><td>URL</td><td>" + q.getMartService().getLocation() + "</td></tr>";
 		html += "<tr><td>Location</td><td>"
@@ -112,8 +104,9 @@ public class BiomartActivityContextualView extends HTMLBasedActivityContextualVi
 
 	@Override
 	public Action getConfigureAction(Frame owner) {
-		return new BiomartActivityConfigurationAction(getActivity(), owner,
-				editManager, fileManager, activityIconManager, applicationConfiguration, serviceDescriptionRegistry);
+		return new BiomartActivityConfigurationAction(getActivity(), owner, editManager,
+				fileManager, activityIconManager, applicationConfiguration,
+				serviceDescriptionRegistry, serviceRegistry);
 	}
 
 	@Override

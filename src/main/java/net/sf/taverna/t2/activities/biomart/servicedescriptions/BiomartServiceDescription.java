@@ -1,4 +1,4 @@
- /* Copyright (C) 2007 The University of Manchester
+/* Copyright (C) 2007 The University of Manchester
  *
  *  Modifications to the initial code base are copyright of their
  *  respective authors, or their employers as appropriate.
@@ -17,7 +17,7 @@
  *  License along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
  ******************************************************************************/
- package net.sf.taverna.t2.activities.biomart.servicedescriptions;
+package net.sf.taverna.t2.activities.biomart.servicedescriptions;
 
 import java.net.URI;
 import java.util.Arrays;
@@ -27,24 +27,21 @@ import javax.swing.Icon;
 
 import net.sf.taverna.t2.servicedescriptions.ServiceDescription;
 
-import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.output.DOMOutputter;
+import org.jdom.output.XMLOutputter;
 
 import uk.org.taverna.scufl2.api.configurations.Configuration;
-import uk.org.taverna.scufl2.api.property.PropertyLiteral;
+
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * @author alanrw
- *
+ * @author David Withers
  */
 public class BiomartServiceDescription extends ServiceDescription {
 
 	public static final URI ACTIVITY_TYPE = URI.create("http://ns.taverna.org.uk/2010/activity/biomart");
-
-	private static Logger logger = Logger.getLogger(BiomartServiceDescription.class);
 
 	private String url;
 	private String dataset;
@@ -65,7 +62,8 @@ public class BiomartServiceDescription extends ServiceDescription {
 	}
 
 	/**
-	 * @param url the url to set
+	 * @param url
+	 *            the url to set
 	 */
 	public void setUrl(String url) {
 		this.url = url;
@@ -79,7 +77,8 @@ public class BiomartServiceDescription extends ServiceDescription {
 	}
 
 	/**
-	 * @param dataset the dataset to set
+	 * @param dataset
+	 *            the dataset to set
 	 */
 	public void setDataset(String dataset) {
 		this.dataset = dataset;
@@ -93,7 +92,8 @@ public class BiomartServiceDescription extends ServiceDescription {
 	}
 
 	/**
-	 * @param location the location to set
+	 * @param location
+	 *            the location to set
 	 */
 	public void setLocation(String location) {
 		this.location = location;
@@ -112,12 +112,8 @@ public class BiomartServiceDescription extends ServiceDescription {
 	public Configuration getActivityConfiguration() {
 		Configuration configuration = new Configuration();
 		configuration.setType(ACTIVITY_TYPE.resolve("#Config"));
-		try {
-			org.w3c.dom.Element element = new DOMOutputter().output(new Document(martQuery)).getDocumentElement();
-			configuration.getPropertyResource().addProperty(ACTIVITY_TYPE.resolve("#martQuery"), new PropertyLiteral(element));
-		} catch (JDOMException e) {
-			logger.warn("Can't convert MartQuery to org.w3c.dom.Element", e);
-		}
+		String queryText = new XMLOutputter().outputString(new Document(martQuery));
+		((ObjectNode) configuration.getJson()).put("martQuery", queryText);
 		return configuration;
 	}
 
@@ -132,16 +128,15 @@ public class BiomartServiceDescription extends ServiceDescription {
 	}
 
 	@Override
-	public List<? extends Comparable> getPath() {
+	public List<? extends Comparable<?>> getPath() {
 		List<String> result;
 		result = Arrays.asList(BIOMART + url, location);
 		return result;
 	}
 
-
 	@Override
 	protected List<Object> getIdentifyingData() {
-		return Arrays.<Object>asList(getUrl(), getLocation(), getDataset());
+		return Arrays.<Object> asList(getUrl(), getLocation(), getDataset());
 	}
 
 	@Override

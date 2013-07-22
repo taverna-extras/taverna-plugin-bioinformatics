@@ -14,6 +14,7 @@
 			<property name="fileManager" ref="fileManager" />
 			<property name="activityIconManager" ref="activityIconManager" />
 			<property name="applicationConfiguration" ref="applicationConfiguration" />
+			<property name="serviceRegistry" ref="serviceRegistry" />
 	</bean>
 
 	<bean id="BiomartActivityViewFactory" class="net.sf.taverna.t2.activities.biomart.views.BiomartActivityViewFactory">
@@ -22,6 +23,7 @@
 			<property name="activityIconManager" ref="activityIconManager" />
 			<property name="colourManager" ref="colourManager" />
 			<property name="applicationConfiguration" ref="applicationConfiguration" />
+			<property name="serviceRegistry" ref="serviceRegistry" />
 	</bean>
 
 </beans>

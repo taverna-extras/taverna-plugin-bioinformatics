@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.swing.Icon;
 
-import net.sf.taverna.t2.activities.biomart.BiomartActivityConfigurationBean;
 import net.sf.taverna.t2.servicedescriptions.AbstractConfigurableServiceProvider;
 import net.sf.taverna.t2.servicedescriptions.ServiceDescription;
 import net.sf.taverna.t2.servicedescriptions.ServiceDescriptionRegistry;
@@ -25,7 +24,7 @@ import org.biomart.martservice.MartURLLocation;
 
 /**
  * @author alanrw
- *
+ * @author David Withers
  */
 public class BiomartServiceProvider extends AbstractConfigurableServiceProvider<BiomartServiceProviderConfig> {
 

@@ -8,7 +8,12 @@
 
 	<service ref="BiomartActivityIcon" interface="net.sf.taverna.t2.workbench.activityicons.ActivityIconSPI" />
 
-	<service ref="BiomartServiceProvider" interface="net.sf.taverna.t2.servicedescriptions.ServiceDescriptionProvider" />
+	<service ref="BiomartServiceProvider">
+		<interfaces>
+			<beans:value>net.sf.taverna.t2.servicedescriptions.ServiceDescriptionProvider</beans:value>
+			<beans:value>net.sf.taverna.t2.servicedescriptions.ConfigurableServiceProvider</beans:value>
+		</interfaces>
+	</service>
 
 	<service ref="BiomartConfigurationMenuAction" auto-export="interfaces" />
 
@@ -20,5 +25,6 @@
 	<reference id="colourManager" interface="net.sf.taverna.t2.workbench.configuration.colour.ColourManager" />
 	<reference id="serviceDescriptionRegistry" interface="net.sf.taverna.t2.servicedescriptions.ServiceDescriptionRegistry"/>
 	<reference id="applicationConfiguration" interface="uk.org.taverna.configuration.app.ApplicationConfiguration" />
+	<reference id="serviceRegistry" interface="uk.org.taverna.commons.services.ServiceRegistry" />
 
 </beans:beans>
