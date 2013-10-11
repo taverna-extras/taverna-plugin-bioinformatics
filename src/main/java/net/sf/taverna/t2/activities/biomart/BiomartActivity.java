@@ -35,6 +35,7 @@ import net.sf.taverna.t2.workflowmodel.processor.activity.ActivityConfigurationE
 import net.sf.taverna.t2.workflowmodel.processor.activity.ActivityOutputPort;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivityCallback;
 
+import org.apache.log4j.Logger;
 import org.biomart.martservice.MartQuery;
 import org.biomart.martservice.MartServiceException;
 import org.biomart.martservice.MartServiceXMLHandler;
@@ -62,6 +63,8 @@ public class BiomartActivity extends AbstractAsynchronousActivity<JsonNode> {
 
 	static boolean STREAM_RESULTS = true;
 
+	private static Logger logger = Logger.getLogger(BiomartActivity.class);
+	
 	private JsonNode json;
 
 	private MartQuery biomartQuery;
@@ -140,7 +143,11 @@ public class BiomartActivity extends AbstractAsynchronousActivity<JsonNode> {
 														.get(i);
 												String outputName = attribute
 														.getQualifiedName();
-												int outputDepth = getOutputPortDepth(outputName);
+												Integer outputDepth = getOutputPortDepth(outputName);
+                                                if (outputDepth == null) {
+                                                    logger.warn("Skipping unknown output port " + outputName);
+                                                    continue;
+                                                }
 												try {
 													T2Reference data = referenceService
 															.register(resultLine[i], outputDepth - 1, true, callback.getContext());
@@ -164,8 +171,12 @@ public class BiomartActivity extends AbstractAsynchronousActivity<JsonNode> {
 											for (Attribute attribute : attributes) {
 												String outputName = attribute
 														.getQualifiedName();
-												int outputDepth =  getOutputPortDepth(outputName);
-												try {
+    				                                Integer outputDepth = getOutputPortDepth(outputName);
+    				                                if (outputDepth == null) {
+    				                                    logger.warn("Skipping unknown output port " + outputName);
+    				                                    continue;
+    				                                }
+    				                                try {
 													T2Reference error = referenceService.getErrorDocumentService()
 															.registerError(message, outputDepth - 1, callback.getContext()).getId();
 													partialOutputData.put(
@@ -187,7 +198,11 @@ public class BiomartActivity extends AbstractAsynchronousActivity<JsonNode> {
 							for (Attribute attribute : attributes) {
 								String outputName = attribute
 										.getQualifiedName();
-								int outputDepth = getOutputPortDepth(outputName);
+								Integer outputDepth = getOutputPortDepth(outputName);
+								if (outputDepth == null) {
+								    logger.warn("Skipping unknown output port " + outputName);
+								    continue;
+								}
 								outputData.put(outputName, referenceService.register(
 										outputLists.get(outputName),
 										outputDepth, true, callback.getContext()));
@@ -205,9 +220,13 @@ public class BiomartActivity extends AbstractAsynchronousActivity<JsonNode> {
 								Attribute attribute = attributes.get(i);
 								String outputName = attribute
 										.getQualifiedName();
-								int outputDepth = getOutputPortDepth(outputName);
-								outputData.put(outputName, referenceService.register(
+                                Integer outputDepth = getOutputPortDepth(outputName);
+                                if (outputDepth == null) {
+                                    logger.warn("Skipping unknown output port " + outputName);
+                                } else {
+                                    outputData.put(outputName, referenceService.register(
 										resultList[i], outputDepth, true, callback.getContext()));
+                                }
 							}
 						}
 					} else {
@@ -217,9 +236,13 @@ public class BiomartActivity extends AbstractAsynchronousActivity<JsonNode> {
 						Dataset dataset = biomartQuery.getQuery().getDatasets()
 								.get(0);
 						String outputName = dataset.getName();
-						int outputDepth = getOutputPortDepth(outputName);
-						outputData.put(outputName, referenceService.register(
+                        Integer outputDepth = getOutputPortDepth(outputName);
+                        if (outputDepth == null) {
+                            logger.warn("Skipping unknown output port " + outputName);
+                        } else {
+                            outputData.put(outputName, referenceService.register(
 								resultList[0], outputDepth, true, callback.getContext()));
+                        }
 					}
 
 					callback.receiveResult(outputData, new int[0]);
@@ -236,13 +259,13 @@ public class BiomartActivity extends AbstractAsynchronousActivity<JsonNode> {
 
 	}
 
-	private int getOutputPortDepth(String portName) {
+	private Integer getOutputPortDepth(String portName) {
 		for (ActivityOutputPort port : getOutputPorts()) {
 			if (port.getName().equals(portName)) {
 				return port.getDepth();
 			}
 		}
-		return 0;
+		return null;
 	}
 
 //	private void buildInputPorts(List<Edit<?>> editList) {
