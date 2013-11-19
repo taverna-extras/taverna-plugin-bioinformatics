@@ -72,9 +72,9 @@ public class BiomobyServiceProvider extends
 		ServiceDescriptionRegistryImpl serviceRegistry = ServiceDescriptionRegistryImpl.getInstance();
 		// If defaults have failed to load from a configuration file then load them here.
 		if (!serviceRegistry.isDefaultSystemConfigurableProvidersLoaded()){
-			defaults.add(new BiomobyServiceProviderConfig(
-					CentralImpl.DEFAULT_ENDPOINT,
-					CentralImpl.DEFAULT_NAMESPACE));
+//			defaults.add(new BiomobyServiceProviderConfig(
+//					CentralImpl.DEFAULT_ENDPOINT,
+//					CentralImpl.DEFAULT_NAMESPACE));
 		} // else return an empty list
 		
 		return defaults;

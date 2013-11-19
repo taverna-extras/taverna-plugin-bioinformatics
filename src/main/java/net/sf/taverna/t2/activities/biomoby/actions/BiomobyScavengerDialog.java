@@ -33,12 +33,11 @@ import net.sf.taverna.t2.lang.ui.ShadedLabel;
  */
 public class BiomobyScavengerDialog extends JPanel {
 
-	private static final String CUSTOM = "Custom";
 	private static final long serialVersionUID = -57047613557546674L;
 	private JTextField registryEndpoint = new JTextField(
-			"http://moby.ucalgary.ca/moby/MOBY-Central.pl");
+			"http://www.inab.org/cgi-bin/MOBY-Central.pl");
 	private JTextField registryURI = new JTextField(
-			"http://moby.ucalgary.ca/MOBY/Central");
+			"http://www.inab.org/MOBY/Central");
 
 	/**
 	 * Default constructor.
@@ -50,55 +49,9 @@ public class BiomobyScavengerDialog extends JPanel {
 	 */
 	public BiomobyScavengerDialog() {
 		super();
-		GridLayout layout = new GridLayout(5, 2);
+		GridLayout layout = new GridLayout(3, 2);
 		setLayout(layout);
 		
-		registryEndpoint.setEnabled(false);
-		registryURI.setEnabled(false);		
-		
-		// a combo box showing known registries
-		final Registries regs = RegistriesList.getInstance();
-		List<String> choices = new ArrayList<String>(Arrays.asList(regs.list()));
-		choices.add(CUSTOM);
-		
-		JComboBox regList = new JComboBox(choices.toArray());
-		regList.setToolTipText("A selection will fill text fields below");
-		regList.setSelectedItem(Registries.DEFAULT_REGISTRY_SYNONYM);
-		regList.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String contents = (String) ((JComboBox) e.getSource())
-						.getSelectedItem();
-
-				if (contents.equals(CUSTOM)) {
-					registryEndpoint.setEnabled(true);
-					registryURI.setEnabled(true);
-					return;
-				} else {
-					registryEndpoint.setEnabled(false);
-					registryURI.setEnabled(false);					
-				}
- 				org.biomoby.registry.meta.Registry theReg = null;
-				try {
-					theReg = regs.get(contents);
-				} catch (MobyException ee) {
-					try {
-						theReg = regs.get(null);
-					} catch (MobyException ee2) {
-
-					}
-				}
-				if (theReg != null) {
-					registryEndpoint.setText(theReg.getEndpoint());
-					registryURI.setText(theReg.getNamespace());
-
-				}
-			}
-		});
-		add(new ShadedLabel("Choose a registry from the list: ",
-				ShadedLabel.BLUE, true));
-		add(regList);
-		add(new ShadedLabel("Or select '" + CUSTOM + "' to enter your own below,", ShadedLabel.BLUE, true));
-		add(new ShadedLabel("", ShadedLabel.BLUE, true));
 		add(new ShadedLabel(
 				"Location (URL) of your BioMoby central registry: ",
 				ShadedLabel.BLUE, true));
