@@ -114,7 +114,7 @@ public class BiomartServiceProvider extends AbstractConfigurableServiceProvider<
 		return sb.toString();
 	}
 	
-	public List<BiomartServiceProviderConfig> getDefaultConfigurations() {
+/*	public List<BiomartServiceProviderConfig> getDefaultConfigurations() {
 		
 		List<BiomartServiceProviderConfig> defaults = new ArrayList<BiomartServiceProviderConfig>();
 
@@ -127,7 +127,7 @@ public class BiomartServiceProvider extends AbstractConfigurableServiceProvider<
 		
 		return defaults;
 
-	}
+	}*/
 
 	@Override
 	protected List<? extends Object> getIdentifyingData() {
