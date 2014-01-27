@@ -64,7 +64,7 @@ public class BiomobyServiceProvider extends
 		}
 	}
 
-	@Override
+/*	@Override
 	public List<BiomobyServiceProviderConfig> getDefaultConfigurations() {
 		
 		List<BiomobyServiceProviderConfig> defaults = new ArrayList<BiomobyServiceProviderConfig>();
@@ -78,7 +78,7 @@ public class BiomobyServiceProvider extends
 		} // else return an empty list
 		
 		return defaults;
-	}
+	}*/
 
 	public String getName() {
 		return "Biomoby service";
