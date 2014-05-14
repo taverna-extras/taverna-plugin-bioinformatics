@@ -116,9 +116,10 @@
 		</dependency>
 	</dependencies>
 	<scm>
-		<connection>scm:svn:http://taverna.googlecode.com/svn/taverna/utils/org.biomart.martservice/trunk/</connection>
-		<developerConnection>scm:svn:https://taverna.googlecode.com/svn/taverna/utils/org.biomart.martservice/trunk/</developerConnection>
-		<url>http://code.google.com/p/taverna/source/browse/#svn/taverna/utils/org.biomart.martservice/trunk/</url>
+                <connection>scm:git:https://github.com/taverna/taverna-biomart-martservice.git</connection>
+                <developerConnection>scm:git:ssh://git@github.com:taverna/taverna-biomart-martservice.git</developerConnection>
+                <url>https://github.com/taverna/taverna-biomart-martservice/</url>
+                <tag>HEAD</tag>
 	</scm>
 	<reporting>
 		<plugins>
