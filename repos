@@ -1,4 +1,4 @@
-taverna2-raven
+#taverna2-raven
 taverna3-command-line
 taverna3-command-line-tests
 taverna3-commons
@@ -32,7 +32,7 @@ taverna-dataflow-activity
 taverna-dataflow-activity-ui
 taverna-dependency-activity
 taverna-disabled-activity-ui
-taverna-docker
+#taverna-docker
 taverna-engine-core
 taverna-engine-credential-manager
 taverna-engine-integration-tests
@@ -70,7 +70,7 @@ taverna-spreadsheet-import-activity-ui
 taverna-stringconstant-activity
 taverna-stringconstant-activity-ui
 taverna-support-utilities
-taverna-tutorials
+#taverna-tutorials
 taverna-ui-api
 taverna-ui-components
 taverna-ui-exts
