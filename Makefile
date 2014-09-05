@@ -10,6 +10,10 @@ pom.xml: pull
 clean:
 	mvn clean
 
+deep-clean:
+	rm -f pom.xml
+	cat repos | xargs rm -rf
+
 build: pom.xml
 	./build.sh
 
