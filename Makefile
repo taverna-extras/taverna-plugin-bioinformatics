@@ -10,12 +10,12 @@ pull: clone
 pom.xml: pull
 	./update-pom.sh
 
-clean:
+clean: pom.xml
 	mvn clean
 
-deep-clean:
+deep-clean: repos
 	rm -f pom.xml
-	grep -v ^# repos | xargs rm -rf
+	cat repos | xargs rm -rf
 
 build: pom.xml
 	./build.sh
