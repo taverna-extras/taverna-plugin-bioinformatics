@@ -13,4 +13,5 @@ taverna-script-activity-ui
 taverna-tutorials
 taverna-webdav-activity
 taverna-webdav-activity-ui
+taverna-usecase-activity
 taverna2.*
