@@ -9,7 +9,7 @@ clone: repos
 pull: clone
 	./pull.sh
 
-pom.xml: pull
+pom.xml: repos
 	./update-pom.sh
 
 clean: pom.xml
