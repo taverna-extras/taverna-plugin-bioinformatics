@@ -1,3 +1,5 @@
+all: build
+
 repos: repos.ignored
 	./update-repos.sh
 
@@ -20,5 +22,3 @@ deep-clean: repos
 build: pom.xml
 	./build.sh
 
-
-all: build
