@@ -1,11 +1,14 @@
 #!/bin/bash
 set -e
 
-
-if [ "$1" == "--ssh" ] ; then  
-	(for a in $(grep -v ^# repos) ; do echo git@github.com:taverna/$a.git ; done) | xargs --max-procs=5 --max-args=1 git clone
+if [ "$1" == "--ssh" ] || [ $SSH ] ; then  
+  base="git@github.com:taverna/"
 else
-	(for a in $(grep -v ^# repos) ; do echo https://github.com/taverna/$a.git ; done) | xargs --max-procs=5 --max-args=1 git clone
+  base="https://github.com/taverna/"
 fi
+echo "Using base $base - to change use ./clone.sh --ssh or export SSH=true"
+
+
+(for a in $(cat repos) ; do if [ ! -d $a ] ; then echo $base$a.git ; fi; done) | xargs -r --max-procs=5 --max-args=1 git clone
 
 
