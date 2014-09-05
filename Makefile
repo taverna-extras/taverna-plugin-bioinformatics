@@ -1,4 +1,7 @@
-clone:
+repos: 
+	./update-repos.sh
+
+clone: repos
 	./clone.sh
 
 pull: clone
@@ -12,7 +15,7 @@ clean:
 
 deep-clean:
 	rm -f pom.xml
-	cat repos | xargs rm -rf
+	grep -v ^# repos | xargs rm -rf
 
 build: pom.xml
 	./build.sh
