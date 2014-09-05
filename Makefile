@@ -1,4 +1,4 @@
-repos: 
+repos: repos.ignored
 	./update-repos.sh
 
 clone: repos
