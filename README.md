@@ -22,7 +22,7 @@ Running the `Makeile` will perform the following commands:
    * mvn validate - ensure all Maven plugins are installed and `target/` folders empty
    * mvn dependency:go-offline - Ensure all dependencies can be downloaded
    * mvn install - Compile and install to `~/.m2/repository`
-   * mvn test - Run all unit tests
+ * mvn test - Run all unit tests
 
  
 
@@ -114,7 +114,7 @@ The output should look something like this:
 
 To download any changes to repositories and rebuild Taverna code:
 
-    make
+    make pull build
 
 
 To retrieve any new repositories in Github, try instead:
