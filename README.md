@@ -14,14 +14,15 @@ from the myGrid Maven repository during the build process.
 Running the `Makeile` will perform the following commands:
  * `./update-repos.sh` - retrieve the updated list of [Taverna GitHub repositories](https://github.com/taverna/)
    * ..except those in `repos.ignored`
- * `./clone.sh` - Check out repositories with `git clone` (5 parallell checkouts at a time)
- * `./pull.sh` - `git pull` any changes for each repository
+   * Note: Github API is rate limited to 60 requests pr hour pr IP - the above makes 2 API requests
+ * `./clone.sh` - Check out repositories with `git clone` (5 parallel checkouts at a time)
+ * `./pull.sh` - `git checkout master` and `git pull` any changes for each repository
  * `./update-pom.sh` - generate the master `pom.xml` from `pom.xml.template`
  * `./build.sh` - Build projects using Maven
-   * mvn clean - ensure all Maven plugins are installed and `target/` folders empty
+   * mvn validate - ensure all Maven plugins are installed and `target/` folders empty
    * mvn dependency:go-offline - Ensure all dependencies can be downloaded
    * mvn install - Compile and install to `~/.m2/repository`
-   * mvn test - Run unit tests
+   * mvn test - Run all unit tests
 
  
 
@@ -38,6 +39,24 @@ Running the `Makeile` will perform the following commands:
 On first usage, run simply:
 
     make
+
+Alternatively, run the shell commands listed above one by one (including `pull.sh`)    
+
+### Git clone with SSH (read-write)
+
+To check out using SSH instead of HTTP, first check that your [SSH key is registered with github](https://help.github.com/articles/generating-ssh-keys):
+
+  stain@biggie-mint ~/src/taverna-build $ ssh git@github.com
+  PTY allocation request failed on channel 0
+  Hi stain! You've successfully authenticated, but GitHub does not provide shell access.
+  Connection to github.com closed.
+
+
+Then check out with
+
+    make SSH=true
+
+### Example run
 
 The first run will take quite a while because all repositories will be checked
 out, and all their dependencies downloaded and built.
@@ -91,8 +110,28 @@ The output should look something like this:
   Downloading: http://repository.mygrid.org.uk/artifactory/repo/org/apache/maven/maven-project/2.2.0/maven-project-2.2.0.jar
   ..
 
+### Updating
+
+To download any changes to repositories and rebuild Taverna code:
+
+    make
+
+
+To retrieve any new repositories in Github, try instead:
+
+    make all
 
 
 
-    
+### Cleaning
+
+To clean the build (delete all `target/` folders), try:
+
+    make clean
+
+
+To force a full new checkout and build, **deleting any changes**, try instead:
+
+    make deep-clean all
+
     
