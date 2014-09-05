@@ -1,4 +1,4 @@
-default: pull build
+default: pull test
 
 repos: repos.ignored
 	./update-repos.sh
@@ -22,4 +22,7 @@ deep-clean: repos
 build: pom.xml
 	./build.sh
 
-all: repos clone pull build
+test: build
+	mvn test
+
+all: repos clone pull pom.xml clean build test
