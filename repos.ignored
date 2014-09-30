@@ -6,6 +6,7 @@ taverna-common-activities-ui
 taverna-component-activity-ui
 taverna-docker
 taverna-engine-integration-tests
+taverna-engine-provenance.*
 taverna-interaction-activity-ui
 taverna-jsonpath-activity
 taverna-jsonpath-activity-ui
@@ -17,3 +18,4 @@ taverna-webdav-activity-ui
 taverna-usecase-activity
 taverna2.*
 taverna-bioswr-perspective
+taverna-server
