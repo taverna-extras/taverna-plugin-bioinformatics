@@ -5,6 +5,7 @@ taverna-common-activities
 taverna-common-activities-ui
 taverna-component-activity-ui
 taverna-docker
+taverna-engine-integration-tests
 taverna-interaction-activity-ui
 taverna-jsonpath-activity
 taverna-jsonpath-activity-ui
