@@ -4,7 +4,7 @@ taverna-build
 Taverna 3 complete checkout and build script.
 
 This project is a convenience script for checking out all of the code needed to
-build Taverna 3 from source - restricted to the repositories at 
+build Taverna 3 from source - restricted to the repositories at
 https://github.com/taverna/
 
 Note that as each module declares dependencies independently, and many of the intra-dependencies
@@ -22,9 +22,10 @@ Running the `Makefile` will perform the following commands:
    * mvn validate - ensure all Maven plugins are installed and `target/` folders empty
    * mvn dependency:go-offline - Ensure all dependencies can be downloaded
    * mvn install - Compile and install to `~/.m2/repository`
+ * `./licenses.sh` - Generate lists of [licenses/](third-party dependencies)
  * mvn test - Run all unit tests
 
- 
+
 
 ## Requirements
 
@@ -40,7 +41,7 @@ On first usage, run simply:
 
     make
 
-Alternatively, run the shell commands listed above one by one (including `pull.sh`)    
+Alternatively, run the shell commands listed above one by one (including `pull.sh`)
 
 ### Git clone with SSH (read-write)
 
@@ -51,10 +52,14 @@ To check out using SSH instead of HTTP, first check that your [SSH key is regist
     Hi stain! You've successfully authenticated, but GitHub does not provide shell access.
     Connection to github.com closed.
 
+If you had already run `make` and checked out anonymously, then first do:
 
-Then check out with
+    make deep-clean`
+
+Then check out with:
 
     make SSH=true
+
 
 ### Example run
 
@@ -72,16 +77,16 @@ The output should look something like this:
     Receiving objects: 100% (83/83), 9.82 KiB | 0 bytes/s, done.
     Resolving deltas: 100% (42/42), done.
     Checking connectivity... done.
-  
+
     stain@biggie-mint ~/src $ cd taverna-build/
     stain@biggie-mint ~/src/taverna-build $ make
     ./update-repos.sh
-  
+
     [1/2]: https://api.github.com/orgs/taverna/repos?per_page=100&page=1 --> <stdout>
       % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                     Dload  Upload   Total   Spent    Left  Speed
     100  515k  100  515k    0     0   327k      0  0:00:01  0:00:01 --:--:--  327k
-  
+
     [2/2]: https://api.github.com/orgs/taverna/repos?per_page=100&page=2 --> <stdout>
     100     5  100     5    0     0     41      0 --:--:-- --:--:-- --:--:--     0
     ./clone.sh
@@ -92,7 +97,7 @@ The output should look something like this:
     Cloning into 'taverna3-command-line-tests'...
     Cloning into 'taverna3-maven-plugin'...
     Receiving objects: 100% (1227/1227), 148.20 KiB | 0 bytes/s, done.
-    Resolving deltas: 100% (435/435), done.4.46 MiB | 717.00 KiB/s   
+    Resolving deltas: 100% (435/435), done.4.46 MiB | 717.00 KiB/s
     ...
     ./pull.sh
     ~/src/taverna-build/taverna-databundle ~/src/taverna-build
@@ -133,5 +138,3 @@ To clean the build (delete all `target/` folders), try:
 To force a full new checkout and build, **deleting any changes**, try instead:
 
     make deep-clean all
-
-    
