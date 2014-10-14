@@ -1,6 +1,8 @@
 taverna-build
 =============
 
+[![Build Status](https://travis-ci.org/taverna/taverna-build.svg)](https://travis-ci.org/taverna/taverna-build)
+
 Taverna 3 complete checkout and build script.
 
 This project is a convenience script for checking out all of the code needed to
