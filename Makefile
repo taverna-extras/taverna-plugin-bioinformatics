@@ -20,7 +20,10 @@ deep-clean: repos
 	rm -f pom.xml
 	cat repos | xargs rm -rf
 
-build: pom.xml
+dependencies: pom.xml
+	./dependencies.sh
+
+build: dependencies
 	./build.sh
 
 licenses: build
