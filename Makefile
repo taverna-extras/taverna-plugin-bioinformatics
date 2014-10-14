@@ -23,12 +23,12 @@ deep-clean: repos
 dependencies: pom.xml
 	./dependencies.sh
 
-build: dependencies
-	./build.sh
-
-licenses: build
+licenses: dependencies
 	mvn license:add-third-party
 	./licenses.sh
+
+build: dependencies
+	./build.sh
 	
 test: build
 	mvn test
