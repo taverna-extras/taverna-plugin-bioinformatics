@@ -13,7 +13,7 @@ pom.xml: repos
 	./update-pom.sh
 
 clean: pom.xml
-	rm -f THIRD-PARTY.txt
+	rm -rf licenses/
 	mvn clean
 
 deep-clean: repos
@@ -23,7 +23,7 @@ deep-clean: repos
 build: pom.xml
 	./build.sh
 
-licenses: THIRD-PARTY.txt build
+licenses: build
 	mvn license:add-third-party
 	./licenses.sh
 	
