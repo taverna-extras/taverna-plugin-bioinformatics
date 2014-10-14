@@ -23,11 +23,11 @@ deep-clean: repos
 build: pom.xml
 	./build.sh
 
-license: THIRD-PARTY.txt build
+licenses: THIRD-PARTY.txt build
 	mvn license:add-third-party
-	cat $(find . -name THIRD-PARTY.txt) > THIRD-PARTY.txt
+	./licenses.sh
 	
 test: build
 	mvn test
 
-all: repos clone pull pom.xml clean build license test
+all: repos clone pull pom.xml clean build licenses test
