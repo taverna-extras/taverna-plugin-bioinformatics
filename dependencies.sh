@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
-mvn validate
-mvn dependency:go-offline
+mvn -B validate
+mvn -B dependency:go-offline

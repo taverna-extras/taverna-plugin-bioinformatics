@@ -1,3 +1,3 @@
 #!/bin/bash
 set -e
-mvn install -DskipTests=true
+mvn -B --fail-at-end install -DskipTests=true

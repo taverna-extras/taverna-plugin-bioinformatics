@@ -14,7 +14,7 @@ pom.xml: repos
 
 clean: pom.xml
 	rm -rf licenses/
-	mvn clean
+	mvn -B clean
 
 deep-clean: repos
 	rm -f pom.xml
@@ -24,13 +24,13 @@ dependencies: pom.xml
 	./dependencies.sh
 
 licenses: dependencies
-	mvn license:add-third-party
+	mvn -B license:add-third-party
 	./licenses.sh
 
 build: dependencies
 	./build.sh
 	
 test: build
-	mvn test
+	mvn -B test
 
 all: repos clone pull pom.xml clean build licenses test
