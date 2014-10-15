@@ -2,9 +2,12 @@
 set -e
 rm -rf licenses/
 mkdir -p licenses
-cd licenses/
+mvn -T4.0C license:aggregate-add-third-party
 
-cat $(find .. -wholename */license/THIRD-PARTY.txt) | grep -v "^Lists of" | sort | uniq > THIRD-PARTY.txt
+cp target/generated-sources/license/THIRD-PARTY.txt licenses/
+cd licenses/
+#cat $(find .. -wholename */license/THIRD-PARTY.txt) | grep -v "^Lists of" | sort | uniq > THIRD-PARTY.txt
+
 cat THIRD-PARTY.txt | grep -v net.sf.taverna | grep -v 'scufl2' | grep -v 'mygrid' | grep -v 'uk.org.taverna' > external.txt
 
 cat external.txt | grep -i 'apache' > apache.txt

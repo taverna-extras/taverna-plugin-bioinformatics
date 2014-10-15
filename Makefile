@@ -24,7 +24,6 @@ dependencies: pom.xml
 	./dependencies.sh
 
 licenses: dependencies
-	mvn -B -T 4.0C license:add-third-party
 	./licenses.sh
 
 build: dependencies
