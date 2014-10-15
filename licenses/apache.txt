@@ -148,6 +148,8 @@
      (The Apache Software License, Version 2.0) Maven Settings Builder (org.apache.maven:maven-settings-builder:3.0.5 - http://maven.apache.org/ref/3.0.5//maven-settings-builder)
      (The Apache Software License, Version 2.0) Maven Settings (org.apache.maven:maven-settings:3.0.5 - http://maven.apache.org/ref/3.0.5//maven-settings)
      (The Apache Software License, Version 2.0) Maven Wagon API (org.apache.maven.wagon:wagon-provider-api:1.0-alpha-5 - no url defined)
+     (The Apache Software License, Version 2.0) Mime Detection Utility (uk.org.mygrid.resources.mimeutil:mime-util:2.1.2-6 - http://www.medsea.eu/mime-util/)
+     (The Apache Software License, Version 2.0) Mime Detection Utility (uk.org.mygrid.resources.mimeutil:mime-util:2.1.2-x-SNAPSHOT - http://www.medsea.eu/mime-util/)
      (The Apache Software License, Version 2.0) opencsv (net.sf.opencsv:opencsv:2.1 - http://opencsv.sf.net)
      (The Apache Software License, Version 2.0) OpenEngSB :: OSGi Wrapped Bundles :: jsch (org.openengsb.wrapped:com.jcraft.jsch-all:0.1.42.w1 - http://www.openengsb.org)
      (The Apache Software License, Version 2.0) OpenSAML-J (org.opensaml:opensaml:1.1 - https://opensaml.org/)
