@@ -1,3 +1,3 @@
 #!/bin/bash
 set -e
-mvn -B --fail-at-end install -DskipTests=true
+mvn -B -T 2.0C --fail-at-end install -DskipTests=true
