@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                      http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="BiomartActivityIcon" class="net.sf.taverna.t2.activities.biomart.servicedescriptions.BiomartActivityIcon" />
+
+	<bean id="BiomartServiceProvider" class="net.sf.taverna.t2.activities.biomart.servicedescriptions.BiomartServiceProvider">
+			<property name="serviceDescriptionRegistry" ref="serviceDescriptionRegistry" />
+	</bean>
+
+	<bean id="BiomartConfigurationMenuAction" class="net.sf.taverna.t2.activities.biomart.menu.BiomartConfigurationMenuAction">
+			<property name="editManager" ref="editManager" />
+			<property name="fileManager" ref="fileManager" />
+			<property name="activityIconManager" ref="activityIconManager" />
+			<property name="applicationConfiguration" ref="applicationConfiguration" />
+			<property name="serviceRegistry" ref="serviceRegistry" />
+	</bean>
+
+	<bean id="BiomartActivityViewFactory" class="net.sf.taverna.t2.activities.biomart.views.BiomartActivityViewFactory">
+			<property name="editManager" ref="editManager" />
+			<property name="fileManager" ref="fileManager" />
+			<property name="activityIconManager" ref="activityIconManager" />
+			<property name="colourManager" ref="colourManager" />
+			<property name="applicationConfiguration" ref="applicationConfiguration" />
+			<property name="serviceRegistry" ref="serviceRegistry" />
+	</bean>
+
+</beans>
