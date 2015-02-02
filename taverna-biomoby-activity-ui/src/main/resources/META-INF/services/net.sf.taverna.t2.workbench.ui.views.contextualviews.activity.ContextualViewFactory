@@ -1,0 +1,3 @@
+net.sf.taverna.t2.activities.biomoby.view.BiomobyActivityContextualViewFactory
+net.sf.taverna.t2.activities.biomoby.view.BiomobyObjectActivityContextualViewFactory
+net.sf.taverna.t2.activities.biomoby.view.MobyParseDatatypeContextualViewFactory
