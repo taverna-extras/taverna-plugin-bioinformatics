@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MartQuery xmlns:biomart="http://org.embl.ebi.escience/xscufl-biomart/0.1alpha">
+  <MartService location="http://www.biomart.org/biomart/martservice" />
+  <MartDataset displayName="Homo sapiens genes (NCBI36)" name="hsapiens_gene_ensembl" type="TableSet" initialBatchSize="100" maximumBatchSize="50000" visible="false">
+    <MartURLLocation default="1" displayName="ENSEMBL 41 (SANGER)" host="www.biomart.org" name="ensembl" port="80" serverVirtualSchema="default" virtualSchema="default" visible="1" />
+  </MartDataset>
+  <Query virtualSchemaName="default" count="0" softwareVersion="0.5">
+    <Dataset name="hsapiens_gene_ensembl">
+      <Attribute name="chromosome_name" />
+      <Attribute name="go_description" />
+      <Filter name="chromosome_name" value="1" />
+      <Filter name="band_end" value="p36.32" />
+      <Filter name="band_start" value="p36.33" />
+    </Dataset>
+  </Query>
+</MartQuery>
+

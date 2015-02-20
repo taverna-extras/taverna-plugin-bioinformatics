@@ -1,0 +1,40 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema#",
+    "id": "http://ns.taverna.org.uk/2010/activity/soaplab.schema.json",
+    "title": "Soaplab consumer activity configuration",
+    "type": "object",
+    "properties": {
+        "@context": {
+            "description": "JSON-LD context for interpreting the configuration as RDF",
+            "required": true,
+            "enum": ["http://ns.taverna.org.uk/2010/activity/soaplab.context.json"]
+        },
+        "endpoint": {
+            "title": "Soaplab Service Endpoint",
+            "description": "The endpoint of the Soaplab service",
+            "type": "string",
+            "required": true
+        }
+        "pollingInterval": {
+            "title": "Polling Interval",
+            "description": "The polling time interval (in milliseconds",
+            "type": "integer",
+            "default": 0,
+            "required": true
+        }
+        "pollingBackoff": {
+            "title": "Polling Backoff",
+            "description": "The polling backoff factor",
+            "type": "number",
+            "default": 1.0,
+            "required": true
+        }
+        "pollingIntervalMax": {
+            "title": "Max Polling Interval",
+            "description": "The maximum polling time interval (in milliseconds)",
+            "type": "integer",
+            "default": 0,
+            "required": true
+        }
+    }
+}
