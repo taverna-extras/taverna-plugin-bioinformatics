@@ -45,8 +45,8 @@ import org.apache.axis.client.Call;
 import org.apache.axis.client.Service;
 import org.apache.log4j.Logger;
 
-import uk.org.taverna.scufl2.api.activity.Activity;
-import uk.org.taverna.scufl2.api.configurations.Configuration;
+import org.apache.taverna.scufl2.api.activity.Activity;
+import org.apache.taverna.scufl2.api.configurations.Configuration;
 
 import com.fasterxml.jackson.databind.JsonNode;
 

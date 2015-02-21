@@ -34,7 +34,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ActivityConfigurationPanel;
-import uk.org.taverna.scufl2.api.activity.Activity;
+import org.apache.taverna.scufl2.api.activity.Activity;
 
 @SuppressWarnings("serial")
 public class SoaplabConfigurationPanel extends ActivityConfigurationPanel {
