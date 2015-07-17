@@ -1,7 +1,21 @@
-/*******************************************************************************
- * This file is a component of the Taverna project, and is licensed  under the
- *  GNU LGPL. Copyright Edward Kawas, The BioMoby Project
- ******************************************************************************/
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package net.sf.taverna.t2.activities.biomoby;
 
 import java.io.StringReader;
@@ -48,9 +62,9 @@ import org.xml.sax.InputSource;
 /**
  * This class contains one method that is used to execute asynchronous moby
  * services
- * 
+ *
  * @author Edward Kawas
- * 
+ *
  */
 
 public class ExecuteAsyncMobyService {
@@ -70,14 +84,14 @@ public class ExecuteAsyncMobyService {
 	private static final String ANON_URI = WSA_NS + "/anonymous";
 	private static final String RESULT_PREFIX = "result_";
 	private static final String STATUS_PREFIX = "status_";
-	
+
 	private static Logger logger = Logger.getLogger(ExecuteAsyncMobyService.class);
 	/**
 	 * This method does the same as getMultipleResourceProperties, with the
 	 * difference that it returns an String instead of a SOAPPart object. The
 	 * result is the serialization of the SOAPPart output obtained from
 	 * getMultipleResourceProperties.
-	 * 
+	 *
 	 * @param msName
 	 *            The MOBY service name
 	 * @param queryIds
@@ -118,7 +132,7 @@ public class ExecuteAsyncMobyService {
 	 * This method does the check and fetch work related to asynchronous
 	 * services. When all the results are fetched, it returns false. When some
 	 * recheck must be issued, it returns true.
-	 * 
+	 *
 	 * @param msName
 	 *            The MOBY service name
 	 * @param epr
@@ -247,7 +261,7 @@ public class ExecuteAsyncMobyService {
 
 	/**
 	 * This method calls the input MOBY service using the asynchronous protocol.
-	 * 
+	 *
 	 * @param endpoint
 	 *            The endpoint of the service.
 	 * @param msName
@@ -411,11 +425,11 @@ public class ExecuteAsyncMobyService {
 			throw new MobyException("Error while assembling output", t);
 		}
 	}
-	
+
 	/**
 	 * This method free the asynchronous MOBY resources associated to the job
 	 * identifier tied to the EndpointReference object passed as input.
-	 * 
+	 *
 	 * @param msName
 	 *            The MOBY service name
 	 * @param epr
@@ -494,10 +508,10 @@ public class ExecuteAsyncMobyService {
 		// We don't mind what it is returned
 		dispatch.invoke(request);
 	}
-	
+
 	/**
 	 * This method is used to launch an asynchronous MOBY job.
-	 * 
+	 *
 	 * @param endpoint
 	 *            The endpoint of the service.
 	 * @param msName
@@ -576,13 +590,13 @@ public class ExecuteAsyncMobyService {
 		}
 	}
 
-	
+
 
 	/**
 	 * This method issues WSRF getMultipleResourceProperties calls. As this call
 	 * is used in BioMOBY for polling and for result fetching, it has an
 	 * additional parameter which handles the call mode.
-	 * 
+	 *
 	 * @param msName
 	 *            The MOBY service name
 	 * @param queryIds

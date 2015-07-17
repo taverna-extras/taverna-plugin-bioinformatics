@@ -1,7 +1,20 @@
 /*
- * This file is a component of the Taverna project,
- * and is licensed under the GNU LGPL.
- * Copyright Edward Kawas, The BioMoby Project
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
 package net.sf.taverna.t2.activities.biomoby;
 
@@ -23,9 +36,9 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 /**
- * 
+ *
  * @author Eddie Kawas
- * 
+ *
  */
 @SuppressWarnings("unchecked")
 public class XMLUtilities {
@@ -42,7 +55,7 @@ public class XMLUtilities {
 			"http://www.biomoby.org/moby");
 
 	/**
-	 * 
+	 *
 	 * @param message
 	 *            the structurally valid BioMoby message as a String
 	 * @return true if the message contains multiple invocations, false
@@ -61,7 +74,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param message
 	 *            the structurally valid BioMoby message as an Element
 	 * @return true if the message contains multiple invocations, false
@@ -85,7 +98,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param element
 	 *            the element to extract the list of simples from. This method
 	 *            assumes that you are passing in a single invokation and that
@@ -175,7 +188,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param message
 	 *            the String of xml to extract the list of simples from. This
 	 *            method assumes that you are passing in a single invokation and
@@ -206,7 +219,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param message
 	 *            the String to extract the list of collections from and assumes
 	 *            that you are passing in a single invocation message.
@@ -235,7 +248,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param element
 	 *            the element to extract the list of collections from and
 	 *            assumes that you are passing in a single invocation message.
@@ -325,7 +338,7 @@ public class XMLUtilities {
 	/**
 	 * This method assumes a single invocation was passed to it
 	 * <p>
-	 * 
+	 *
 	 * @param name
 	 *            the article name of the simple that you are looking for
 	 * @param xml
@@ -358,7 +371,7 @@ public class XMLUtilities {
 	/**
 	 * This method assumes a single invocation was passed to it
 	 * <p>
-	 * 
+	 *
 	 * @param name
 	 *            the article name of the simple that you are looking for
 	 * @param element
@@ -439,7 +452,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param xml
 	 *            a string of xml containing a single invocation message to
 	 *            extract the queryID from
@@ -454,7 +467,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param xml
 	 *            a single invocation message to extract the queryID from
 	 * @return the queryID contained in the xml or a generated one if one doesnt
@@ -501,7 +514,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param xml
 	 *            a string of xml containing a single invocation message to
 	 *            extract the queryID from
@@ -518,7 +531,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param xml
 	 *            a single invocation message to extract the queryID from
 	 * @return the element passed in to the method with the queryID set if the
@@ -560,7 +573,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 *            the articlename of the simple that you wish to extract
 	 * @param xml
@@ -580,7 +593,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 *            the articlename of the simple that you wish to extract
 	 * @param xml
@@ -599,7 +612,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 *            the name of the collection to extract
 	 * @param element
@@ -697,7 +710,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 * @param xml
 	 * @return
@@ -715,7 +728,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 * @param element
 	 * @return
@@ -731,7 +744,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 * @param xml
 	 * @return
@@ -747,7 +760,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 *            the name of the collection to extract the simples from.
 	 * @param xml
@@ -775,7 +788,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 *            the name of the collection to extract the simples from.
 	 * @param element
@@ -810,7 +823,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 *            the name of the simples that you would like to extract. The
 	 *            name can be collection name as well. This method extracts
@@ -843,7 +856,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 *            the name of the simples that you would like to extract. The
 	 *            name can be collection name as well. This method extracts
@@ -912,7 +925,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param xml
 	 *            the XML to extract from
 	 * @return an array of String objects that represent the simples
@@ -938,7 +951,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 *            the name of the collection to extract the simples from.
 	 * @param element
@@ -971,7 +984,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 *            the name of the collection to extract the simples from.
 	 * @param xml
@@ -1001,7 +1014,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 *            the name of the collection to extract the simples from.
 	 * @param element
@@ -1037,7 +1050,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param xml
 	 *            the message to extract the invocation messages from
 	 * @return an array of String objects each representing a distinct BioMOBY
@@ -1061,7 +1074,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param element
 	 *            the message to extract the invocation messages from
 	 * @return an array of Element objects each representing a distinct
@@ -1120,7 +1133,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param document
 	 *            the string to create a DOM document from
 	 * @return a Document object that represents the string of XML.
@@ -1151,7 +1164,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param elements
 	 *            the fully wrapped moby simples and/or collections to wrap an
 	 *            input message around
@@ -1175,7 +1188,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param elements
 	 *            the fully wrapped moby simples and/or collections to wrap an
 	 *            input message around
@@ -1256,7 +1269,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param newName
 	 *            the new name for this fully wrapped BioMOBY collection
 	 * @param element
@@ -1281,7 +1294,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param newName
 	 *            the new name for this fully wrapped BioMOBY collection
 	 * @param xml
@@ -1299,7 +1312,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param oldName
 	 * @param newName
 	 * @param type
@@ -1315,7 +1328,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param oldName
 	 * @param newName
 	 * @param type
@@ -1342,7 +1355,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 * @throws MobyException
 	 */
@@ -1353,7 +1366,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param element
 	 * @param queryID
 	 * @param serviceNotes
@@ -1418,7 +1431,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param xml
 	 * @return
 	 * @throws MobyException
@@ -1429,7 +1442,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param element
 	 * @return
 	 * @throws MobyException
@@ -1442,7 +1455,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param xml
 	 * @param queryID
 	 * @return
@@ -1473,7 +1486,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param elements
 	 * @return
 	 * @throws MobyException
@@ -1502,7 +1515,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param xmls
 	 * @return
 	 * @throws MobyException
@@ -1519,7 +1532,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param xml
 	 *            a string of xml
 	 * @return true if the xml contains a full moby message (assumes single
@@ -1536,7 +1549,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param xml
 	 *            a string of xml
 	 * @return true if the xml contains a full moby message (assumes single
@@ -1551,7 +1564,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param element
 	 *            an Element containing a single invocation
 	 * @return true if the element contains a moby collection, false otherwise.
@@ -1568,7 +1581,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param xml
 	 *            a string of xml containing a single invocation
 	 * @return true if the xml contains a moby collection, false otherwise.
@@ -1581,7 +1594,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param xml
 	 *            a string of xml to check for emptiness
 	 * @return true if the element is empty, false otherwise.
@@ -1595,7 +1608,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param xml
 	 *            an element to check for emptiness
 	 * @return true if the element is empty, false otherwise.
@@ -1618,7 +1631,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param theList
 	 *            a list of Elements that represent collections (wrapped in a
 	 *            MobyData tag
@@ -1627,7 +1640,7 @@ public class XMLUtilities {
 	 * @return a list containing a single wrapped collection Element that contains all
 	 *         of the simples in the collections in theList
 	 * @throws MobyException
-	 * 
+	 *
 	 */
 	public static List mergeCollections(List theList, String name)
 			throws MobyException {
@@ -1654,7 +1667,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param element
 	 *            a full moby message (root element called MOBY) and may be
 	 *            prefixed
@@ -1679,7 +1692,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param xml
 	 *            a full moby message (root element called MOBY) and may be
 	 *            prefixed
@@ -1700,7 +1713,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param xml
 	 *            a full moby message (root element called MOBY) and may be
 	 *            prefixed
@@ -1716,7 +1729,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param element
 	 *            the xml element
 	 * @param articleName
@@ -1750,7 +1763,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param xml
 	 *            the string of xml
 	 * @param articleName
@@ -1774,7 +1787,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param xml
 	 *            the xml message to test whether or not there is stuff in the
 	 *            mobyData portion of a message.
@@ -1809,7 +1822,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param xml
 	 *            the xml message to test whether or not there is stuff in the
 	 *            mobyData portion of a message.
@@ -1864,7 +1877,7 @@ public class XMLUtilities {
 	}
 
 	/*
-	 * 
+	 *
 	 * @param current the Element that you would like to search @param name the
 	 * name of the element that you would like to find @param list the list to
 	 * put the elements that are found in @return a list containing the elements
@@ -1886,7 +1899,7 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param collectionName
 	 *            the name you would like the collection to be called
 	 * @param simples2makeCollection
