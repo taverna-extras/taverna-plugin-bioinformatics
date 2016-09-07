@@ -1,36 +1,3 @@
-/*
- * Copyright (C) 2003 The University of Manchester 
- *
- * Modifications to the initial code base are copyright of their
- * respective authors, or their employers as appropriate.  Authorship
- * of the modifications may be determined from the ChangeLog placed at
- * the end of this file.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- * USA.
- *
- ****************************************************************
- * Source code information
- * -----------------------
- * Filename           $RCSfile: QueryConfigController.java,v $
- * Revision           $Revision: 1.4 $
- * Release status     $State: Exp $
- * Last modified on   $Date: 2007/12/13 11:38:57 $
- *               by   $Author: davidwithers $
- * Created on 27-Mar-2006
- *****************************************************************/
 package org.biomart.martservice.config;
 
 import java.util.HashMap;
@@ -52,7 +19,7 @@ import org.ensembl.mart.lib.config.FilterDescription;
 /**
  * Controls the interaction between graphical <code>QueryComponent</code>s
  * and <code>Query</code>s.
- * 
+ *
  * @author David Withers
  */
 public class QueryConfigController {
@@ -77,7 +44,7 @@ public class QueryConfigController {
 
 	/**
 	 * Constructs an instance of a <code>QueryConfigController</code>.
-	 * 
+	 *
 	 * @param martQuery
 	 */
 	public QueryConfigController(MartQuery martQuery) {
@@ -97,7 +64,7 @@ public class QueryConfigController {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#finalize()
 	 */
 	protected void finalize() throws Throwable {
@@ -107,7 +74,7 @@ public class QueryConfigController {
 
 	/**
 	 * Returns the <code>MartQuery</code> under control.
-	 * 
+	 *
 	 * @return the <code>MartQuery</code> under control
 	 */
 	public MartQuery getMartQuery() {
@@ -116,7 +83,7 @@ public class QueryConfigController {
 
 	/**
 	 * Removes a <code>QueryComponent</code> from the controller.
-	 * 
+	 *
 	 * @param queryComponent
 	 *            the <code>QueryComponent</code> to remove
 	 */
@@ -126,11 +93,11 @@ public class QueryConfigController {
 
 	/**
 	 * Registers a <code>QueryComponent</code> with the controller.
-	 * 
+	 *
 	 * If the <code>Query</code> already contains an <code>Attribute</code>
 	 * or <code>Filter</code> with the corresponding name the
 	 * <code>QueryComponent</code> is set as selected.
-	 * 
+	 *
 	 * @param queryComponent
 	 *            the <code>QueryComponent</code> to register
 	 */
@@ -182,7 +149,7 @@ public class QueryConfigController {
 	 * Returns the <code>Attribute</code> mapped to the
 	 * <code>QueryComponent</code>. If no <code>Attribute</code> is mapped
 	 * a new <code>Attribute</code> is created and added to the map.
-	 * 
+	 *
 	 * @param queryComponent
 	 * @return
 	 */
@@ -205,7 +172,7 @@ public class QueryConfigController {
 	 * Returns the <code>Filter</code> mapped to the
 	 * <code>QueryComponent</code>. If no <code>Filter</code> is mapped a
 	 * new <code>Filter</code> is created and added to the map.
-	 * 
+	 *
 	 * @param queryComponent
 	 * @return
 	 */
@@ -250,7 +217,7 @@ public class QueryConfigController {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryComponentListener#attributeAdded(org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryComponentEvent)
 		 */
 		public void attributeAdded(QueryComponentEvent event) {
@@ -264,7 +231,7 @@ public class QueryConfigController {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryComponentListener#attributeRemoved(org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryComponentEvent)
 		 */
 		public void attributeRemoved(QueryComponentEvent event) {
@@ -278,7 +245,7 @@ public class QueryConfigController {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryComponentListener#filterAdded(org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryComponentEvent)
 		 */
 		public void filterAdded(QueryComponentEvent event) {
@@ -292,7 +259,7 @@ public class QueryConfigController {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryComponentListener#filterRemoved(org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryComponentEvent)
 		 */
 		public void filterRemoved(QueryComponentEvent event) {
@@ -306,7 +273,7 @@ public class QueryConfigController {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryComponentListener#filterChanged(org.embl.ebi.escience.scuflworkers.biomartservice.config.QueryComponentEvent)
 		 */
 		public void filterChanged(QueryComponentEvent event) {
@@ -320,7 +287,7 @@ public class QueryConfigController {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see org.biomart.martservice.config.event.QueryComponentListener#linkAdded(org.biomart.martservice.config.event.QueryComponentEvent)
 		 */
 		public void linkAdded(QueryComponentEvent event) {
@@ -329,7 +296,7 @@ public class QueryConfigController {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see org.biomart.martservice.config.event.QueryComponentListener#linkRemoved(org.biomart.martservice.config.event.QueryComponentEvent)
 		 */
 		public void linkRemoved(QueryComponentEvent event) {
@@ -338,7 +305,7 @@ public class QueryConfigController {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see org.biomart.martservice.config.QueryComponentListener#linkChanged(org.biomart.martservice.config.QueryComponentEvent)
 		 */
 		public void linkChanged(QueryComponentEvent event) {

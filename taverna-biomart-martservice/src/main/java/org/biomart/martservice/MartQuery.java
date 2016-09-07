@@ -1,36 +1,3 @@
-/*
- * Copyright (C) 2003 The University of Manchester 
- *
- * Modifications to the initial code base are copyright of their
- * respective authors, or their employers as appropriate.  Authorship
- * of the modifications may be determined from the ChangeLog placed at
- * the end of this file.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- * USA.
- *
- ****************************************************************
- * Source code information
- * -----------------------
- * Filename           $RCSfile: MartQuery.java,v $
- * Revision           $Revision: 1.2 $
- * Release status     $State: Exp $
- * Last modified on   $Date: 2007/12/13 11:38:55 $
- *               by   $Author: davidwithers $
- * Created on 08-May-2006
- *****************************************************************/
 package org.biomart.martservice;
 
 import java.util.ArrayList;
@@ -50,7 +17,7 @@ import org.ensembl.mart.lib.config.DatasetConfig;
 
 /**
  * Class for creating queries to send to a BioMart web service.
- * 
+ *
  * @author David Withers
  */
 public class MartQuery {
@@ -98,7 +65,7 @@ public class MartQuery {
 
 	/**
 	 * Returns the martDataset.
-	 * 
+	 *
 	 * @return the martDataset.
 	 */
 	public MartDataset getMartDataset() {
@@ -107,7 +74,7 @@ public class MartQuery {
 
 	/**
 	 * Sets the martDataset.
-	 * 
+	 *
 	 * @param martDataset
 	 *            the martDataset to set.
 	 */
@@ -117,7 +84,7 @@ public class MartQuery {
 
 	/**
 	 * Returns the martService.
-	 * 
+	 *
 	 * @return the martService.
 	 */
 	public MartService getMartService() {
@@ -126,7 +93,7 @@ public class MartQuery {
 
 	/**
 	 * Sets the martService.
-	 * 
+	 *
 	 * @param martService
 	 *            the martService to set.
 	 */
@@ -136,7 +103,7 @@ public class MartQuery {
 
 	/**
 	 * Returns the query.
-	 * 
+	 *
 	 * @return the query.
 	 */
 	public Query getQuery() {
@@ -145,7 +112,7 @@ public class MartQuery {
 
 	/**
 	 * Sets the query.
-	 * 
+	 *
 	 * @param query
 	 *            the query to set.
 	 */
@@ -156,7 +123,7 @@ public class MartQuery {
 
 	/**
 	 * Adds the ID that links the specified dataset to the initial dataset.
-	 * 
+	 *
 	 * @param datasetName
 	 *            the dataset
 	 * @param linkId
@@ -168,7 +135,7 @@ public class MartQuery {
 
 	/**
 	 * Removes a dataset and any datasets linked to it.
-	 * 
+	 *
 	 * @param datasetName
 	 *            the dataset to remove
 	 */
@@ -192,7 +159,7 @@ public class MartQuery {
 	/**
 	 * Changes the ID that links a dataset. This method performs no function,
 	 * nor does it throw an exception, if the specified dataset does not exist.
-	 * 
+	 *
 	 * @param datasetName
 	 *            the dataset
 	 * @param linkId
@@ -218,7 +185,7 @@ public class MartQuery {
 	/**
 	 * Returns the Datasets that this Query contains in the order specified by
 	 * the links.
-	 * 
+	 *
 	 * @return the Datasets that this Query contains in the order specified by
 	 *         the links
 	 */
@@ -257,7 +224,7 @@ public class MartQuery {
 	/**
 	 * Returns all the Attributes from all the Datasets in this Query in the
 	 * order specified by the links.
-	 * 
+	 *
 	 * @return all the Attributes from all the Datasets in this Query in the
 	 *         order specified by the links
 	 */
@@ -278,7 +245,7 @@ public class MartQuery {
 	/**
 	 * Adds an Attribute to the Dataset with the given datasetName. If the Query
 	 * has no Dataset with the given datasetName then a new Dataset is created.
-	 * 
+	 *
 	 * @param datasetName
 	 *            the name of the Dataset to add the Attribute to
 	 * @param attribute
@@ -300,7 +267,7 @@ public class MartQuery {
 
 	/**
 	 * Removes an Attribute from its containing Dataset.
-	 * 
+	 *
 	 * @param attribute
 	 */
 	public void removeAttribute(Attribute attribute) {
@@ -320,7 +287,7 @@ public class MartQuery {
 	/**
 	 * Adds a Filter to the Dataset with the given datasetName. If the Query has
 	 * no Dataset with the given datasetName then a new Dataset is created.
-	 * 
+	 *
 	 * @param datasetName
 	 *            the name of the Dataset to add the Filter to
 	 * @param filter
@@ -342,7 +309,7 @@ public class MartQuery {
 
 	/**
 	 * Removes a Filter from its containing Dataset.
-	 * 
+	 *
 	 * @param filter
 	 */
 	public void removeFilter(Filter filter) {

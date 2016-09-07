@@ -1,36 +1,3 @@
-/*
- * Copyright (C) 2003 The University of Manchester 
- *
- * Modifications to the initial code base are copyright of their
- * respective authors, or their employers as appropriate.  Authorship
- * of the modifications may be determined from the ChangeLog placed at
- * the end of this file.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- * USA.
- *
- ****************************************************************
- * Source code information
- * -----------------------
- * Filename           $RCSfile: MartServiceXMLHandler.java,v $
- * Revision           $Revision: 1.4 $
- * Release status     $State: Exp $
- * Last modified on   $Date: 2007/12/13 11:38:55 $
- *               by   $Author: davidwithers $
- * Created on 28-Apr-2006
- *****************************************************************/
 package org.biomart.martservice;
 
 import java.util.Iterator;
@@ -43,7 +10,7 @@ import org.jdom.Namespace;
 
 /**
  * Utility class for serializing mart service classes to XML.
- * 
+ *
  * @author David Withers
  */
 public class MartServiceXMLHandler {
@@ -105,7 +72,7 @@ public class MartServiceXMLHandler {
 
 	/**
 	 * Converts a <code>MartService</code> to an XML element.
-	 * 
+	 *
 	 * @param martService
 	 *            the <code>MartService</code> to serialize
 	 * @param namespace
@@ -122,7 +89,7 @@ public class MartServiceXMLHandler {
 
 	/**
 	 * Creates a <code>MartService</code> from an XML element.
-	 * 
+	 *
 	 * @param element
 	 *            the <code>Element</code> to deserialize
 	 * @return a deserialized <code>MartService</code>
@@ -134,7 +101,7 @@ public class MartServiceXMLHandler {
 
 	/**
 	 * Converts a <code>MartDataset</code> to an XML element.
-	 * 
+	 *
 	 * @param dataset
 	 *            the <code>MartDataset</code> to serialize
 	 * @param namespace
@@ -167,7 +134,7 @@ public class MartServiceXMLHandler {
 
 	/**
 	 * Creates a <code>MartDataset</code> from an XML element.
-	 * 
+	 *
 	 * @param element
 	 *            the <code>Element</code> to deserialize
 	 * @param namespace
@@ -197,7 +164,7 @@ public class MartServiceXMLHandler {
 
 	/**
 	 * Creates a <code>MartRegistry</code> from an XML element.
-	 * 
+	 *
 	 * @param element
 	 *            the <code>Element</code> to deserialize
 	 * @param namespace
@@ -236,7 +203,7 @@ public class MartServiceXMLHandler {
 
 	/**
 	 * Converts a <code>MartURLLocation</code> to an XML element.
-	 * 
+	 *
 	 * @param location
 	 *            the <code>MartURLLocation</code> to serialize
 	 * @param namespace
@@ -283,7 +250,7 @@ public class MartServiceXMLHandler {
 
 	/**
 	 * Creates a <code>MartURLLocation</code> from an XML element.
-	 * 
+	 *
 	 * @param element
 	 *            the <code>Element</code> to deserialize
 	 * @return a deserialized <code>MartURLLocation</code>
@@ -320,7 +287,7 @@ public class MartServiceXMLHandler {
 
 	/**
 	 * Creates a <code>MartQuery</code> from an XML element.
-	 * 
+	 *
 	 * @param element
 	 *            the <code>Element</code> to deserialize
 	 * @param namespace
@@ -354,7 +321,7 @@ public class MartServiceXMLHandler {
 
 	/**
 	 * Converts a <code>MartQuery</code> to an XML element.
-	 * 
+	 *
 	 * @param martQuery
 	 *            the <code>MartQuery</code> to serialize
 	 * @param namespace

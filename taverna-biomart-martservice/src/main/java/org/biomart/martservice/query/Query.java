@@ -1,36 +1,3 @@
-/*
- * Copyright (C) 2003 The University of Manchester 
- *
- * Modifications to the initial code base are copyright of their
- * respective authors, or their employers as appropriate.  Authorship
- * of the modifications may be determined from the ChangeLog placed at
- * the end of this file.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- * USA.
- *
- ****************************************************************
- * Source code information
- * -----------------------
- * Filename           $RCSfile: Query.java,v $
- * Revision           $Revision: 1.4 $
- * Release status     $State: Exp $
- * Last modified on   $Date: 2007/10/03 15:57:30 $
- *               by   $Author: davidwithers $
- * Created on 03-Apr-2006
- *****************************************************************/
 package org.biomart.martservice.query;
 
 import java.util.ArrayList;
@@ -44,7 +11,7 @@ import org.biomart.martservice.MartServiceException;
 
 /**
  * Class for creating mart queries.
- * 
+ *
  * @author David Withers
  */
 public class Query {
@@ -55,7 +22,7 @@ public class Query {
 	private int uniqueRows;
 
 	private String softwareVersion;
-	
+
 	private String formatter;
 
 	private String requestId;
@@ -73,7 +40,7 @@ public class Query {
 	/**
 	 * Constructs an instance of a <code>Query</code> with the specified
 	 * <code>virtualSchemaName</code> and a <code>count</code> of 0.
-	 * 
+	 *
 	 * @param virtualSchemaName
 	 */
 	public Query(String virtualSchemaName) {
@@ -83,7 +50,7 @@ public class Query {
 	/**
 	 * Constructs an instance of a <code>Query</code> with the specified
 	 * <code>virtualSchemaName</code> and <code>count</code>.
-	 * 
+	 *
 	 * @param virtualSchemaName
 	 * @param count
 	 */
@@ -96,7 +63,7 @@ public class Query {
 	 * Constructs an instance of a <code>Query</code> with the specified
 	 * <code>virtualSchemaName</code>, <code>softwareVersion</code> and
 	 * <code>requestId</code>.
-	 * 
+	 *
 	 * @param virtualSchemaName
 	 * @param softwareVersion
 	 * @param requestId
@@ -110,7 +77,7 @@ public class Query {
 	 * Constructs an instance of a <code>Query</code> with the specified
 	 * <code>virtualSchemaName</code>, <code>count</code> and
 	 * <code>softwareVersion</code>.
-	 * 
+	 *
 	 * @param virtualSchemaName
 	 * @param count
 	 * @param softwareVersion
@@ -123,7 +90,7 @@ public class Query {
 	 * Constructs an instance of a <code>Query</code> with the specified
 	 * <code>virtualSchemaName</code>, <code>count</code>,
 	 * <code>softwareVersion</code> and <code>requestId</code>.
-	 * 
+	 *
 	 * @param virtualSchemaName
 	 * @param count
 	 * @param softwareVersion
@@ -140,7 +107,7 @@ public class Query {
 	/**
 	 * Constructs an instance of a <code>Query</code> which is a deep copy of
 	 * another <code>Query</code>.
-	 * 
+	 *
 	 * @param query
 	 *            the <code>Query</code> to copy
 	 * @throws MartServiceException
@@ -162,7 +129,7 @@ public class Query {
 
 	/**
 	 * Returns the virtualSchema.
-	 * 
+	 *
 	 * @return the virtualSchema.
 	 */
 	public String getVirtualSchemaName() {
@@ -171,7 +138,7 @@ public class Query {
 
 	/**
 	 * Sets the virtualSchema.
-	 * 
+	 *
 	 * @param virtualSchemaName
 	 *            the virtualSchema to set.
 	 */
@@ -181,7 +148,7 @@ public class Query {
 
 	/**
 	 * Returns the count.
-	 * 
+	 *
 	 * @return the count.
 	 */
 	public int getCount() {
@@ -190,7 +157,7 @@ public class Query {
 
 	/**
 	 * Sets the count.
-	 * 
+	 *
 	 * @param count
 	 *            the count to set.
 	 */
@@ -200,7 +167,7 @@ public class Query {
 
 	/**
 	 * Returns the uniqueRows query attribute
-	 * 
+	 *
 	 * @return the uniqueRows query attribute
 	 */
 	public int getUniqueRows() {
@@ -209,9 +176,9 @@ public class Query {
 
 	/**
 	 * Sets the uniqueRows query attribute.
-	 * 
+	 *
 	 * Valid values are 0 or 1.
-	 * 
+	 *
 	 * @param uniqueRows value for the uniqueRows query attribute
 	 */
 	public void setUniqueRows(int uniqueRows) {
@@ -220,7 +187,7 @@ public class Query {
 
 	/**
 	 * Returns the softwareVersion.
-	 * 
+	 *
 	 * @return the softwareVersion
 	 */
 	public String getSoftwareVersion() {
@@ -229,7 +196,7 @@ public class Query {
 
 	/**
 	 * Sets the softwareVersion.
-	 * 
+	 *
 	 * @param softwareVersion
 	 *            the new softwareVersion
 	 */
@@ -239,7 +206,7 @@ public class Query {
 
 	/**
 	 * Returns the formatter.
-	 * 
+	 *
 	 * @return the formatter
 	 */
 	public String getFormatter() {
@@ -248,7 +215,7 @@ public class Query {
 
 	/**
 	 * Sets the formatter.
-	 * 
+	 *
 	 * @param formatter the new formatter
 	 */
 	public void setFormatter(String formatter) {
@@ -271,7 +238,7 @@ public class Query {
 
 	/**
 	 * Returns the requestId.
-	 * 
+	 *
 	 * @return the requestId
 	 */
 	public String getRequestId() {
@@ -280,7 +247,7 @@ public class Query {
 
 	/**
 	 * Sets the requestId.
-	 * 
+	 *
 	 * @param requestId
 	 *            the new requestId
 	 */
@@ -290,9 +257,9 @@ public class Query {
 
 	/**
 	 * Adds a Dataset to the Query.
-	 * 
+	 *
 	 * The Dataset is added at the end of the list of Datasets.
-	 * 
+	 *
 	 * @param dataset
 	 *            the Dataset to add
 	 */
@@ -302,7 +269,7 @@ public class Query {
 
 	/**
 	 * Adds a Dataset to the Query at the specified position.
-	 * 
+	 *
 	 * @param index
 	 *            the position to add the Dataset
 	 * @param dataset
@@ -319,7 +286,7 @@ public class Query {
 
 	/**
 	 * Removes a Dataset from the Query.
-	 * 
+	 *
 	 * @param dataset
 	 *            the Dataset to remove
 	 */
@@ -342,7 +309,7 @@ public class Query {
 
 	/**
 	 * Returns the Datasets that this Query contains.
-	 * 
+	 *
 	 * @return the Datasets that this Query contains.
 	 */
 	public List<Dataset> getDatasets() {
@@ -352,7 +319,7 @@ public class Query {
 	/**
 	 * Returns a Dataset with the given datasetName. If the Query has no Dataset
 	 * with the given datasetName null is returned.
-	 * 
+	 *
 	 * @param datasetName
 	 * @return a Dataset with the given datasetName
 	 */
@@ -363,7 +330,7 @@ public class Query {
 	/**
 	 * Returns true if this Query contains a Dataset with the name
 	 * <code>datasetName</code>.
-	 * 
+	 *
 	 * @param datasetName
 	 * @return true if this Query contains a Dataset with the name
 	 *         <code>datasetName</code>.
@@ -374,7 +341,7 @@ public class Query {
 
 	/**
 	 * Adds a Link to the Query.
-	 * 
+	 *
 	 * @param link
 	 *            the Link to add
 	 */
@@ -389,7 +356,7 @@ public class Query {
 
 	/**
 	 * Removes a link from the Query
-	 * 
+	 *
 	 * @param link
 	 *            the Link to remove
 	 */
@@ -401,7 +368,7 @@ public class Query {
 
 	/**
 	 * Returns the Links that this Query contains.
-	 * 
+	 *
 	 * @return the Links that this Query contains.
 	 */
 	public Set<Link> getLinks() {
@@ -411,7 +378,7 @@ public class Query {
 	/**
 	 * Returns a Link with the given source. If the Query has no Link with the
 	 * given source null is returned.
-	 * 
+	 *
 	 * @param source
 	 *            the source of the link
 	 * @return a Link with the given source
@@ -422,7 +389,7 @@ public class Query {
 
 	/**
 	 * Returns true if this Query contains a Link with the same source.
-	 * 
+	 *
 	 * @param source
 	 *            the source of the link
 	 * @return true if this Query contains a Link with the same source.
@@ -434,7 +401,7 @@ public class Query {
 	/**
 	 * Returns a List of Links with the given target. If the Query has no Link
 	 * with the given target an empty List is returned.
-	 * 
+	 *
 	 * @param target
 	 *            the target of the link
 	 * @return a Link with the given target
@@ -452,7 +419,7 @@ public class Query {
 
 	/**
 	 * Returns all the Attributes from all the Datasets in this Query.
-	 * 
+	 *
 	 * @return all the Attributes from all the Datasets in this Query.
 	 */
 	public List<Attribute> getAttributes() {
@@ -465,7 +432,7 @@ public class Query {
 
 	/**
 	 * Returns all the Filters from all the Datasets in this Query.
-	 * 
+	 *
 	 * @return all the Filters from all the Datasets in this Query.
 	 */
 	public List<Filter> getFilters() {
@@ -480,7 +447,7 @@ public class Query {
 	 * Adds the specified query listener to receive query events. If
 	 * <code>listener</code> is null, no exception is thrown and no action is
 	 * performed.
-	 * 
+	 *
 	 * @param listener
 	 *            the query listener
 	 */
@@ -496,7 +463,7 @@ public class Query {
 	 * if <code>listener</code> was not previously added to this component. If
 	 * <code>listener</code> is null, no exception is thrown and no action is
 	 * performed.
-	 * 
+	 *
 	 * @param listener
 	 *            the query listener
 	 */

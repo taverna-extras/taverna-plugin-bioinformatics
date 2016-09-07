@@ -1,41 +1,8 @@
-/*
- * Copyright (C) 2003 The University of Manchester 
- *
- * Modifications to the initial code base are copyright of their
- * respective authors, or their employers as appropriate.  Authorship
- * of the modifications may be determined from the ChangeLog placed at
- * the end of this file.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- * USA.
- *
- ****************************************************************
- * Source code information
- * -----------------------
- * Filename           $RCSfile: Filter.java,v $
- * Revision           $Revision: 1.1 $
- * Release status     $State: Exp $
- * Last modified on   $Date: 2007/01/31 14:12:09 $
- *               by   $Author: davidwithers $
- * Created on 26-Apr-2006
- *****************************************************************/
 package org.biomart.martservice.query;
 
 /**
  * Class for creating filter elements of mart queries.
- * 
+ *
  * @author David Withers
  */
 public class Filter {
@@ -51,7 +18,7 @@ public class Filter {
 
 	/**
 	 * Constructs an instance of a <code>Filter</code> with the specified name.
-	 * 
+	 *
 	 * @param name
 	 *            the name of the <code>Filter</code>; must not be <code>null</code>
 	 */
@@ -62,7 +29,7 @@ public class Filter {
 	/**
 	 * Constructs a instance of a <code>Filter</code> with the specified name
 	 * and value.
-	 * 
+	 *
 	 * @param name
 	 *            the name of the <code>Filter</code>; must not be <code>null</code>
 	 * @param value
@@ -76,7 +43,7 @@ public class Filter {
 	 * Constructs a instance of a <code>Filter</code> with the specified name
 	 * and value, and sets a flag to indicate if this is a boolean
 	 * <code>Filter</code>.
-	 * 
+	 *
 	 * @param name
 	 *            the name of the <code>Filter</code>; must not be <code>null</code>
 	 * @param value
@@ -95,7 +62,7 @@ public class Filter {
 	/**
 	 * Constructs an instance of a <code>Filter</code> which is a copy of
 	 * another <code>Filter</code>.
-	 * 
+	 *
 	 * @param filter
 	 *            the <code>Filter</code> to copy; must not be <code>null</code>
 	 */
@@ -110,7 +77,7 @@ public class Filter {
 
 	/**
 	 * Returns the name of the Filter.
-	 * 
+	 *
 	 * @return the name of the Filter
 	 */
 	public String getName() {
@@ -119,7 +86,7 @@ public class Filter {
 
 	/**
 	 * Sets the name of the Filter.
-	 * 
+	 *
 	 * @param name
 	 *            the name of the Filter; must not be <code>null</code>
 	 */
@@ -132,11 +99,11 @@ public class Filter {
 
 	/**
 	 * Returns the qualified name of this <code>Filter</code>.
-	 * 
+	 *
 	 * The qualified name is <code>containingDatasetName.filterName</code> or
 	 * just <code>attributeName</code> if the <code>Filter</code> is not in
 	 * a <code>Dataset</code>.
-	 * 
+	 *
 	 * @return the qualified name of this <code>Filter</code>.
 	 */
 	public String getQualifiedName() {
@@ -150,7 +117,7 @@ public class Filter {
 	/**
 	 * Returns the <code>Dataset</code> containing this <code>Filter</code>
 	 * or null if it is not in a <code>Dataset</code>.
-	 * 
+	 *
 	 * @return the <code>Dataset</code> containing this <code>Filter</code>
 	 *         or null if it is not in a <code>Dataset</code>
 	 */
@@ -160,7 +127,7 @@ public class Filter {
 
 	/**
 	 * Sets the containing <code>Dataset</code>.
-	 * 
+	 *
 	 * @param dataset
 	 *            the containing <code>Dataset</code>
 	 */
@@ -170,7 +137,7 @@ public class Filter {
 
 	/**
 	 * Returns the value.
-	 * 
+	 *
 	 * @return the value.
 	 */
 	public String getValue() {
@@ -179,7 +146,7 @@ public class Filter {
 
 	/**
 	 * Sets the value.
-	 * 
+	 *
 	 * @param value
 	 *            the value to set.
 	 */
@@ -206,7 +173,7 @@ public class Filter {
 
 	/**
 	 * Returns <code>true</code> if this is a boolean filter.
-	 * 
+	 *
 	 * @return <code>true</code> if this is a boolean filter.
 	 */
 	public boolean isBoolean() {
@@ -215,7 +182,7 @@ public class Filter {
 
 	/**
 	 * Sets the booleanFilter flag.
-	 * 
+	 *
 	 * @param booleanFilter
 	 */
 	public void setBoolean(boolean booleanFilter) {
@@ -224,7 +191,7 @@ public class Filter {
 
 	/**
 	 * Returns <code>true</code> if this is a list filter.
-	 * 
+	 *
 	 * @return <code>true</code> if this is a list filter.
 	 */
 	public boolean isList() {
@@ -233,7 +200,7 @@ public class Filter {
 
 	/**
 	 * Sets the listFilter flag.
-	 * 
+	 *
 	 * @param listFilter
 	 */
 	public void setList(boolean listFilter) {

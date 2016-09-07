@@ -1,36 +1,3 @@
-/*
- * Copyright (C) 2003 The University of Manchester 
- *
- * Modifications to the initial code base are copyright of their
- * respective authors, or their employers as appropriate.  Authorship
- * of the modifications may be determined from the ChangeLog placed at
- * the end of this file.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- * USA.
- *
- ****************************************************************
- * Source code information
- * -----------------------
- * Filename           $RCSfile: MartService.java,v $errors/failure.html
- * Revision           $Revision: 1.7 $
- * Release status     $State: Exp $
- * Last modified on   $Date: 2008/08/11 12:48:29 $
- *               by   $Author: davidwithers $
- * Created on 17-Mar-2006
- *****************************************************************/
 package org.biomart.martservice;
 
 import java.io.File;
@@ -63,7 +30,7 @@ import org.xml.sax.InputSource;
 
 /**
  * A class for interacting with a BioMart web service.
- * 
+ *
  * @author David Withers
  */
 public class MartService {
@@ -102,10 +69,10 @@ public class MartService {
 	/**
 	 * Constructs an instance of a <code>MartService</code> with the specified
 	 * location.
-	 * 
+	 *
 	 * The location must be the URL of a valid BioMart MartService, e.g.
 	 * http://www.biomart.org/biomart/martservice
-	 * 
+	 *
 	 * @param location
 	 *            the URL of the MartService
 	 */
@@ -117,10 +84,10 @@ public class MartService {
 	 * Returns a <code>MartService</code> for the specified location. If a
 	 * <code>MartService</code> does not exist for the location a new one is
 	 * constructed.
-	 * 
+	 *
 	 * The location must be the URL of a valid BioMart MartService, e.g.
 	 * http://www.biomart.org/biomart/martservice
-	 * 
+	 *
 	 * @param location
 	 *            the URL of the MartService
 	 */
@@ -133,7 +100,7 @@ public class MartService {
 
 	/**
 	 * Returns the requestId.
-	 * 
+	 *
 	 * @return the requestId
 	 */
 	public String getRequestId() {
@@ -142,7 +109,7 @@ public class MartService {
 
 	/**
 	 * Sets the requestId.
-	 * 
+	 *
 	 * @param requestId
 	 *            the new requestId
 	 */
@@ -152,7 +119,7 @@ public class MartService {
 
 	/**
 	 * Returns the cacheDirectory.
-	 * 
+	 *
 	 * @return the cacheDirectory
 	 */
 	public File getCacheDirectory() {
@@ -161,7 +128,7 @@ public class MartService {
 
 	/**
 	 * Sets the cacheDirectory.
-	 * 
+	 *
 	 * @param cacheDirectory
 	 *            the new cacheDirectory
 	 */
@@ -171,7 +138,7 @@ public class MartService {
 
 	/**
 	 * Returns the URL of the MartService.
-	 * 
+	 *
 	 * @return the URL of the MartService
 	 */
 	public String getLocation() {
@@ -191,7 +158,7 @@ public class MartService {
 
 	/**
 	 * Returns the MartRegistry for this MartService.
-	 * 
+	 *
 	 * @return the MartRegistry for this MartService
 	 * @throws MartServiceException
 	 *             if the MartService returns an error or is unavailable
@@ -214,7 +181,7 @@ public class MartService {
 
 	/**
 	 * Returns all the datasets available from this MartService.
-	 * 
+	 *
 	 * @return all the datasets available from this MartService.
 	 * @throws MartServiceException
 	 *             if the MartService returns an error or is unavailable
@@ -230,7 +197,7 @@ public class MartService {
 
 	/**
 	 * Returns the datasets belonging to the virtualSchema.
-	 * 
+	 *
 	 * @param virtualSchema
 	 *            the virtual schema to include datasets from.
 	 * @return the datasets belonging to the virtualSchema.
@@ -252,7 +219,7 @@ public class MartService {
 
 	/**
 	 * Returns the datasets specified by martURLLocation.
-	 * 
+	 *
 	 * @param martURLLocation
 	 *            where to find the datasets.
 	 * @return the datasets specified by martURLLocation.
@@ -271,7 +238,7 @@ public class MartService {
 
 	/**
 	 * Returns the dataset specified by a virtualSchema and a dataset name.
-	 * 
+	 *
 	 * @param virtualSchema
 	 *            the virtualSchema containing the dataset
 	 * @param datasetName
@@ -295,7 +262,7 @@ public class MartService {
 
 	/**
 	 * Returns the configuration for a dataset.
-	 * 
+	 *
 	 * @param dataset
 	 *            the dataset to get the configuration for
 	 * @return the configuration for a dataset
@@ -398,7 +365,7 @@ public class MartService {
 
 	/**
 	 * Returns the importables for a dataset.
-	 * 
+	 *
 	 * @param dataset
 	 * @return the importables for a dataset
 	 * @throws MartServiceException
@@ -420,7 +387,7 @@ public class MartService {
 
 	/**
 	 * Returns the exportables for a dataset.
-	 * 
+	 *
 	 * @param dataset
 	 * @return the exportables for a dataset
 	 * @throws MartServiceException
@@ -443,10 +410,10 @@ public class MartService {
 	/**
 	 * Sends a <code>Query</code> to the MartService and returns the results
 	 * of executing the query.
-	 * 
+	 *
 	 * The results are returned as an array of lists; one list for each
 	 * attribute specified in the query.
-	 * 
+	 *
 	 * @param query
 	 *            the query to execute
 	 * @return the results of executing the query
@@ -462,12 +429,12 @@ public class MartService {
 	 * Sends a <code>Query</code> to the MartService and writes the results to
 	 * the <code>ResultReceiver</code> as each line of the result stream is
 	 * read.
-	 * 
+	 *
 	 * @param query
 	 * @param resultReceiver
 	 * @throws MartServiceException
 	 *             if the MartService returns an error or is unavailable
-	 * @throws ResultReceiverException 
+	 * @throws ResultReceiverException
 	 *             if the ResultReceiver cannot receive the result
 	 * @see ResultReceiver
 	 */
@@ -478,7 +445,7 @@ public class MartService {
 
 	/**
 	 * Returns a list of datasets that can be linked to the specified dataset.
-	 * 
+	 *
 	 * @param martDataset
 	 * @return datasets that can be linked to the specified dataset
 	 * @throws MartServiceException
@@ -520,7 +487,7 @@ public class MartService {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
@@ -538,7 +505,7 @@ public class MartService {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {

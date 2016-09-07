@@ -1,36 +1,3 @@
-/*
- * Copyright (C) 2003 The University of Manchester 
- *
- * Modifications to the initial code base are copyright of their
- * respective authors, or their employers as appropriate.  Authorship
- * of the modifications may be determined from the ChangeLog placed at
- * the end of this file.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- * USA.
- *
- ****************************************************************
- * Source code information
- * -----------------------
- * Filename           $RCSfile: QueryComponent.java,v $
- * Revision           $Revision: 1.2 $
- * Release status     $State: Exp $
- * Last modified on   $Date: 2007/12/13 11:38:56 $
- *               by   $Author: davidwithers $
- * Created on 03-Apr-2006
- *****************************************************************/
 package org.biomart.martservice.config.ui;
 
 import java.awt.event.ItemEvent;
@@ -47,7 +14,7 @@ import org.ensembl.mart.lib.config.BaseNamedConfigurationObject;
 
 /**
  * Abstract class for creating query configuration UI components.
- * 
+ *
  * @author David Withers
  */
 public abstract class QueryComponent extends JPanel {
@@ -75,7 +42,7 @@ public abstract class QueryComponent extends JPanel {
 
 	/**
 	 * Returns the dataset.
-	 * 
+	 *
 	 * @return the dataset.
 	 */
 	public MartDataset getDataset() {
@@ -84,7 +51,7 @@ public abstract class QueryComponent extends JPanel {
 
 	/**
 	 * Sets the dataset.
-	 * 
+	 *
 	 * @param dataset
 	 *            the dataset to set.
 	 */
@@ -112,7 +79,7 @@ public abstract class QueryComponent extends JPanel {
 
 	/**
 	 * Returns the name.
-	 * 
+	 *
 	 * @return the name.
 	 */
 	public String getName() {
@@ -141,7 +108,7 @@ public abstract class QueryComponent extends JPanel {
 
 	/**
 	 * Returns the value.
-	 * 
+	 *
 	 * @return the value.
 	 */
 	public String getValue() {
@@ -150,7 +117,7 @@ public abstract class QueryComponent extends JPanel {
 
 	/**
 	 * Sets the value.
-	 * 
+	 *
 	 * @param value
 	 *            the value to set.
 	 */
@@ -160,7 +127,7 @@ public abstract class QueryComponent extends JPanel {
 
 	/**
 	 * Returns the configObject.
-	 * 
+	 *
 	 * @return the configObject
 	 */
 	public BaseNamedConfigurationObject getConfigObject() {
@@ -169,7 +136,7 @@ public abstract class QueryComponent extends JPanel {
 
 	/**
 	 * Sets the configObject.
-	 * 
+	 *
 	 * @param configObject
 	 *            the configObject to set.
 	 */
@@ -179,7 +146,7 @@ public abstract class QueryComponent extends JPanel {
 
 	/**
 	 * Sets the selected state of this component.
-	 * 
+	 *
 	 * @param selected
 	 *            <code>true</code> if this component is selected,
 	 *            <code>false</code> otherwise
@@ -192,11 +159,11 @@ public abstract class QueryComponent extends JPanel {
 
 	/**
 	 * Sets the button used to select/deselect this QueryComponent.
-	 * 
+	 *
 	 * This function adds an ItemListener to the button and fires the
 	 * appropriate QueryComponentEvent when the button is selected or
 	 * deselected.
-	 * 
+	 *
 	 * @param button
 	 *            the button used to select/deselect this QueryComponent.
 	 */
@@ -229,7 +196,7 @@ public abstract class QueryComponent extends JPanel {
 	 * Adds the specified query component listener to receive query component
 	 * events. If <code>listener</code> is null, no exception is thrown and no
 	 * action is performed.
-	 * 
+	 *
 	 * @param listener
 	 *            the query component listener
 	 */
@@ -243,7 +210,7 @@ public abstract class QueryComponent extends JPanel {
 	 * does it throw an exception, if <code>listener</code> was not previously
 	 * added to this component. If <code>listener</code> is null, no exception
 	 * is thrown and no action is performed.
-	 * 
+	 *
 	 * @param listener
 	 *            the query component listener
 	 */
@@ -253,7 +220,7 @@ public abstract class QueryComponent extends JPanel {
 
 	/**
 	 * Fires an attribute added event.
-	 * 
+	 *
 	 * @param event the event to be fired
 	 */
 	protected void fireAttributeAdded(QueryComponentEvent event) {
@@ -264,7 +231,7 @@ public abstract class QueryComponent extends JPanel {
 
 	/**
 	 * Fires an attribute removed event.
-	 * 
+	 *
 	 * @param event the event to be fired
 	 */
 	protected void fireAttributeRemoved(QueryComponentEvent event) {
@@ -275,7 +242,7 @@ public abstract class QueryComponent extends JPanel {
 
 	/**
 	 * Fires an filter added event.
-	 * 
+	 *
 	 * @param event the event to be fired
 	 */
 	protected void fireFilterAdded(QueryComponentEvent event) {
@@ -286,7 +253,7 @@ public abstract class QueryComponent extends JPanel {
 
 	/**
 	 * Fires an filter removed event.
-	 * 
+	 *
 	 * @param event the event to be fired
 	 */
 	protected void fireFilterRemoved(QueryComponentEvent event) {
@@ -297,7 +264,7 @@ public abstract class QueryComponent extends JPanel {
 
 	/**
 	 * Fires an filter changed event.
-	 * 
+	 *
 	 * @param event the event to be fired
 	 */
 	protected void fireFilterChanged(QueryComponentEvent event) {
@@ -308,7 +275,7 @@ public abstract class QueryComponent extends JPanel {
 
 	/**
 	 * Fires an link added event.
-	 * 
+	 *
 	 * @param event the event to be fired
 	 */
 	protected void fireLinkAdded(QueryComponentEvent event) {
@@ -319,7 +286,7 @@ public abstract class QueryComponent extends JPanel {
 
 	/**
 	 * Fires an link removed event.
-	 * 
+	 *
 	 * @param event the event to be fired
 	 */
 	protected void fireLinkRemoved(QueryComponentEvent event) {
@@ -330,7 +297,7 @@ public abstract class QueryComponent extends JPanel {
 
 	/**
 	 * Fires an link changed event.
-	 * 
+	 *
 	 * @param event the event to be fired
 	 */
 	protected void fireLinkChanged(QueryComponentEvent event) {

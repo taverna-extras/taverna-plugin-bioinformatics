@@ -1,36 +1,3 @@
-/*
- * Copyright (C) 2003 The University of Manchester 
- *
- * Modifications to the initial code base are copyright of their
- * respective authors, or their employers as appropriate.  Authorship
- * of the modifications may be determined from the ChangeLog placed at
- * the end of this file.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- * USA.
- *
- ****************************************************************
- * Source code information
- * -----------------------
- * Filename           $RCSfile: MartURLLocation.java,v $
- * Revision           $Revision: 1.2 $
- * Release status     $State: Exp $
- * Last modified on   $Date: 2007/10/04 14:15:59 $
- *               by   $Author: davidwithers $
- * Created on 17-Mar-2006
- *****************************************************************/
 package org.biomart.martservice;
 
 import org.ensembl.mart.lib.config.MartLocation;
@@ -38,7 +5,7 @@ import org.ensembl.mart.lib.config.MartLocation;
 /**
  * The MartURLLocation contained by the MartRegistry returned by a BioMart web
  * service.
- * 
+ *
  * @author David Withers
  */
 public class MartURLLocation implements MartLocation {
@@ -90,7 +57,7 @@ public class MartURLLocation implements MartLocation {
 
 	/**
 	 * Returns true if the default flag is set.
-	 * 
+	 *
 	 * @return true if the default flag is set
 	 */
 	public boolean isDefault() {
@@ -99,7 +66,7 @@ public class MartURLLocation implements MartLocation {
 
 	/**
 	 * Sets the default flag.
-	 * 
+	 *
 	 * @param defaultValue
 	 *            the value of the default flag
 	 */
@@ -109,7 +76,7 @@ public class MartURLLocation implements MartLocation {
 
 	/**
 	 * Returns the displayName.
-	 * 
+	 *
 	 * @return the displayName.
 	 */
 	public String getDisplayName() {
@@ -118,7 +85,7 @@ public class MartURLLocation implements MartLocation {
 
 	/**
 	 * Sets the displayName.
-	 * 
+	 *
 	 * @param displayName
 	 *            the displayName to set.
 	 */
@@ -128,7 +95,7 @@ public class MartURLLocation implements MartLocation {
 
 	/**
 	 * Returns the host.
-	 * 
+	 *
 	 * @return the host.
 	 */
 	public String getHost() {
@@ -137,7 +104,7 @@ public class MartURLLocation implements MartLocation {
 
 	/**
 	 * Sets the host.
-	 * 
+	 *
 	 * @param host
 	 *            the host to set.
 	 */
@@ -183,7 +150,7 @@ public class MartURLLocation implements MartLocation {
 
 	/**
 	 * Returns the name
-	 * 
+	 *
 	 * @return the name.
 	 */
 	public String getName() {
@@ -192,7 +159,7 @@ public class MartURLLocation implements MartLocation {
 
 	/**
 	 * Sets the name.
-	 * 
+	 *
 	 * @param name
 	 *            the name to set.
 	 */
@@ -220,7 +187,7 @@ public class MartURLLocation implements MartLocation {
 
 	/**
 	 * Returns the port.
-	 * 
+	 *
 	 * @return the port.
 	 */
 	public int getPort() {
@@ -229,7 +196,7 @@ public class MartURLLocation implements MartLocation {
 
 	/**
 	 * Sets the port.
-	 * 
+	 *
 	 * @param port
 	 *            the port to set.
 	 */
@@ -239,7 +206,7 @@ public class MartURLLocation implements MartLocation {
 
 	/**
 	 * Returns the serverVirtualSchema.
-	 * 
+	 *
 	 * @return the serverVirtualSchema.
 	 */
 	public String getServerVirtualSchema() {
@@ -248,7 +215,7 @@ public class MartURLLocation implements MartLocation {
 
 	/**
 	 * Sets the serverVirtualSchema.
-	 * 
+	 *
 	 * @param serverVirtualSchema
 	 *            the serverVirtualSchema to set.
 	 */
@@ -258,7 +225,7 @@ public class MartURLLocation implements MartLocation {
 
 	/**
 	 * Returns the virtualSchema.
-	 * 
+	 *
 	 * @return the virtualSchema.
 	 */
 	public String getVirtualSchema() {
@@ -267,7 +234,7 @@ public class MartURLLocation implements MartLocation {
 
 	/**
 	 * Sets the virtualSchema.
-	 * 
+	 *
 	 * @param virtualSchema
 	 *            the virtualSchema to set.
 	 */
@@ -277,7 +244,7 @@ public class MartURLLocation implements MartLocation {
 
 	/**
 	 * Returns true if the location is visible.
-	 * 
+	 *
 	 * @return Returns the visible.
 	 */
 	public boolean isVisible() {
@@ -294,7 +261,7 @@ public class MartURLLocation implements MartLocation {
 
 	/**
 	 * Returns true if this location is redirected.
-	 * 
+	 *
 	 * @return the redirect
 	 */
 	public boolean isRedirect() {
@@ -310,7 +277,7 @@ public class MartURLLocation implements MartLocation {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.ensembl.mart.lib.config.MartLocation#getType()
 	 */
 	public String getType() {
@@ -319,7 +286,7 @@ public class MartURLLocation implements MartLocation {
 
 	/**
 	 * Returns the display name.
-	 * 
+	 *
 	 * @return the display name
 	 */
 	public String toString() {

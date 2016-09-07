@@ -1,36 +1,3 @@
-/*
- * Copyright (C) 2003 The University of Manchester 
- *
- * Modifications to the initial code base are copyright of their
- * respective authors, or their employers as appropriate.  Authorship
- * of the modifications may be determined from the ChangeLog placed at
- * the end of this file.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- * USA.
- *
- ****************************************************************
- * Source code information
- * -----------------------
- * Filename           $RCSfile: QueryConfigUtils.java,v $
- * Revision           $Revision: 1.3 $
- * Release status     $State: Exp $
- * Last modified on   $Date: 2007/12/13 11:38:57 $
- *               by   $Author: davidwithers $
- * Created on 30-Mar-2006
- *****************************************************************/
 package org.biomart.martservice.config;
 
 import java.awt.Component;
@@ -59,14 +26,14 @@ import org.ensembl.mart.lib.config.Option;
 
 /**
  * Utility class for configuration objects.
- * 
+ *
  * @author David Withers
  */
 public abstract class QueryConfigUtils {
 	public static final String LINE_END = System.getProperty("line.separator");
 
 	private static int DISPLAY_WIDTH = 35;
-	
+
 	public static String splitSentence(String sentence) {
 		return splitSentence(sentence, DISPLAY_WIDTH);
 	}
@@ -97,7 +64,7 @@ public abstract class QueryConfigUtils {
 
 	/**
 	 * Returns name truncated to DISPLAY_WIDTH.
-	 * 
+	 *
 	 * @param name
 	 * @return
 	 */
@@ -111,17 +78,17 @@ public abstract class QueryConfigUtils {
 
 	public static List<String> getOutputFormats(AttributePage attributePage) {
 		List<String> outputFormats = new ArrayList<String>();
-		
+
 		String[] formats = attributePage.getOutFormats().split(",");
 		for (int i = 0; i < formats.length; i++) {
 			outputFormats.add(formats[i]);
 		}
 		return outputFormats;
 	}
-	
+
 	/**
 	 * Returns true if filterDescription has no options.
-	 * 
+	 *
 	 * @param filterDescription
 	 * @return true if filterDescription has no options
 	 */
@@ -132,7 +99,7 @@ public abstract class QueryConfigUtils {
 	/**
 	 * Returns true if filterDescription has options and at least one option
 	 * also has options.
-	 * 
+	 *
 	 * @param filterDescription
 	 * @return true if filterDescription has options and at least one option
 	 *         also has options
@@ -150,7 +117,7 @@ public abstract class QueryConfigUtils {
 	/**
 	 * Returns true if filterDescription has options and the first option has a
 	 * type equal to "boolean".
-	 * 
+	 *
 	 * @param filterDescription
 	 * @return true if filterDescription has options and the first option has a
 	 *         type equal to "boolean"
@@ -168,7 +135,7 @@ public abstract class QueryConfigUtils {
 	/**
 	 * Returns true if filterDescription has options and the first option has a
 	 * value equal to null.
-	 * 
+	 *
 	 * @param filterDescription
 	 * @return true if filterDescription has options and the first option has a
 	 *         value equal to null
@@ -249,7 +216,7 @@ public abstract class QueryConfigUtils {
 	/**
 	 * Returns the dataset referenced by a configuration object or null if the
 	 * configuration object does not reference a dataset.
-	 * 
+	 *
 	 * @param martService
 	 *            the MartService to fetch the referenced dataset from
 	 * @param referencedFromDataset
@@ -286,7 +253,7 @@ public abstract class QueryConfigUtils {
 
 	/**
 	 * Returns the filter description referenced by the filter description.
-	 * 
+	 *
 	 * @param martService
 	 *            the MartService to fetch the referenced filter description
 	 *            from
@@ -322,7 +289,7 @@ public abstract class QueryConfigUtils {
 
 	/**
 	 * Returns the filter description referenced by the attribute description.
-	 * 
+	 *
 	 * @param martService
 	 *            the MartService to fetch the referenced filter description
 	 *            from
@@ -422,7 +389,7 @@ public abstract class QueryConfigUtils {
 	/**
 	 * Returns true if the internal name of the configuration object contains a
 	 * '.' character.
-	 * 
+	 *
 	 * @param bnco
 	 *            the configuration object
 	 * @return true if the internal name of the configuration object contains a
@@ -431,7 +398,7 @@ public abstract class QueryConfigUtils {
 	public static boolean isReference(BaseNamedConfigurationObject bnco,
 			String softwareVersion) {
 		if ("0.5".equals(softwareVersion)) {
-			return bnco.getAttribute("pointerDataset") != null 
+			return bnco.getAttribute("pointerDataset") != null
 			&& (bnco.getAttribute("pointerAttribute") != null || bnco.getAttribute("pointerFilter") != null);
 		} else {
 			return bnco.getInternalName().indexOf(".") != -1;
@@ -441,7 +408,7 @@ public abstract class QueryConfigUtils {
 	/**
 	 * Returns true if the internal name of the AttributeDescription has the
 	 * format "[datasetName].[attributeName]".
-	 * 
+	 *
 	 * @param attributeDescription
 	 * @return true if the internal name of the AttributeDescription has the
 	 *         format "[datasetName].[attributeName]"
@@ -458,7 +425,7 @@ public abstract class QueryConfigUtils {
 	/**
 	 * Returns true if the internal name of the AttributeDescription has the
 	 * format "[datasetName].filter.[filterName]".
-	 * 
+	 *
 	 * @param attributeDescription
 	 * @return true if the internal name of the AttributeDescription has the
 	 *         format "[datasetName].filter.[filterName]"
@@ -475,7 +442,7 @@ public abstract class QueryConfigUtils {
 //	/**
 //	 * Returns the qualified name of the AttributeDescription in the format
 //	 * "[datasetName].[attributeName]".
-//	 * 
+//	 *
 //	 * @param dataset
 //	 * @param attributeDescription
 //	 * @return true if the qualified name of the AttributeDescription in the
@@ -543,16 +510,16 @@ public abstract class QueryConfigUtils {
 	 * Converts a List of objects to a comma separated string of the objects'
 	 * string representations in the order given by the List's iterator. For
 	 * example:
-	 * 
+	 *
 	 * <blockquote>
-	 * 
+	 *
 	 * <pre>
 	 *          List list = Arrays.toList(new String[] {&quot;one&quot;, &quot;two&quot;, &quot;three&quot;};
 	 *          System.out.println(listToCsv(list));
 	 * </pre>
-	 * 
+	 *
 	 * </blockquote> would return the string "one,two,three".
-	 * 
+	 *
 	 * @param list
 	 * @return a List of objects to a comma separated string of the object's
 	 *         string representations
@@ -571,7 +538,7 @@ public abstract class QueryConfigUtils {
 	/**
 	 * Returns true iff the 'display' or 'hidden' value of the configuration
 	 * object is not "true".
-	 * 
+	 *
 	 * @param bnco
 	 *            the configuration object
 	 * @return true iff the 'display' or 'hidden' value of configuration object

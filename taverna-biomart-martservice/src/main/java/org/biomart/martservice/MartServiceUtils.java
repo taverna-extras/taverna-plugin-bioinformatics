@@ -1,36 +1,3 @@
-/*
- * Copyright (C) 2003 The University of Manchester 
- *
- * Modifications to the initial code base are copyright of their
- * respective authors, or their employers as appropriate.  Authorship
- * of the modifications may be determined from the ChangeLog placed at
- * the end of this file.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- * USA.
- *
- ****************************************************************
- * Source code information
- * -----------------------
- * Filename           $RCSfile: MartServiceUtils.java,v $
- * Revision           $Revision: 1.12 $
- * Release status     $State: Exp $
- * Last modified on   $Date: 2008/07/31 15:06:49 $
- *               by   $Author: davidwithers $
- * Created on 17-Mar-2006
- *****************************************************************/
 package org.biomart.martservice;
 
 import java.io.BufferedReader;
@@ -73,7 +40,7 @@ import org.xml.sax.InputSource;
 
 /**
  * Utility class for interacting with a BioMart web service.
- * 
+ *
  * @author David Withers
  */
 public class MartServiceUtils {
@@ -110,7 +77,7 @@ public class MartServiceUtils {
 	/**
 	 * Sends a registry request to the Biomart webservice and constructs a
 	 * MartRegistry from the XML returned by the webservice.
-	 * 
+	 *
 	 * @param martServiceLocation
 	 *            the URL of the Biomart webservice
 	 * @return a MartRegistry
@@ -197,7 +164,7 @@ public class MartServiceUtils {
 	 * Sends a datasets request to the Biomart webservice and constructs an
 	 * array of MartDataset from the tab separated rows of data returned by the
 	 * webservice.
-	 * 
+	 *
 	 * @param martServiceLocation
 	 *            the URL of the Biomart webservice
 	 * @param mart
@@ -245,7 +212,7 @@ public class MartServiceUtils {
 	/**
 	 * Sends a configuration request to the Biomart webservice and constructs a
 	 * DatasetConfig from the XML returned by the webservice.
-	 * 
+	 *
 	 * @param martServiceLocation
 	 *            the URL of the Biomart webservice
 	 * @param dataset
@@ -320,7 +287,7 @@ public class MartServiceUtils {
 	 * Sends a query to the Biomart webservice and constructs an array of List
 	 * of String results from the tab separated rows of data returned by the
 	 * webservice.
-	 * 
+	 *
 	 * @param martServiceLocation
 	 *            the URL of the Biomart webservice
 	 * @param query
@@ -435,7 +402,7 @@ public class MartServiceUtils {
 
 		}
 	}
-	
+
 //	private static String getLocation(MartURLLocation martUrlLocation) {
 //		StringBuffer location = new StringBuffer("http://");
 //		location.append(martUrlLocation.getHost());
@@ -443,7 +410,7 @@ public class MartServiceUtils {
 //		location.append(martUrlLocation.getPath());
 //		return location.toString();
 //	}
-	
+
 	private static int getAttributeCount(List<Attribute> attributeList) {
 		int result = 0;
 		for (Attribute attribute : attributeList) {
@@ -526,10 +493,10 @@ public class MartServiceUtils {
 		} else if ("XLS".equals(formatter)) {
 			mimeType = "'application/excel'";
 		}
-		
+
 		return mimeType;
 	}
-	
+
 	private static List<String>[] tabSeparatedReaderToResults(Reader reader,
 			int resultsCount) throws IOException {
 		List<String>[] results = new List[resultsCount];
@@ -550,7 +517,7 @@ public class MartServiceUtils {
 
 	private static Object[] readResult(InputStream inputStream, String formatter) throws IOException {
 		Object[] result = new Object[1];
-		
+
 		if (getMimeTypeForFormatter(formatter).contains("application/")) {
 			result[0] = IOUtils.toByteArray(inputStream);
 		} else {
@@ -558,7 +525,7 @@ public class MartServiceUtils {
 		}
 		return result;
 	}
-	
+
 	private static MartDataset[] tabSeparatedReaderToDatasets(Reader reader,
 			MartURLLocation martURLLocation) throws IOException {
 		List<MartDataset> datasetList = new ArrayList<MartDataset>();
@@ -606,7 +573,7 @@ public class MartServiceUtils {
 
 	/**
 	 * Creates an XML string from a query
-	 * 
+	 *
 	 * @param query
 	 * @return an XML string
 	 */
@@ -644,7 +611,7 @@ public class MartServiceUtils {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param client
 	 */
 	public static void setProxy(HttpClient client) {

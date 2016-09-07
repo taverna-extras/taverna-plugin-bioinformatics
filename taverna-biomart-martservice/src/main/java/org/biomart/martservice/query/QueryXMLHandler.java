@@ -1,36 +1,3 @@
-/*
- * Copyright (C) 2003 The University of Manchester 
- *
- * Modifications to the initial code base are copyright of their
- * respective authors, or their employers as appropriate.  Authorship
- * of the modifications may be determined from the ChangeLog placed at
- * the end of this file.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- * USA.
- *
- ****************************************************************
- * Source code information
- * -----------------------
- * Filename           $RCSfile: QueryXMLHandler.java,v $
- * Revision           $Revision: 1.6 $
- * Release status     $State: Exp $
- * Last modified on   $Date: 2008/03/04 16:45:18 $
- *               by   $Author: davidwithers $
- * Created on 28-Apr-2006
- *****************************************************************/
 package org.biomart.martservice.query;
 
 import java.util.List;
@@ -40,7 +7,7 @@ import org.jdom.Namespace;
 
 /**
  * Utility class for serializing <code>Query</code> classes to XML.
- * 
+ *
  * @author David Withers
  */
 public class QueryXMLHandler {
@@ -63,18 +30,18 @@ public class QueryXMLHandler {
 	public static final String UNIQUE_ROWS_ATTRIBUTE = "uniqueRows";
 
 	public static final String VERSION_ATTRIBUTE = "softwareVersion";
-	
+
 	public static final String FORMATTER_ATTRIBUTE = "formatter";
-	
+
 	public static final String HEADER_ATTRIBUTE = "header";
-	
+
 	public static final String REQUEST_ID_ATTRIBUTE = "requestId";
 
 	public static final String SCHEMA_ATTRIBUTE = "virtualSchemaName";
 
 	/**
 	 * Converts a <code>Query</code> to an XML element.
-	 * 
+	 *
 	 * @param query
 	 *            the <code>Query</code> to serialize
 	 * @param namespace
@@ -94,16 +61,16 @@ public class QueryXMLHandler {
 		queryElement.setAttribute(UNIQUE_ROWS_ATTRIBUTE, String.valueOf(query.getUniqueRows()));
 		String softwareVersion = query.getSoftwareVersion();
 		if (softwareVersion != null) {
-			queryElement.setAttribute(VERSION_ATTRIBUTE, softwareVersion);			
+			queryElement.setAttribute(VERSION_ATTRIBUTE, softwareVersion);
 		}
 		String formatter = query.getFormatter();
 		if (formatter != null) {
-			queryElement.setAttribute(FORMATTER_ATTRIBUTE, formatter);			
-			queryElement.setAttribute(HEADER_ATTRIBUTE, "1");			
+			queryElement.setAttribute(FORMATTER_ATTRIBUTE, formatter);
+			queryElement.setAttribute(HEADER_ATTRIBUTE, "1");
 		}
 		String requestId = query.getRequestId();
 		if (requestId != null) {
-			queryElement.setAttribute(REQUEST_ID_ATTRIBUTE, requestId);			
+			queryElement.setAttribute(REQUEST_ID_ATTRIBUTE, requestId);
 		}
 		for (Dataset dataset : query.getDatasets()) {
 			queryElement.addContent(datasetToElement(dataset, namespace));
@@ -117,7 +84,7 @@ public class QueryXMLHandler {
 
 	/**
 	 * Converts a <code>Dataset</code> to an XML element.
-	 * 
+	 *
 	 * @param dataset
 	 *            the <code>Dataset</code> to serialize
 	 * @param namespace
@@ -142,7 +109,7 @@ public class QueryXMLHandler {
 
 	/**
 	 * Converts a <code>Link</code> to an XML element.
-	 * 
+	 *
 	 * @param link
 	 *            the <code>Link</code> to serialize
 	 * @param namespace
@@ -160,7 +127,7 @@ public class QueryXMLHandler {
 
 	/**
 	 * Converts an <code>Attribute</code> to an XML element.
-	 * 
+	 *
 	 * @param attribute
 	 *            the <code>Attribute</code> to serialize
 	 * @param namespace
@@ -181,7 +148,7 @@ public class QueryXMLHandler {
 
 	/**
 	 * Converts a <code>Filter</code> to an XML element.
-	 * 
+	 *
 	 * @param filter
 	 *            the <code>Filter</code> to serialize
 	 * @param namespace
@@ -214,7 +181,7 @@ public class QueryXMLHandler {
 
 	/**
 	 * Creates a <code>Query</code> from an XML element.
-	 * 
+	 *
 	 * @param element
 	 *            the <code>Element</code> to deserialize
 	 * @param namespace
@@ -247,7 +214,7 @@ public class QueryXMLHandler {
 
 	/**
 	 * Creates a <code>Dataset</code> from an XML element.
-	 * 
+	 *
 	 * @param element
 	 *            the <code>Element</code> to deserialize
 	 * @param namespace
@@ -272,7 +239,7 @@ public class QueryXMLHandler {
 
 	/**
 	 * Creates a <code>Filter</code> from an XML element.
-	 * 
+	 *
 	 * @param element
 	 *            the <code>Element</code> to deserialize
 	 * @return a deserialized <code>Filter</code>
@@ -300,7 +267,7 @@ public class QueryXMLHandler {
 
 	/**
 	 * Creates an <code>Attribute</code> from an XML element.
-	 * 
+	 *
 	 * @param element
 	 *            the <code>Element</code> to deserialize
 	 * @return a deserialized <code>Attribute</code>
@@ -317,7 +284,7 @@ public class QueryXMLHandler {
 
 	/**
 	 * Creates an <code>Link</code> from an XML element.
-	 * 
+	 *
 	 * @param element
 	 *            the <code>Element</code> to deserialize
 	 * @return a deserialized <code>Link</code>
