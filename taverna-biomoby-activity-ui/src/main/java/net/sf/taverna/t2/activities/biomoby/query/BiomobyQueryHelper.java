@@ -1,7 +1,3 @@
-/*******************************************************************************
- * This file is a component of the Taverna project, and is licensed  under the
- *  GNU LGPL. Copyright Edward Kawas, The BioMoby Project
- ******************************************************************************/
 package net.sf.taverna.t2.activities.biomoby.query;
 
 import java.io.File;
@@ -50,7 +46,7 @@ public class BiomobyQueryHelper {
 	private String remoteServiceRdfUrl = null;
 
 	private static final String CACHE_NAME = "moby-cache";
-	
+
 	private ApplicationRuntime applicationRuntime = ApplicationRuntime
 			.getInstance();
 
@@ -80,7 +76,7 @@ public class BiomobyQueryHelper {
 					this.registryNamespace, cacheLoc + CACHE_NAME);
 
 		} catch (MobyException e) {
-			// 
+			//
 			log.warn("There was a problem in initializing the caching agent, therefor caching is disabled.",
 							e);
 		}
@@ -96,7 +92,7 @@ public class BiomobyQueryHelper {
 	}
 
 		/**
-	 * 
+	 *
 	 * @return an ArrayList of BiomobyActivityItem
 	 * @throws MobyException
 	 *             if something goes wrong
@@ -221,19 +217,19 @@ public class BiomobyQueryHelper {
 		callBack.partialResults(findDatatypeDescriptions());
 		callBack.finished();
 	}
-	
+
 	public List<BiomobyDatatypeDescription> findDatatypeDescriptions() {
 		try {
 			central.updateCache(CentralDigestCachedImpl.CACHE_PART_DATATYPES);
 		} catch (MobyException ex) {
-			
+
 			return new ArrayList<BiomobyDatatypeDescription>();
 		}
 		MobyDataType[] datatypes;
 		try {
 			datatypes = central.getDataTypes();
 		} catch (MobyException ex) {
-			
+
 			return new ArrayList<BiomobyDatatypeDescription>();
 		}
 		List<BiomobyDatatypeDescription> datatypeDescriptions = new ArrayList<BiomobyDatatypeDescription>();
@@ -251,7 +247,7 @@ public class BiomobyQueryHelper {
 				try {
 					dataDesc.setLsid(URI.create(lsid));
 				} catch (Exception e) {
-					
+
 				}
 			}
 			ArrayList<String> lineage = new ArrayList<String>();
