@@ -20,10 +20,6 @@ package net.sf.taverna.t2.activities.biomoby;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-/*******************************************************************************
- * This file is a component of the Taverna project, and is licensed  under the
- *  GNU LGPL. Copyright Edward Kawas, The BioMoby Project
- ******************************************************************************/
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;

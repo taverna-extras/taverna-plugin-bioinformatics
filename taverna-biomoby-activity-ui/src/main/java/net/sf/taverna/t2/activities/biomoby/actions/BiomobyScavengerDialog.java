@@ -1,12 +1,3 @@
-/*******************************************************************************
- * This file is a component of the Taverna project, and is licensed  under the
- *  GNU LGPL. Copyright Edward Kawas, The BioMoby Project
- ******************************************************************************/
-/*
- * This file is a component of the Taverna project,
- * and is licensed under the GNU LGPL.
- * Copyright Edward Kawas, The BioMoby Project
- */
 package net.sf.taverna.t2.activities.biomoby.actions;
 
 import java.awt.GridLayout;
@@ -29,7 +20,7 @@ import net.sf.taverna.t2.lang.ui.ShadedLabel;
 /**
  * a dialog for helping create scavengers for BioMoby registries that are not
  * the default registry.
- * 
+ *
  */
 public class BiomobyScavengerDialog extends JPanel {
 
@@ -42,25 +33,25 @@ public class BiomobyScavengerDialog extends JPanel {
 
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 */
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 */
 	public BiomobyScavengerDialog() {
 		super();
 		GridLayout layout = new GridLayout(5, 2);
 		setLayout(layout);
-		
+
 		registryEndpoint.setEnabled(false);
-		registryURI.setEnabled(false);		
-		
+		registryURI.setEnabled(false);
+
 		// a combo box showing known registries
 		final Registries regs = RegistriesList.getInstance();
 		List<String> choices = new ArrayList<String>(Arrays.asList(regs.list()));
 		choices.add(CUSTOM);
-		
+
 		JComboBox regList = new JComboBox(choices.toArray());
 		regList.setToolTipText("A selection will fill text fields below");
 		regList.setSelectedItem(Registries.DEFAULT_REGISTRY_SYNONYM);
@@ -75,7 +66,7 @@ public class BiomobyScavengerDialog extends JPanel {
 					return;
 				} else {
 					registryEndpoint.setEnabled(false);
-					registryURI.setEnabled(false);					
+					registryURI.setEnabled(false);
 				}
  				org.biomoby.registry.meta.Registry theReg = null;
 				try {
@@ -119,7 +110,7 @@ public class BiomobyScavengerDialog extends JPanel {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the string representation of the BioMoby Registry endpoint
 	 */
 	public String getRegistryEndpoint() {
@@ -127,7 +118,7 @@ public class BiomobyScavengerDialog extends JPanel {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the string representation of the BioMoby Registry endpoint
 	 */
 	public String getRegistryURI() {

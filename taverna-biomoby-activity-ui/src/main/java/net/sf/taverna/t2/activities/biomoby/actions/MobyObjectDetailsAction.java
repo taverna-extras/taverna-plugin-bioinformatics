@@ -1,6 +1,3 @@
-/**
- *
- */
 package net.sf.taverna.t2.activities.biomoby.actions;
 
 import java.awt.Component;

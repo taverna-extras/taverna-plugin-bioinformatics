@@ -1,9 +1,3 @@
-/*
- * Created on Sep 9, 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package net.sf.taverna.t2.activities.biomoby.actions;
 
 import java.awt.BorderLayout;
@@ -21,17 +15,17 @@ import net.sf.taverna.t2.lang.ui.DialogTextArea;
 /**
  * @author Eddie Kawas
  *
- * 
+ *
  */
 public class MobyPanel extends JPanel {
 
-	
+
 	private static final long serialVersionUID = 1L;
 	private DialogTextArea textArea = null;
 	private String text = "";
 	private String name = "";
 	private JLabel jLabel = new JLabel();
-	
+
 	/**
 	 * This is the default constructor
 	 */
@@ -42,7 +36,7 @@ public class MobyPanel extends JPanel {
 		this.name = name;
 		initialize();
 	}
-	
+
 	public MobyPanel(String label) {
 		super(new BorderLayout());
 		jLabel.setText(label);
@@ -50,7 +44,7 @@ public class MobyPanel extends JPanel {
 	}
 	/**
 	 * This method initializes this
-	 * 
+	 *
 	 * @return void
 	 */
 	private void initialize() {
@@ -61,10 +55,10 @@ public class MobyPanel extends JPanel {
 	}
 
 	/**
-	 * This method initializes jTextArea	
-	 * 	
-	 * @return DialogTextArea	
-	 */    
+	 * This method initializes jTextArea
+	 *
+	 * @return DialogTextArea
+	 */
 	private DialogTextArea getTextArea() {
 		if (textArea == null) {
 			textArea = new DialogTextArea();
@@ -78,7 +72,7 @@ public class MobyPanel extends JPanel {
 		textArea.setCaretPosition(0);
 		return textArea;
 	}
-	
+
 	public void setText(String text) {
 	    this.text = text;
 	    if (textArea == null) {
@@ -93,16 +87,16 @@ public class MobyPanel extends JPanel {
     public ImageIcon getIcon() {
     	return new ImageIcon(MobyPanel.class.getResource("/moby_small.png"));
     }
-    
+
     /**
-     * 
+     *
      * @param icon a relative path to an icon to get
-     * @return the ImageIcon at icon 
+     * @return the ImageIcon at icon
      */
     public static ImageIcon getIcon(String icon) {
     	return new ImageIcon(MobyPanel.class.getResource(icon));
     }
-    
+
     public String getName(){
     	if (name==null) return "";
     	else return name;
@@ -110,12 +104,12 @@ public class MobyPanel extends JPanel {
 
 	public void onDisplay() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void onDispose() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public static Frame CreateFrame(String title) {

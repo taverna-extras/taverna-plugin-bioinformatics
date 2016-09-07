@@ -9,3 +9,6 @@ Portions of this software were originally based on the following:
 These have been licensed to the Apache Software Foundation under a software grant.
 
 ---------------------------------------------------------
+TODO: taverna-biomoby-activity-ui/src/main/java/net/sf/taverna/t2/activities/biomoby/query/CacheImpl.java
+says (c) Martin Senger and is licensed as LGPL - did University of Manchester
+have a ICLA from Senger so that this file can relicensed as Apache License?

@@ -1,13 +1,8 @@
-/*******************************************************************************
- * This file is a component of the Taverna project, and is licensed  under the
- *  GNU LGPL. Copyright Edward Kawas, The BioMoby Project
- ******************************************************************************/
 /*
  * This file is a component of the Taverna project,
  * and is licensed under the GNU LGPL.
  * Copyright Edward Kawas, Martin Senger, The BioMoby Project
  */
-
 package net.sf.taverna.t2.activities.biomoby.query;
 
 import java.io.BufferedOutputStream;
@@ -33,16 +28,16 @@ import org.biomoby.shared.MobyException;
  * use the results of the cached cumulative results (their implementation is
  * just passed to the parent class).
  * <p>
- * 
+ *
  * The caching is done in the file system, not in memory, so the results are
  * permanent (until someone removes the caching directory, or calls
  * {@link #removeFromCache}).
  * <p>
- * 
+ *
  * This class can be used also without caching - just instantiate it with
  * 'cacheDir' set to null in the constructor.
  * <p>
- * 
+ *
  * @author <A HREF="mailto:martin.senger@gmail.com">Martin Senger</A>
  * @version $Id: CacheImpl.java,v 1.2 2008/09/04 13:42:16 sowen70 Exp $
  */
@@ -144,7 +139,7 @@ public class CacheImpl {
 	 * Return a directory name representing the current cache. This is the same
 	 * name as given in constructors.
 	 * <p>
-	 * 
+	 *
 	 * @return current cache directory name
 	 **************************************************************************/
 	public String getCacheDir() {
@@ -156,7 +151,7 @@ public class CacheImpl {
 	 * whole cache (for that Moby registry this instance was initiated for).
 	 * Otherwise 'id' indicates which part of the cache that will be removed.
 	 * <p>
-	 * 
+	 *
 	 * @param id
 	 *            should be either null, or one of the following:
 	 *            {@link #CACHE_PART_DATATYPES}, {@link #CACHE_PART_SERVICES},
@@ -186,7 +181,7 @@ public class CacheImpl {
 	 * Create a cache directory from 'cacheDirectory' and 'registryId' if it
 	 * does not exist yet. Make sure that it is writable. Return a File
 	 * representing created directory.
-	 * 
+	 *
 	 * 'registryId' (which may be null) denotes what registry this cache is
 	 * going to be created for. If null, an endpoint of a default Moby registry
 	 * is used.
@@ -348,7 +343,7 @@ public class CacheImpl {
 			urlConnection.setUseCaches(false);
 			urlConnection.setRequestProperty ( "User-agent", "Taverna_BioMOBY/1.5");
 			urlConnection.setConnectTimeout(1000*60*5);
-			
+
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					urlConnection.getInputStream()));
 			String inputLine;
@@ -468,7 +463,7 @@ public class CacheImpl {
 	}
 
 	/***************************************************************************
-	 * 
+	 *
 	 **************************************************************************/
 	protected static String MSG_CACHE_NOT_DIR(File cache) {
 		return "Surprisingly, '" + cache.getAbsolutePath()
@@ -476,7 +471,7 @@ public class CacheImpl {
 	}
 
 	/***************************************************************************
-	 * 
+	 *
 	 **************************************************************************/
 	protected static String MSG_CACHE_BAD_FILE(File file, Exception e) {
 		return "Ignoring '" + file.getPath()
@@ -488,7 +483,7 @@ public class CacheImpl {
 	 * Return age of the current (whole) cache in millis from the beginning of
 	 * the Epoch; or -1 if cache is empty, or the age is unknown.
 	 * <p>
-	 * 
+	 *
 	 * @return the cache age which is taken as the oldest (but filled) cache
 	 *         part (part is considered e.g. 'services', or 'data types', not
 	 *         their individual entities)
