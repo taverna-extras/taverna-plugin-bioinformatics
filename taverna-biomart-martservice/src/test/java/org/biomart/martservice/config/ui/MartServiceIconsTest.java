@@ -1,5 +1,4 @@
 /*
- *****************************************************************/
 package org.biomart.martservice.config.ui;
 
 import junit.framework.TestCase;

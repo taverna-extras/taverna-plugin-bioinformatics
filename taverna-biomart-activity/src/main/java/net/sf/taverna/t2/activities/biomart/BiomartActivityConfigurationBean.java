@@ -1,5 +1,3 @@
-/*******************************************************************************
- ******************************************************************************/
 package net.sf.taverna.t2.activities.biomart;
 
 import net.sf.taverna.t2.workflowmodel.processor.config.ConfigurationBean;

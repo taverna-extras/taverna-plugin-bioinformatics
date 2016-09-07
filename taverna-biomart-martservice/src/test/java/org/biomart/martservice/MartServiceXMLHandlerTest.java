@@ -1,5 +1,4 @@
 /*
- *****************************************************************/
 package org.biomart.martservice;
 
 import java.io.IOException;

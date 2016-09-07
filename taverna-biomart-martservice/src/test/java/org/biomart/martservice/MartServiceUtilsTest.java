@@ -1,5 +1,4 @@
 /*
- *****************************************************************/
 package org.biomart.martservice;
 
 import static org.junit.Assert.*;

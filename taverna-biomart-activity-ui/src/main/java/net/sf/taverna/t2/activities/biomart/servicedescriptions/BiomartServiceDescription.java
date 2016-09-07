@@ -1,4 +1,3 @@
- ******************************************************************************/
 package net.sf.taverna.t2.activities.biomart.servicedescriptions;
 
 import java.net.URI;

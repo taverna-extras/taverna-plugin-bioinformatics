@@ -1,5 +1,4 @@
 /*
- *****************************************************************/
 package org.biomart.martservice.config.event;
 
 import org.biomart.martservice.MartDataset;

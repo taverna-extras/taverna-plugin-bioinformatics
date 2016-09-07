@@ -1,5 +1,4 @@
 /*
- *****************************************************************/
 package org.biomart.martservice.query;
 
 import org.junit.Test;
