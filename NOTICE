@@ -12,3 +12,10 @@ These have been licensed to the Apache Software Foundation under a software gran
 TODO: taverna-biomoby-activity-ui/src/main/java/net/sf/taverna/t2/activities/biomoby/query/CacheImpl.java
 says (c) Martin Senger and is licensed as LGPL - did University of Manchester
 have a ICLA from Senger so that this file can relicensed as Apache License?
+
+---------------------------------------------------------
+taverna-biomart-activity/src/main/resources/schema.json
+(c) Apache Software Foundation 2017, licenced under Apache 2.0
+---------------------------------------------------------
+taverna-biomart-activity/src/main/resources/META-INF/services/net.sf.taverna.t2.workflowmodel.health.HealthChecker
+(c) Apache Software Foundation 2017, licenced under Apache 2.0
