@@ -1,3 +1,5 @@
+package org.biomart.martservice.config.ui;
+
 /*
 package org.biomart.martservice.config.ui;
 /*
