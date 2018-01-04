@@ -1,3 +1,5 @@
+package org.biomart.martservice.query;
+
 /*
 package org.biomart.martservice.query;
 /*
