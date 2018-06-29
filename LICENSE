@@ -200,3 +200,12 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+
+-------------------------------------------------
+taverna-biomoby-activity-ui/src/main/java/net/sf/taverna/t2/activities/biomoby/query/CacheImpl.java
+
+ This file is a component of the Taverna project,
+ and is licensed under the GNU LGPL.
+ Copyright Edward Kawas, Martin Senger, The BioMoby Project
+
+https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html
