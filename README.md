@@ -15,22 +15,28 @@
    limitations under the License.
 -->
 
-# Apache Taverna Bioinformatics plugins
+# Bioinformatics plugins for Apache Taverna
 
 Plugins for
-[Apache Taverna](http://taverna.incubator.apache.org/) for
+[Taverna](http://taverna.incubator.apache.org/) for
 supporting bioinformatics-specific services.
 
-Note this module relies on other
-[Apache Taverna modules](http://taverna.incubator.apache.org/code) for
-the actual workflow execution.
+This plugin is **no longer maintained** by the Apache Taverna project, but 
+has been made available to [taverna-extras](https://github.com/taverna-extras/) 
+for archival purposes, open for third-party contributions.
+
+This module may rely on 
+[Apache Taverna modules](http://taverna.incubator.apache.org/code) from Maven Central
+as well as the older Taverna 2 modules from http://www.mygrid.org.uk/maven/repository - do note that Taverna 2 was licensed as LGPL 2.1 or later.
+
+**Note:** This plugins have **not** been updated for [Apache Taverna 3](https://taverna.incubator.apache.org/download/engine/)
 
 
 ## License
 
 (c) 2007-2014 University of Manchester
 
-(c) 2014-2015 Apache Software Foundation
+(c) 2014-2018 Apache Software Foundation
 
 This product includes software developed at The
 [Apache Software Foundation](http://www.apache.org/).
@@ -45,38 +51,13 @@ details about embedded third-party libraries and source code.
 
 # Contribute
 
-Please subscribe to and contact the
-[dev@taverna](http://taverna.incubator.apache.org/community/lists#dev mailing list)
-for any questions, suggestions and discussions about
-Apache Taverna.
 
-Bugs and feature plannings are tracked in the Jira
-[Issue tracker](https://issues.apache.org/jira/browse/TAVERNA/component/12326818)
-under the `TAVERNA` component _Taverna Plugin Bioinformatics._ Feel free
-to add an issue!
 
-To suggest changes to this source code, feel free to raise a
-[GitHub pull request](https://github.com/apache/incubator-taverna-plugin-bioinformatics/pulls).
-Any contributions received are assumed to be covered by the [Apache License
-2.0](https://www.apache.org/licenses/LICENSE-2.0). We might ask you
-to sign a [Contributor License Agreement](https://www.apache.org/licenses/#clas)
-before accepting a larger contribution.
+This plugin is **not actively maintained**, but feel free to raise a
+[GitHub pull request](https://github.com/taverna-extras/taverna-plugin-bioinformatics/pulls).
 
-## Disclaimer
-
-Apache Taverna is an effort undergoing incubation at the
-[Apache Software Foundation (ASF)](http://www.apache.org/),
-sponsored by the [Apache Incubator PMC](http://incubator.apache.org/).
-
-[Incubation](http://incubator.apache.org/incubation/Process_Description.html)
-is required of all newly accepted projects until a further review
-indicates that the infrastructure, communications, and decision making process
-have stabilized in a manner consistent with other successful ASF projects.
-
-While incubation status is not necessarily a reflection of the completeness
-or stability of the code, it does indicate that the project has yet to be
-fully endorsed by the ASF.
-
+Any contributions received are assumed to be covered by the 
+[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0). 
 
 
 ## Prerequisites
