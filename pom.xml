@@ -141,12 +141,14 @@
     <module>taverna-soaplab-activity</module>
     <module>taverna-soaplab-activity-ui</module>
   </modules>
+
   <scm>
-    <connection>scm:git:https://git-wip-us.apache.org/repos/asf/incubator-taverna-plugin-bioinformatics.git</connection>
-    <developerConnection>scm:git:https://git-wip-us.apache.org/repos/asf/incubator-taverna-plugin-bioinformatics.git</developerConnection>
-    <url>https://github.com/apache/incubator-taverna-plugin-bioinformatics</url>
+    <connection>scm:git:git://github.com/taverna-extras/taverna-plugin-bioinformatics.git</connection>
+    <developerConnection>scm:git:git@github.com:taverna-extras/taverna-plugin-bioinformatics.git</developerConnection>
+    <url>https://github.com/taverna-extras/taverna-plugin-bioinformatics/</url>
     <tag>HEAD</tag>
   </scm>
+
 
   <repositories>
     <repository>
@@ -177,8 +179,5 @@
 			<url>http://www.mygrid.org.uk/maven/snapshot-repository</url>
 		</repository>
 	</repositories>
-
-
-  </repositories>
 
 </project>
